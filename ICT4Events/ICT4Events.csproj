@@ -58,6 +58,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Global.asax" />
     <Content Include="LoginForm.aspx" />
     <Content Include="Registreren.aspx" />
     <Content Include="Site.Master" />
@@ -71,10 +72,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Static\CSS\custom.css" />
+    <Content Include="Static\Javascript\jquery-1.10.2.js" />
+    <Content Include="Static\Javascript\jquery-1.10.2.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseConnectionClass.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="LoginForm.aspx.cs">
       <DependentUpon>LoginForm.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
