@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="LoginForm.aspx" />
+    <Content Include="Registreren.aspx" />
     <Content Include="Site.Master" />
     <None Include="Properties\PublishProfiles\Berry.pubxml" />
     <None Include="Web.Debug.config">
@@ -69,7 +70,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Registreren.aspx" />
+    <Content Include="Static\CSS\custom.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

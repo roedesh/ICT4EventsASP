@@ -1,15 +1,22 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ICT4Events.Site" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Master.cs" Inherits="ICT4Events.Site" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link href="Static/CSS/custom.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
+    <div id="header">
+        <ul>
+            <li><asp:HyperLink href="LoginForm.aspx" runat="server">Inloggen</asp:HyperLink></li>
+            <li><asp:HyperLink href="Registreren.aspx" runat="server">Registreren</asp:HyperLink></li>
+        </ul>
+    </div>
     <div>
         <asp:ContentPlaceHolder ID="MainContent" runat="server">
         
