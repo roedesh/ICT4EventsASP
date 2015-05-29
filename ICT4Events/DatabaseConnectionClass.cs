@@ -46,10 +46,10 @@ namespace ICT4Events
         }
         #endregion
 
-        #region Update Queries
+        #region Update Queries Berry
         #endregion
 
-        #region Delete Queries
+        #region Delete Queries Berry
 
         public string deleteStatement(string table, int value)
         {
@@ -70,7 +70,7 @@ namespace ICT4Events
         }
         #endregion
 
-        #region Insert Queries
+        #region Insert Queries Berry
         public string insertStatement(string table, List<string> values)
         {
             data = null;
@@ -132,7 +132,7 @@ namespace ICT4Events
         }
         #endregion
 
-        #region Select Queries
+        #region Select Queries Berry
         public string selectStatement(string table, string column, bool max, string value)
         {
             data = null;

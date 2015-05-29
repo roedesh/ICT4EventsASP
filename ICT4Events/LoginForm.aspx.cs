@@ -10,9 +10,15 @@ namespace ICT4Events
     public partial class LoginForm : System.Web.UI.Page
     {
         private int counter;
+        private string data;
         protected void Page_Load(object sender, EventArgs e)
         {
             counter = 0;
+
+            if (Session["username"] != null)
+            {
+                Label1.Text = Session["username"].ToString();
+            }
         }
 
         protected void bt_login_Click(object sender, EventArgs e)
@@ -24,14 +30,15 @@ namespace ICT4Events
             }
             catch(Exception x)
             {
-                Label1.Text = x.ToString();
+                data = x.ToString();
                 counter++;
             }
             finally
             {
                 if (counter == 0)
                 {
-                    Label1.Text = "Succes";
+                    data = "succes";
+                    Session["username"] = data;
                 } counter = 0;
             }
         }
