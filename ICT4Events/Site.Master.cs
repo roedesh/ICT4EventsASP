@@ -19,7 +19,7 @@ namespace ICT4Events
         {
             if (Session["USER_ID"] != null)
             {
-                lbWelkom.Text = "Welkom " + Session["USER_ID"];
+                lbWelkom.Text = "(Welkom " + Session["USER_ID"] + ")";
                 IsLoggedIn = true;
             }
             else
