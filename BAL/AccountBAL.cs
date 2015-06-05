@@ -38,6 +38,12 @@
 
         }
 
+        public DataTable GetAccountLogin(string username, string password)
+        {
+            return new AccountDAL().Load(username, password);
+
+        }
+
         public DataTable GetAccount(string username, string password)
         {
             return new AccountDAL().Load(username, password);

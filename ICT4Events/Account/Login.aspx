@@ -19,6 +19,7 @@
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" ValidationGroup="Login1" 
                     ErrorMessage="Dit veld is verplicht." />
                 <br />
+                <asp:Literal runat="server"  ID="FailureText" Text="" EnableViewState="False"></asp:Literal>
                 <asp:Button ID="btnLogin" runat="server" CommandName="Login" Text="Inloggen" ValidationGroup="Login1" />
                 <asp:Button ID="btnRegister" runat="server" Text="Registreren" />
             </LayoutTemplate>
