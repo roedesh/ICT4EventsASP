@@ -30,8 +30,8 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"INSERT INTO Account (AccountID, RangID, Gebruikersnaam, Wachtwoord, Leeftijd, Interesses, Handtekening) 
-                VALUES (AccountID_SEQ.nextval, :rankID, :username, :password, :age, :interests, :signature)";
+                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, wachtwoord, email, activatiehash, geactiveerd) 
+                VALUES (ACCOUNT_FCSEQ, :username, :password, :email, :hash, :activated)";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("rankID", rankID));
