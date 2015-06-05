@@ -35,7 +35,7 @@ namespace ICT4Events
                 }
 
             }
-        }
+        
         }
     }
 }

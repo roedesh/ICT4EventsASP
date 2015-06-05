@@ -7,14 +7,16 @@
     <div>
         <asp:Login ID="Login1" runat="server" OnLoggingIn="OnLoggingIn">
             <LayoutTemplate>
-                <h3>Gebruikersnaam</h3>
-                <asp:TextBox ID="tbUserName" runat="server" Height="35" Width="300"></asp:TextBox>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="rUserName"
+               <asp:Label runat="server" AssociatedControlID="UserName" ID="UserNameLabel">Gebruikersnaam:</asp:Label></td>
+                <br />
+                <asp:TextBox ID="UserName" runat="server" Height="35" Width="300"></asp:TextBox>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName" ValidationGroup="Login1" 
                     ErrorMessage="Dit veld is verplicht." />
-
-                <h3>Wachtwoord</h3>
-                <asp:TextBox ID="tbPassword" TextMode="Password" runat="server" Height="35" Width="300"></asp:TextBox>
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="rPassword"
+                <br />
+                <asp:Label runat="server" AssociatedControlID="Password" ID="PasswordLabel">Wachtwoord:</asp:Label></td>
+                <br />
+                <asp:TextBox ID="Password" TextMode="Password" runat="server" Height="35" Width="300"></asp:TextBox>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" ValidationGroup="Login1" 
                     ErrorMessage="Dit veld is verplicht." />
                 <br />
                 <asp:Button ID="btnLogin" runat="server" Text="Inloggen" ValidationGroup="Login1" />
