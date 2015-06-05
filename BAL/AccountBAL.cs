@@ -26,15 +26,15 @@
 
         }
 
-        public int DeleteAccount(int accountID)
+        public int DeleteAccount(string username)
         {
-            return new AccountDAL().Delete(accountID);
+            return new AccountDAL().Delete(username);
 
         }
 
-        public DataTable GetAccount(int accountID)
+        public DataTable GetAccount(string username)
         {
-            return new AccountDAL().Load(accountID);
+            return new AccountDAL().Load(username);
 
         }
 

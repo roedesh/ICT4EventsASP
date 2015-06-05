@@ -22,6 +22,15 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.TextBox tbSearchUserName;
         
         /// <summary>
+        /// btSearchAccount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btSearchAccount;
+        
+        /// <summary>
         /// tbEmailAdress control.
         /// </summary>
         /// <remarks>
@@ -31,6 +40,15 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.TextBox tbEmailAdress;
         
         /// <summary>
+        /// tbRank control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbRank;
+        
+        /// <summary>
         /// tbUserName control.
         /// </summary>
         /// <remarks>
@@ -38,6 +56,15 @@ namespace ICT4Events.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbUserName;
+        
+        /// <summary>
+        /// tbPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbPassword;
         
         /// <summary>
         /// tbFirstName control.
@@ -56,6 +83,24 @@ namespace ICT4Events.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbLastName;
+        
+        /// <summary>
+        /// tbAge control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbAge;
+        
+        /// <summary>
+        /// tbInterests control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbInterests;
         
         /// <summary>
         /// tbAddress control.

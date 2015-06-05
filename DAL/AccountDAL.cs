@@ -81,15 +81,15 @@ namespace DAL
             }
         }
 
-        public int Delete(int accountID)
+        public int Delete(string username)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = "DELETE FROM Account WHERE ID = :accountID";
+                string insertQuery = "DELETE FROM Account WHERE gebruikersnaam = :gebruikersnaam";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
-                    cmd.Parameters.Add(new OracleParameter("accountID", accountID));
+                    cmd.Parameters.Add(new OracleParameter("gebruikersnaam", username));
                     try
                     {
                         return cmd.ExecuteNonQuery();
@@ -103,17 +103,17 @@ namespace DAL
             }
         }
 
-        public DataTable Load(int accountID)
+        public DataTable Load(string username)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT * FROM Account WHERE ID = :accountID";
+                string loadQuery = "SELECT * FROM Account WHERE gebruikersnaam = :gebruikersnaam";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
                     DataTable t = new DataTable();
-                    cmd.Parameters.Add(new OracleParameter("accountID", accountID));
+                    cmd.Parameters.Add(new OracleParameter("gebruikersnaam", username));
                     try
                     {
                         a.Fill(t);
