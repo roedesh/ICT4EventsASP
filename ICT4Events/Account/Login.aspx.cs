@@ -21,8 +21,8 @@ namespace ICT4Events
                 bool isTrue= true;
             if (IsValid)
             {
-               // ...login(((TextBox)Login1.FindControl("username")).Text,
-                    //((TextBox)Login1.FindControl("password")).Text)
+               //  ...login(((TextBox)Login1.FindControl("username")).Text,
+                    // ((TextBox)Login1.FindControl("password")).Text)
                 if (isTrue) //hier controleren gebruikersgegevens
                 {
                     Session["USER_ID"] = ((TextBox)Login1.FindControl("tbUsername")).Text;

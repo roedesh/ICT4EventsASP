@@ -13,11 +13,11 @@
     <form id="form1" runat="server">
     <div id="header">
         <ul>
-            <asp:Label ID="lbWelkom" runat="server" Text=""></asp:Label>
+            
             <% if (!IsLoggedIn) { %>
         <li><a href="../Account/login.aspx">Inloggen</a></li>
     <% } else { %>
-        <li><a href="../Account/logout.aspx">Uitloggen</a></li>
+        <li><a href="../Account/logout.aspx"><asp:Label ID="lbWelkom" runat="server" Text=""></asp:Label>Uitloggen</a></li>
     <%} %>
             <li><asp:HyperLink href="Registreren.aspx" runat="server">Registreren</asp:HyperLink></li>
         </ul>
