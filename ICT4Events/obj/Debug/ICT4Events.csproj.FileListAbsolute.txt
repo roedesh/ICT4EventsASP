@@ -5,3 +5,10 @@ C:\Users\berry\Documents\school\P3\PT\periode 2\ICT4EventsASP\ICT4Events\obj\Deb
 C:\Users\berry\Documents\school\P3\PT\periode 2\ICT4EventsASP\ICT4Events\obj\Debug\ICT4Events.dll
 C:\Users\berry\Documents\school\P3\PT\periode 2\ICT4EventsASP\ICT4Events\obj\Debug\ICT4Events.pdb
 C:\Users\berry\Documents\school\P3\PT\periode 2\ICT4EventsASP\ICT4Events\bin\Oracle.DataAccess.dll
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\obj\Debug\ICT4Events.csprojResolveAssemblyReference.cache
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\obj\Debug\ICT4Events.dll
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\obj\Debug\ICT4Events.pdb
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\bin\ICT4Events.dll.config
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\bin\ICT4Events.dll
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\bin\ICT4Events.pdb
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\bin\Oracle.DataAccess.dll

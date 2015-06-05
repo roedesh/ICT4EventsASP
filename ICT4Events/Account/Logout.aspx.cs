@@ -7,25 +7,20 @@ using System.Web.UI.WebControls;
 
 namespace ICT4Events
 {
-    public partial class Site : System.Web.UI.MasterPage
+    public partial class Logout : System.Web.UI.Page
     {
-        public bool IsLoggedIn
-        {
-            get;
-            set;
-        }
-        
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["USER_ID"] != null)
             {
-                lbWelkom.Text = "(Welkom " + Session["USER_ID"] + ")";
-                IsLoggedIn = true;
+                // logout:
+                Session.Remove("USER_ID");
+                Session.RemoveAll();
+                Response.Redirect("../Default.aspx");
             }
             else
             {
-                lbWelkom.Text = "";
-                IsLoggedIn = false;
+                Response.Redirect("../Account/Login.aspx");
             }
         }
     }
