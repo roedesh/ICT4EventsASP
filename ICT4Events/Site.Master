@@ -11,22 +11,43 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div id="header">
-        <ul>
-            
-            <% if (!IsLoggedIn) { %>
-        <li><a href="../Account/login.aspx">Inloggen</a></li>
-    <% } else { %>
-        <li><a href="../Account/logout.aspx"><asp:Label ID="lbWelkom" runat="server" Text=""></asp:Label>Uitloggen</a></li>
-    <%} %>
-            <li><asp:HyperLink href="Registreren.aspx" runat="server">Registreren</asp:HyperLink></li>
-        </ul>
-    </div>
-    <div>
-        <asp:ContentPlaceHolder ID="MainContent" runat="server">
-        
-        </asp:ContentPlaceHolder>
-    </div>
+        <div id="header">
+            <ul>
+
+                <% if (!IsLoggedIn)
+                   { %>
+                <li>
+                    <asp:HyperLink href="../Account/login.aspx" runat="server">Inloggen</asp:HyperLink></li>
+                <li>
+                    <asp:HyperLink href="Registreren.aspx" runat="server">Registreren</asp:HyperLink></li>
+                <% }
+                   else
+                   { %>
+                <li>
+                    <asp:HyperLink href="Registreren.aspx" runat="server">Mijn Account</asp:HyperLink></li>
+                <li><asp:HyperLink href="../Account/logout.aspx" runat="server">
+                    <asp:Label ID="lbWelkom" runat="server" Text=""></asp:Label>Uitloggen</asp:HyperLink></li>
+                <%} %>
+            </ul>
+        </div>
+        <% if (IsLoggedInAsAdmin ){%>
+        <div id="header-admin">
+            <ul>
+
+                <li>
+                    <asp:HyperLink href="../Event/EventManagementAdmin.aspx" runat="server">Event Management</asp:HyperLink></li>
+                <li>
+                    <asp:HyperLink href="../Account/AccountManagement.aspx" runat="server">Account Management</asp:HyperLink></li>
+                
+            </ul>
+        </div>
+        <% }%>
+
+
+        <div>
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
     </form>
 </body>
 </html>

@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
+﻿
 namespace ICT4Events
 {
+
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+
     public partial class Login : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -25,8 +27,8 @@ namespace ICT4Events
                     // ((TextBox)Login1.FindControl("password")).Text)
                 if (isTrue) //hier controleren gebruikersgegevens
                 {
-                    Session["USER_ID"] = ((TextBox)Login1.FindControl("tbUsername")).Text;
-                    Response.Redirect("../default.aspx");
+                    Session["USER_ID"] = ((TextBox)Login1.FindControl("UserName")).Text;
+                    Response.Redirect("../Default.aspx");
                 }
                 else
                 {

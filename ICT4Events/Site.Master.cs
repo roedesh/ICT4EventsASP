@@ -14,6 +14,11 @@ namespace ICT4Events
             get;
             set;
         }
+        public bool IsLoggedInAsAdmin
+        {
+            get;
+            set;
+        }
         
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -21,11 +26,19 @@ namespace ICT4Events
             {
                 lbWelkom.Text = "(Welkom " + Session["USER_ID"] + ")";
                 IsLoggedIn = true;
+
+                if (Session["USER_ID"].ToString() == "admin")
+                {
+                    IsLoggedInAsAdmin = true;
+                    
+                }
             }
             else
             {
+                
                 lbWelkom.Text = "";
                 IsLoggedIn = false;
+                IsLoggedInAsAdmin = false;
             }
         }
     }
