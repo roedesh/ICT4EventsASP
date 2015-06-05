@@ -23,3 +23,7 @@ D:\Dropbox\Fontys\S2\P2\PTS2\CreateUser\ICT4Events\ICT4Events\bin\DAL.pdb
 D:\Dropbox\Fontys\S2\P2\PTS2\CreateUser\ICT4Events\ICT4Events\obj\Debug\ICT4Events.csprojResolveAssemblyReference.cache
 D:\Dropbox\Fontys\S2\P2\PTS2\CreateUser\ICT4Events\ICT4Events\obj\Debug\ICT4Events.dll
 D:\Dropbox\Fontys\S2\P2\PTS2\CreateUser\ICT4Events\ICT4Events\obj\Debug\ICT4Events.pdb
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\bin\BAL.dll
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\bin\DAL.dll
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\bin\BAL.pdb
+C:\Users\jonne\Documents\GitHub\ICT4EventsASP\ICT4Events\bin\DAL.pdb
