@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class EventDAL
+    public class EventDAL
     {
     }
 }

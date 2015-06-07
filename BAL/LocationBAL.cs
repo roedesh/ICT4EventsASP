@@ -7,7 +7,7 @@ using DAL;
 
 namespace BAL
 {
-    class LocationBAL
+    public class LocationBAL
     {
     }
 }

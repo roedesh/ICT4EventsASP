@@ -7,7 +7,7 @@ using DAL;
 
 namespace BAL
 {
-    class PostBAL
+    public class PostBAL
     {
     }
 }

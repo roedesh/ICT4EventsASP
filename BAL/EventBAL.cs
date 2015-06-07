@@ -7,7 +7,7 @@ using DAL;
 
 namespace BAL
 {
-    class EventBAL
+    public class EventBAL
     {
     }
 }

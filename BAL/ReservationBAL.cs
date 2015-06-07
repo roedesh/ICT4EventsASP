@@ -7,7 +7,7 @@ using DAL;
 
 namespace BAL
 {
-    class ReservationBAL
+    public class ReservationBAL
     {
     }
 }

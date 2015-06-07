@@ -7,7 +7,7 @@ using DAL;
 
 namespace BAL
 {
-    class RentalBAL
+    public class RentalBAL
     {
     }
 }

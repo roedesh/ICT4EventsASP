@@ -91,6 +91,10 @@ namespace ICT4Events.Account
                     new AccountBAL().DeleteAccount(tbUserName.Text);
                 }
             }
+            finally
+            {
+
+            }
         }
     }
 }
