@@ -30,8 +30,8 @@
             ErrorMessage="Dit veld is verplicht." />
         <br />
         <br />
-        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" />
-        <asp:Button ID="btnCreate" runat="server" Text="Maak event aan" />
+        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" />
+        <asp:Button ID="btnCreate" runat="server" Text="Maak event aan" OnClick="btnCreate_Click" />
         <asp:Button ID="btnDelete" runat="server" Text="Verwijder Event" />
     </div>
 </asp:Content>
