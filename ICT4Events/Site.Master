@@ -24,7 +24,7 @@
                    else
                    { %>
                 <li>
-                    <asp:HyperLink href="Registreren.aspx" runat="server">Mijn Account</asp:HyperLink></li>
+                    <asp:HyperLink href="../Account/MyAccount.aspx" runat="server">Mijn Account</asp:HyperLink></li>
                 <li><asp:HyperLink href="../Account/logout.aspx" runat="server">
                     <asp:Label ID="lbWelkom" runat="server" Text=""></asp:Label>Uitloggen</asp:HyperLink></li>
                 <%} %>

@@ -18,6 +18,7 @@ namespace ICT4Events
                 // logout:
                 Session.Remove("USER_ID");
                 Session.RemoveAll();
+                Response.Write("<script>alert('u bent succesvol uitgelogd');</script>");
                 Response.Redirect("../Default.aspx");
             }
             else
