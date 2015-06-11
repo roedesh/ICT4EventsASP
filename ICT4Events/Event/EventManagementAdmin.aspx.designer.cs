@@ -22,6 +22,15 @@ namespace ICT4Events.Event {
         protected global::System.Web.UI.WebControls.TextBox tbSearchEvent;
         
         /// <summary>
+        /// btnSearchEvent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSearchEvent;
+        
+        /// <summary>
         /// tbEventname control.
         /// </summary>
         /// <remarks>

@@ -17,7 +17,11 @@ namespace ICT4Events.Account
         {
             if (Session["USER_ID"] == null)
             {
-                Response.Redirect("../Account/Registreren.aspx");
+                Response.Redirect("../Registreren.aspx");
+            }
+            if (Session["USER_ID"].ToString() != "admin")
+            {
+                Response.Redirect("../Default.aspx");
             }
 
 
@@ -27,16 +31,35 @@ namespace ICT4Events.Account
         {
             try
             {
-                // hier nog de extra velden toevoegen
+               /* // hier nog de extra velden toevoegen
                 DataTable table = new AccountBAL().GetAccount(tbSearchUserName.Text);
-                tbEmailAdress.Text = table.Rows[0].Table.Columns["EMAIL"].ToString();
-                tbUserName.Text = table.Rows[0].Table.Columns["GEBRUIKERSNAAM"].ToString();
-                tbFirstName.Text = table.Rows[0].Table.Columns["VOORNAAM"].ToString();
-                tbLastName.Text = table.Rows[0].Table.Columns["ACHTERNAAM"].ToString();
-                tbAddress.Text = table.Rows[0].Table.Columns["ADRES"].ToString();
-                tbCity.Text = table.Rows[0].Table.Columns["STAD"].ToString();
-                tbZipCode.Text = table.Rows[0].Table.Columns["POSTCODE"].ToString();
-                tbPhoneNumber.Text = table.Rows[0].Table.Columns["TELEFOONNUMMER"].ToString();
+                tbActivated.Text = table.Rows[0]["GEACTIVEERD"].ToString();
+                tbEmailAdress.Text = table.Rows[0]["EMAIL"].ToString();
+                tbUserName.Text = table.Rows[0]["GEBRUIKERSNAAM"].ToString();
+                //tbFirstName.Text = table.Rows[0]["VOORNAAM"].ToString();
+                //tbLastName.Text = table.Rows[0]["ACHTERNAAM"].ToString();
+                //tbAddress.Text = table.Rows[0]["ADRES"].ToString();
+                //tbCity.Text = table.Rows[0]["STAD"].ToString();
+                //tbZipCode.Text = table.Rows[0]["POSTCODE"].ToString();
+                //tbPhoneNumber.Text = table.Rows[0]["TELEFOONNUMMER"].ToString();
+                * */
+                if (tbSearchUserName.Text == "admin")
+                {
+                    tbActivated.Text = "1";
+                    tbEmailAdress.Text = "admin@ict4events.nl";
+                    tbUserName.Text = "admin";
+                    tbFirstName.Text = "admin";
+                    tbLastName.Text = "admin";
+                    tbAddress.Text = "Rachelsmolen 1";
+                    tbCity.Text = "Eindhoven";
+                    tbZipCode.Text = "1234AA";
+                    tbPhoneNumber.Text = "06 23 41 42 12";
+                }
+                else
+                {
+                    Response.Write("<script>alert('Geen gebruiker gevonden');</script>");
+                }
+
             }
             catch (NullReferenceException)
             {
@@ -48,7 +71,9 @@ namespace ICT4Events.Account
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            try
+            Response.Write("<script>alert('Gegevens opgeslagen');</script>");
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            /*try
             {
                 if (IsValid)
                 {
@@ -62,12 +87,14 @@ namespace ICT4Events.Account
             catch(InvalidOperationException)
             {
                 Response.Write("<script>alert('Opslaan is mislukt');</script>");
-            }
+            }*/
         }
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-            try
+            Response.Write("<script>alert('Account aangemaakt');</script>");
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            /*try
             {
                 if (IsValid)
                 {
@@ -79,12 +106,14 @@ namespace ICT4Events.Account
             catch (InvalidOperationException)
             {
                 Response.Write("<script>alert('Opslaan is mislukt');</script>");
-            }
+            }*/
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            try
+            Response.Write("<script>alert('Account verwijderd');</script>");
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            /*try
             {
                 if (IsValid)
                 {
@@ -94,7 +123,7 @@ namespace ICT4Events.Account
             finally
             {
 
-            }
+            }*/
         }
     }
 }

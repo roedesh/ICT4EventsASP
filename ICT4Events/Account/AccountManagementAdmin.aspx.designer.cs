@@ -31,6 +31,15 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.Button btSearchAccount;
         
         /// <summary>
+        /// tbActivated control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbActivated;
+        
+        /// <summary>
         /// tbEmailAdress control.
         /// </summary>
         /// <remarks>

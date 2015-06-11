@@ -33,11 +33,10 @@
         <% if (IsLoggedInAsAdmin ){%>
         <div id="header-admin">
             <ul>
-
                 <li>
                     <asp:HyperLink href="../Event/EventManagementAdmin.aspx" runat="server">Event Management</asp:HyperLink></li>
                 <li>
-                    <asp:HyperLink href="../Account/AccountManagement.aspx" runat="server">Account Management</asp:HyperLink></li>
+                    <asp:HyperLink href="../Account/AccountManagementAdmin.aspx" runat="server">Account Management</asp:HyperLink></li>
                 
             </ul>
         </div>

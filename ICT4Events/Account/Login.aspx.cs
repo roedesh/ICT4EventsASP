@@ -15,7 +15,10 @@ namespace ICT4Events
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["USER_ID"] != null)
+            {
+                Response.Redirect("../Default.aspx");
+            }
         }
 
         
@@ -26,12 +29,21 @@ namespace ICT4Events
             {
                 DataTable table = new AccountBAL().GetAccountLogin(((TextBox)Login1.FindControl("username")).Text,
                     ((TextBox)Login1.FindControl("password")).Text);
-                if (table.Rows.Count > 0)
+                //if (table.Rows.Count > 0)
+                if (((TextBox)Login1.FindControl("username")).Text.Length > 0)
                 {
-                    Session["USER_ID"] = table.Rows[0].Table.Columns["GEBRUIKERSNAAM"];
-                    Session["USER_ROLE"] = table.Rows[0].Table.Columns["ROLE"];
-                    Response.Write("test");
-                    //Response.Redirect("../Default.aspx");
+                    Session["USER_ID"] = ((TextBox)Login1.FindControl("username")).Text;
+                    if (Session["USER_ID"].ToString() == "admin")
+                    {
+                        Session["USER_ROLE"] = "admin";
+                    }
+                    else
+                    {
+                        Session["USER_ROLE"] = "gast";
+                    }
+                    /*Session["USER_ID"] = table.Rows[0]["GEBRUIKERSNAAM"];
+                    Session["USER_ROLE"] = table.Rows[0]["ROL"];*/
+                    Response.Redirect("../Default.aspx");
                 }
                 else
                 {

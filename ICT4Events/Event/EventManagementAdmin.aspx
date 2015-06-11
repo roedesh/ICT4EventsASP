@@ -6,6 +6,8 @@
         <div>
         <h1>Zoek event:</h1>
         <asp:TextBox ID="tbSearchEvent" runat="server" Height="25px" Width="250px"></asp:TextBox>
+            <br />
+            <asp:Button ID="btnSearchEvent" runat="server" Text="Zoek event" OnClick="btnSearchEvent_Click" />
         <hr />
         <br />
         <h2>Event naam:</h2>
