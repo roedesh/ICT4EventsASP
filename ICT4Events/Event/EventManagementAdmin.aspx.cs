@@ -17,7 +17,7 @@ namespace ICT4Events.Event
         {
             if (Session["USER_ID"] == null)
             {
-                Response.Redirect("../Account/Registreren.aspx");
+                Response.Redirect("../Registreren.aspx");
             }
             if (Session["USER_ID"].ToString() != "admin")
             {
@@ -28,12 +28,20 @@ namespace ICT4Events.Event
         protected void btnCreate_Click(object sender, EventArgs e)
         {
             Response.Write("<script>alert('Gegevens opgeslagen');</script>");
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            tbAddress.Text = string.Empty;
+            tbCity.Text = string.Empty;
+            tbEventname.Text = string.Empty;
+            tbZipCode.Text = string.Empty;
+
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            
             Response.Write("<script>alert('Gegevens opgeslagen');</script>");
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            tbAddress.Text = string.Empty;
+            tbCity.Text = string.Empty;
+            tbEventname.Text = string.Empty;
+            tbZipCode.Text = string.Empty;
         }
 
         protected void btnSearchEvent_Click(object sender, EventArgs e)
