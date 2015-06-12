@@ -245,7 +245,9 @@ DROP SEQUENCE "VERHUUR_FCSEQ";
 	"straat" NVARCHAR2(255), 
 	"huisnr" NVARCHAR2(255), 
 	"woonplaats" NVARCHAR2(255), 
-	"banknr" NVARCHAR2(255)
+	"banknr" NVARCHAR2(255),
+	"password" NVARCHAR2(255),
+	"rol" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
 --  DDL for Table PLEK
@@ -417,7 +419,8 @@ SET DEFINE OFF;
 Insert into LOCATIE (ID,"naam","straat","nr","postcode","plaats") values ('1','Camping De Valkenhof',null,null,null,null);
 REM INSERTING into PERSOON
 SET DEFINE OFF;
-Insert into PERSOON (ID,"voornaam","tussenvoegsel","achternaam","straat","huisnr","woonplaats","banknr") values ('1','Jan',null,'Pietersen','Rachelsmolen','1','5611MA','NL91ABNA0417164300');
+Insert into PERSOON (ID,"voornaam","tussenvoegsel","achternaam","straat","huisnr","woonplaats","banknr","password","rol") values ('1','Jan',null,'Pietersen','Rachelsmolen','1','5611MA','NL91ABNA0417164300','Jan','Admin');
+Insert into PERSOON (ID,"voornaam","tussenvoegsel","achternaam","straat","huisnr","woonplaats","banknr","password","rol") values ('2','Admin',null,'Adminson','Rachelsmolen','1','5611MA','NL91ABNA0417154300','Admin','Admin');
 REM INSERTING into PLEK
 SET DEFINE OFF;
 Insert into PLEK (ID,"locatie_id","nummer","capaciteit") values ('1','1','1','5');
