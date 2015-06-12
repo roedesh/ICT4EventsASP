@@ -67,6 +67,9 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="LoginForm.aspx" />
     <Content Include="Account\Logout.aspx" />
+    <Content Include="Post\Category.aspx" />
+    <Content Include="Post\CreatePost.aspx" />
+    <Content Include="Post\Post.aspx" />
     <Content Include="Registreren.aspx" />
     <Content Include="Reservering\PlaatsReservering.aspx" />
     <Content Include="Site.Master" />
@@ -146,6 +149,24 @@
     <Compile Include="Account\Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Post\Category.aspx.cs">
+      <DependentUpon>Category.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Post\Category.aspx.designer.cs">
+      <DependentUpon>Category.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Post\CreatePost.aspx.cs">
+      <DependentUpon>CreatePost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Post\CreatePost.aspx.designer.cs">
+      <DependentUpon>CreatePost.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Post\Post.aspx.cs">
+      <DependentUpon>Post.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Post\Post.aspx.designer.cs">
+      <DependentUpon>Post.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registreren.aspx.cs">
       <DependentUpon>Registreren.aspx</DependentUpon>
@@ -181,6 +202,9 @@
       <Project>{9b0091bb-0d26-4b61-894c-40a0f4a4bcac}</Project>
       <Name>BAL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
