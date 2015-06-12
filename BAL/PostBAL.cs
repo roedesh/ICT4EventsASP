@@ -10,9 +10,15 @@ namespace BAL
 {
     public class PostBAL
     {
+        #region Categorie
         public DataTable GetCategories()
         {
-            return new PostDAL().LoadAll();
+            return new PostDAL().LoadRootCategories();
         }
+        public DataTable GetCategories(string id)
+        {
+            return new PostDAL().LoadChildCategories(id);
+        }
+        #endregion
     }
 }

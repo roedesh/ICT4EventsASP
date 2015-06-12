@@ -18,7 +18,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT * FROM Categorie WHERE category IS NULL";
+                string loadQuery = "SELECT * FROM CATEGORIE WHERE CATEGORIE_ID IS NULL";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -42,7 +42,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT * FROM Categorie WHERE category_id = :category_id";
+                string loadQuery = "SELECT * FROM Categorie WHERE categorie_id = :categorie_id";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("category_id", parentID));
