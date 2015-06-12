@@ -37,6 +37,10 @@
             return new AccountDAL().Load(username);
 
         }
+        public DataTable GetAccountByBarcode(string barcode)
+        {
+            return new AccountDAL().LoadPerson(barcode);
+        }
 
         public DataTable GetAccountLogin(string username, string password)
         {

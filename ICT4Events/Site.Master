@@ -39,6 +39,8 @@
                     <asp:HyperLink href="../Event/EventManagementAdmin.aspx" runat="server">Event Management</asp:HyperLink></li>
                 <li>
                     <asp:HyperLink href="../Account/AccountManagementAdmin.aspx" runat="server">Account Management</asp:HyperLink></li>
+                <li>
+                    <asp:HyperLink href="ToegangsControle.aspx" runat="server">Toegangs Controle</asp:HyperLink></li>
                 
             </ul>
         </div>

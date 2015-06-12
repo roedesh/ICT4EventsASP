@@ -9,7 +9,7 @@
     <asp:TextBox ID="tbBarcode" runat="server" onFocus="this.select()" ></asp:TextBox>
     <asp:TextBox ID="tbSearchPerson" runat="server"></asp:TextBox>
     <br />
-&nbsp;<asp:Button ID="btnSearchPerson0" runat="server" Text="Zoek Persoon" Width="94px" />
+&nbsp;<asp:Button ID="btnSearchPerson0" runat="server" Text="Zoek Persoon" Width="94px" OnClick="btnSearchPerson0_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Button ID="btnSearchPerson" runat="server" Text="Zoek Persoon" Width="94px" />
     <br />

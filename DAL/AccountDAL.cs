@@ -127,6 +127,30 @@ namespace DAL
                 }
             }
         }
+        public DataTable LoadPerson(string barcode)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = "SELECT p.*, r.BETAALD FROM ACCOUNT a, RESERVERING_POLSBANDJE rp, RESERVERING r, PERSOON p WHERE a.ID = rp.ACCOUNT_ID AND p.ID = r.PERSOON_ID AND r.ID = rp.RESERVERING_ID AND a.ACTIVATIEHASH = :barcode ";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    cmd.Parameters.Add(new OracleParameter("barcode", barcode));
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
 
         public DataTable Load(string username, string password)
         {
