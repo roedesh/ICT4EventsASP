@@ -19,10 +19,12 @@
                 <li>
                     <asp:HyperLink href="../Account/login.aspx" runat="server">Inloggen</asp:HyperLink></li>
                 <li>
-                    <asp:HyperLink href="Registreren.aspx" runat="server">Registreren</asp:HyperLink></li>
+                    <asp:HyperLink href="/Registreren.aspx" runat="server">Registreren</asp:HyperLink></li>
                 <% }
                    else
                    { %>
+                <li>
+                    <asp:HyperLink href="../Reservering/PlaatsReservering.aspx" runat="server">Reserveren</asp:HyperLink></li>
                 <li>
                     <asp:HyperLink href="../Account/MyAccount.aspx" runat="server">Mijn Account</asp:HyperLink></li>
                 <li><asp:HyperLink href="../Account/logout.aspx" runat="server">

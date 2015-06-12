@@ -68,6 +68,7 @@
     <Content Include="LoginForm.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Registreren.aspx" />
+    <Content Include="Reservering\PlaatsReservering.aspx" />
     <Content Include="Site.Master" />
     <None Include="Properties\PublishProfiles\Berry.pubxml" />
     <None Include="Web.Debug.config">
@@ -152,6 +153,13 @@
     </Compile>
     <Compile Include="Registreren.aspx.designer.cs">
       <DependentUpon>Registreren.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reservering\PlaatsReservering.aspx.cs">
+      <DependentUpon>PlaatsReservering.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reservering\PlaatsReservering.aspx.designer.cs">
+      <DependentUpon>PlaatsReservering.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
