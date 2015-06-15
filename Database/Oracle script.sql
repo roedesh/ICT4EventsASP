@@ -1,44 +1,44 @@
 /*
-Due to bugs in SQL Developer exporter I had to make changes to this script:
--Set Date Language so date fields are correctly inserted
--Set define off to be sure
+DUE TO BUGS IN SQL DEVELOPER EXPORTER I HAD TO MAKE CHANGES TO THIS SCRIPT:
+-SET DATE LANGUAGE SO DATE FIELDS ARE CORRECTLY INSERTED
+-SET DEFINE OFF TO BE SURE
 
-Furthermore a customization was needed in the Access to Oracle converter:
--Long Text in Access becomes a NCLOB field but the contents of this column was always NULL. So Long Text forced to be VARCHAR2.
+FURTHERMORE A CUSTOMIZATION WAS NEEDED IN THE ACCESS TO ORACLE CONVERTER:
+-LONG TEXT IN ACCESS BECOMES A NCLOB FIELD BUT THE CONTENTS OF THIS COLUMN WAS ALWAYS NULL. SO LONG TEXT FORCED TO BE VARCHAR2.
 
 */
 
---Disables the parsing of commands to replace substitution variables with their values
-set define off;
+--DISABLES THE PARSING OF COMMANDS TO REPLACE SUBSTITUTION VARIABLES WITH THEIR VALUES
+SET DEFINE OFF;
 
---belangrijk zodat Engelse afkortingen van maanden goed worden herkend dus 
--- MAR is March (Engels) en MRT is Maart (Nederlands)
-ALTER SESSION set NLS_DATE_LANGUAGE = 'DUTCH';
+--BELANGRIJK ZODAT ENGELSE AFKORTINGEN VAN MAANDEN GOED WORDEN HERKEND DUS 
+-- MAR IS MARCH (ENGELS) EN MRT IS MAART (NEDERLANDS)
+ALTER SESSION SET NLS_DATE_LANGUAGE = 'DUTCH';
 
 --------------------------------------------------------
---  File created - donderdag-december-18-2014   
+--  FILE CREATED - DONDERDAG-DECEMBER-18-2014   
 --------------------------------------------------------
-DROP TABLE "ACCOUNT" cascade constraints;
-DROP TABLE "ACCOUNT_BIJDRAGE" cascade constraints;
-DROP TABLE "BERICHT" cascade constraints;
-DROP TABLE "BESTAND" cascade constraints;
-DROP TABLE "BIJDRAGE" cascade constraints;
-DROP TABLE "BIJDRAGE_BERICHT" cascade constraints;
-DROP TABLE "CATEGORIE" cascade constraints;
-DROP TABLE "EVENT" cascade constraints;
-DROP TABLE "LOCATIE" cascade constraints;
-DROP TABLE "PERSOON" cascade constraints;
-DROP TABLE "PLEK" cascade constraints;
-DROP TABLE "PLEK_RESERVERING" cascade constraints;
-DROP TABLE "PLEK_SPECIFICATIE" cascade constraints;
-DROP TABLE "POLSBANDJE" cascade constraints;
-DROP TABLE "PRODUCT" cascade constraints;
-DROP TABLE "PRODUCTCAT" cascade constraints;
-DROP TABLE "PRODUCTEXEMPLAAR" cascade constraints;
-DROP TABLE "RESERVERING" cascade constraints;
-DROP TABLE "RESERVERING_POLSBANDJE" cascade constraints;
-DROP TABLE "SPECIFICATIE" cascade constraints;
-DROP TABLE "VERHUUR" cascade constraints;
+DROP TABLE "ACCOUNT" CASCADE CONSTRAINTS;
+DROP TABLE "ACCOUNT_BIJDRAGE" CASCADE CONSTRAINTS;
+DROP TABLE "BERICHT" CASCADE CONSTRAINTS;
+DROP TABLE "BESTAND" CASCADE CONSTRAINTS;
+DROP TABLE "BIJDRAGE" CASCADE CONSTRAINTS;
+DROP TABLE "BIJDRAGE_BERICHT" CASCADE CONSTRAINTS;
+DROP TABLE "CATEGORIE" CASCADE CONSTRAINTS;
+DROP TABLE "EVENT" CASCADE CONSTRAINTS;
+DROP TABLE "LOCATIE" CASCADE CONSTRAINTS;
+DROP TABLE "PERSOON" CASCADE CONSTRAINTS;
+DROP TABLE "PLEK" CASCADE CONSTRAINTS;
+DROP TABLE "PLEK_RESERVERING" CASCADE CONSTRAINTS;
+DROP TABLE "PLEK_SPECIFICATIE" CASCADE CONSTRAINTS;
+DROP TABLE "POLSBANDJE" CASCADE CONSTRAINTS;
+DROP TABLE "PRODUCT" CASCADE CONSTRAINTS;
+DROP TABLE "PRODUCTCAT" CASCADE CONSTRAINTS;
+DROP TABLE "PRODUCTEXEMPLAAR" CASCADE CONSTRAINTS;
+DROP TABLE "RESERVERING" CASCADE CONSTRAINTS;
+DROP TABLE "RESERVERING_POLSBANDJE" CASCADE CONSTRAINTS;
+DROP TABLE "SPECIFICATIE" CASCADE CONSTRAINTS;
+DROP TABLE "VERHUUR" CASCADE CONSTRAINTS;
 DROP SEQUENCE "ACCOUNT_BIJDRAGE_FCSEQ";
 DROP SEQUENCE "ACCOUNT_FCSEQ";
 DROP SEQUENCE "BIJDRAGE_FCSEQ";
@@ -57,1319 +57,1320 @@ DROP SEQUENCE "RESERVERING_POLSBANDJE_FCSEQ";
 DROP SEQUENCE "SPECIFICATIE_FCSEQ";
 DROP SEQUENCE "VERHUUR_FCSEQ";
 --------------------------------------------------------
---  DDL for Sequence ACCOUNT_BIJDRAGE_FCSEQ
+--  DDL FOR SEQUENCE ACCOUNT_BIJDRAGE_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "ACCOUNT_BIJDRAGE_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 5 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence ACCOUNT_FCSEQ
+--  DDL FOR SEQUENCE ACCOUNT_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "ACCOUNT_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 5 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence BIJDRAGE_FCSEQ
+--  DDL FOR SEQUENCE BIJDRAGE_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "BIJDRAGE_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 15 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence EVENT_FCSEQ
+--  DDL FOR SEQUENCE EVENT_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "EVENT_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 2 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence LOCATIE_FCSEQ
+--  DDL FOR SEQUENCE LOCATIE_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "LOCATIE_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 2 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence PERSOON_FCSEQ
+--  DDL FOR SEQUENCE PERSOON_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "PERSOON_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 2 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence PLEK_FCSEQ
+--  DDL FOR SEQUENCE PLEK_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "PLEK_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 4 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence PLEK_RESERVERING_FCSEQ
+--  DDL FOR SEQUENCE PLEK_RESERVERING_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "PLEK_RESERVERING_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 3 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence PLEK_SPECIFICATIE_FCSEQ
+--  DDL FOR SEQUENCE PLEK_SPECIFICATIE_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "PLEK_SPECIFICATIE_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 16 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence POLSBANDJE_FCSEQ
+--  DDL FOR SEQUENCE POLSBANDJE_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "POLSBANDJE_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 5 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence PRODUCTCAT_FCSEQ
+--  DDL FOR SEQUENCE PRODUCTCAT_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "PRODUCTCAT_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 5 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence PRODUCTEXEMPLAAR_FCSEQ
+--  DDL FOR SEQUENCE PRODUCTEXEMPLAAR_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "PRODUCTEXEMPLAAR_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 7 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence PRODUCT_FCSEQ
+--  DDL FOR SEQUENCE PRODUCT_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "PRODUCT_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 4 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence RESERVERING_FCSEQ
+--  DDL FOR SEQUENCE RESERVERING_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "RESERVERING_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 2 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence RESERVERING_POLSBANDJE_FCSEQ
+--  DDL FOR SEQUENCE RESERVERING_POLSBANDJE_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "RESERVERING_POLSBANDJE_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 5 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence SPECIFICATIE_FCSEQ
+--  DDL FOR SEQUENCE SPECIFICATIE_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "SPECIFICATIE_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 8 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Sequence VERHUUR_FCSEQ
+--  DDL FOR SEQUENCE VERHUUR_FCSEQ
 --------------------------------------------------------
 
    CREATE SEQUENCE  "VERHUUR_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 5 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
---  DDL for Table ACCOUNT
+--  DDL FOR TABLE ACCOUNT
 --------------------------------------------------------
 
   CREATE TABLE "ACCOUNT" 
    (	"ID" NUMBER(10,0), 
-	"gebruikersnaam" NVARCHAR2(255), 
-	"email" NVARCHAR2(255), 
-	"activatiehash" NVARCHAR2(255), 
-	"geactiveerd" NUMBER(1,0) DEFAULT (0)
+	"GEBRUIKERSNAAM" NVARCHAR2(255), 
+	"EMAIL" NVARCHAR2(255), 
+	"ACTIVATIEHASH" NVARCHAR2(255), 
+	"GEACTIVEERD" NUMBER(1,0) DEFAULT (0),
+	"PASSWORD" NVARCHAR2(255),
+	"ROL" NVARCHAR2(255) DEFAULT ('GEBRUIKER')
    ) ;
 --------------------------------------------------------
---  DDL for Table ACCOUNT_BIJDRAGE
+--  DDL FOR TABLE ACCOUNT_BIJDRAGE
 --------------------------------------------------------
 
   CREATE TABLE "ACCOUNT_BIJDRAGE" 
    (	"ID" NUMBER(10,0), 
-	"account_id" NUMBER(10,0), 
-	"bijdrage_id" NUMBER(10,0), 
-	"like" NUMBER(1,0) DEFAULT (0), 
-	"ongewenst" NUMBER(1,0) DEFAULT (0)
+	"ACCOUNT_ID" NUMBER(10,0), 
+	"BIJDRAGE_ID" NUMBER(10,0), 
+	"LIKE" NUMBER(1,0) DEFAULT (0), 
+	"ONGEWENST" NUMBER(1,0) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table BERICHT
+--  DDL FOR TABLE BERICHT
 --------------------------------------------------------
 
   CREATE TABLE "BERICHT" 
-   (	"bijdrage_id" NUMBER(10,0), 
-	"titel" NVARCHAR2(255), 
-	"inhoud" VARCHAR2(255)
+   (	"BIJDRAGE_ID" NUMBER(10,0), 
+	"TITEL" NVARCHAR2(255), 
+	"INHOUD" VARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table BESTAND
+--  DDL FOR TABLE BESTAND
 --------------------------------------------------------
 
   CREATE TABLE "BESTAND" 
-   (	"bijdrage_id" NUMBER(10,0), 
-	"categorie_id" NUMBER(10,0), 
-	"bestandslocatie" NVARCHAR2(255), 
-	"grootte" NUMBER(10,0) DEFAULT (0)
+   (	"BIJDRAGE_ID" NUMBER(10,0), 
+	"CATEGORIE_ID" NUMBER(10,0), 
+	"BESTANDSLOCATIE" NVARCHAR2(255), 
+	"GROOTTE" NUMBER(10,0) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table BIJDRAGE
+--  DDL FOR TABLE BIJDRAGE
 --------------------------------------------------------
 
   CREATE TABLE "BIJDRAGE" 
    (	"ID" NUMBER(10,0), 
-	"account_id" NUMBER(10,0), 
-	"datum" DATE, 
-	"soort" NVARCHAR2(255)
+	"ACCOUNT_ID" NUMBER(10,0), 
+	"DATUM" DATE, 
+	"SOORT" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table BIJDRAGE_BERICHT
+--  DDL FOR TABLE BIJDRAGE_BERICHT
 --------------------------------------------------------
 
   CREATE TABLE "BIJDRAGE_BERICHT" 
-   (	"bijdrage_id" NUMBER(10,0) DEFAULT (0), 
-	"bericht_id" NUMBER(10,0) DEFAULT (0)
+   (	"BIJDRAGE_ID" NUMBER(10,0) DEFAULT (0), 
+	"BERICHT_ID" NUMBER(10,0) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table CATEGORIE
+--  DDL FOR TABLE CATEGORIE
 --------------------------------------------------------
 
   CREATE TABLE "CATEGORIE" 
-   (	"bijdrage_id" NUMBER(10,0), 
-	"categorie_id" NUMBER(10,0), 
-	"naam" NVARCHAR2(255)
+   (	"BIJDRAGE_ID" NUMBER(10,0), 
+	"CATEGORIE_ID" NUMBER(10,0), 
+	"NAAM" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table EVENT
+--  DDL FOR TABLE EVENT
 --------------------------------------------------------
 
   CREATE TABLE "EVENT" 
    (	"ID" NUMBER(10,0), 
-	"locatie_id" NUMBER(10,0), 
-	"naam" NVARCHAR2(255), 
-	"datumstart" DATE, 
-	"datumEinde" DATE, 
-	"maxBezoekers" NUMBER(10,0) DEFAULT (0)
+	"LOCATIE_ID" NUMBER(10,0), 
+	"NAAM" NVARCHAR2(255), 
+	"DATUMSTART" DATE, 
+	"DATUMEINDE" DATE, 
+	"MAXBEZOEKERS" NUMBER(10,0) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table LOCATIE
+--  DDL FOR TABLE LOCATIE
 --------------------------------------------------------
 
   CREATE TABLE "LOCATIE" 
    (	"ID" NUMBER(10,0), 
-	"naam" NVARCHAR2(255), 
-	"straat" NVARCHAR2(255), 
-	"nr" NVARCHAR2(255), 
-	"postcode" NVARCHAR2(255), 
-	"plaats" NVARCHAR2(255)
+	"NAAM" NVARCHAR2(255), 
+	"STRAAT" NVARCHAR2(255), 
+	"NR" NVARCHAR2(255), 
+	"POSTCODE" NVARCHAR2(255), 
+	"PLAATS" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table PERSOON
+--  DDL FOR TABLE PERSOON
 --------------------------------------------------------
 
   CREATE TABLE "PERSOON" 
    (	"ID" NUMBER(10,0), 
-	"voornaam" NVARCHAR2(255), 
-	"tussenvoegsel" NVARCHAR2(255), 
-	"achternaam" NVARCHAR2(255), 
-	"straat" NVARCHAR2(255), 
-	"huisnr" NVARCHAR2(255), 
-	"woonplaats" NVARCHAR2(255), 
-	"banknr" NVARCHAR2(255),
-	"password" NVARCHAR2(255),
-	"rol" NVARCHAR2(255)
+	"VOORNAAM" NVARCHAR2(255), 
+	"TUSSENVOEGSEL" NVARCHAR2(255), 
+	"ACHTERNAAM" NVARCHAR2(255), 
+	"STRAAT" NVARCHAR2(255), 
+	"HUISNR" NVARCHAR2(255), 
+	"WOONPLAATS" NVARCHAR2(255), 
+	"BANKNR" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table PLEK
+--  DDL FOR TABLE PLEK
 --------------------------------------------------------
 
   CREATE TABLE "PLEK" 
    (	"ID" NUMBER(10,0), 
-	"locatie_id" NUMBER(10,0), 
-	"nummer" NVARCHAR2(255), 
-	"capaciteit" NUMBER(10,0) DEFAULT (0)
+	"LOCATIE_ID" NUMBER(10,0), 
+	"NUMMER" NVARCHAR2(255), 
+	"CAPACITEIT" NUMBER(10,0) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table PLEK_RESERVERING
+--  DDL FOR TABLE PLEK_RESERVERING
 --------------------------------------------------------
 
   CREATE TABLE "PLEK_RESERVERING" 
    (	"ID" NUMBER(10,0), 
-	"plek_id" NUMBER(10,0), 
-	"reservering_id" NUMBER(10,0)
+	"PLEK_ID" NUMBER(10,0), 
+	"RESERVERING_ID" NUMBER(10,0)
    ) ;
 --------------------------------------------------------
---  DDL for Table PLEK_SPECIFICATIE
+--  DDL FOR TABLE PLEK_SPECIFICATIE
 --------------------------------------------------------
 
   CREATE TABLE "PLEK_SPECIFICATIE" 
-   (	"id" NUMBER(10,0), 
-	"specificatie_id" NUMBER(10,0), 
-	"plek_id" NUMBER(10,0), 
-	"waarde" NVARCHAR2(255)
+   (	"ID" NUMBER(10,0), 
+	"SPECIFICATIE_ID" NUMBER(10,0), 
+	"PLEK_ID" NUMBER(10,0), 
+	"WAARDE" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table POLSBANDJE
+--  DDL FOR TABLE POLSBANDJE
 --------------------------------------------------------
 
   CREATE TABLE "POLSBANDJE" 
    (	"ID" NUMBER(10,0), 
-	"barcode" NVARCHAR2(255), 
-	"actief" NUMBER(1,0) DEFAULT (0)
+	"BARCODE" NVARCHAR2(255), 
+	"ACTIEF" NUMBER(1,0) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table PRODUCT
+--  DDL FOR TABLE PRODUCT
 --------------------------------------------------------
 
   CREATE TABLE "PRODUCT" 
    (	"ID" NUMBER(10,0), 
-	"productcat_id" NUMBER(10,0), 
-	"merk" NVARCHAR2(255), 
-	"serie" NVARCHAR2(255), 
-	"typenummer" NVARCHAR2(255), 
-	"prijs" NUMBER(19,2) DEFAULT (0)
+	"PRODUCTCAT_ID" NUMBER(10,0), 
+	"MERK" NVARCHAR2(255), 
+	"SERIE" NVARCHAR2(255), 
+	"TYPENUMMER" NVARCHAR2(255), 
+	"PRIJS" NUMBER(19,2) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table PRODUCTCAT
+--  DDL FOR TABLE PRODUCTCAT
 --------------------------------------------------------
 
   CREATE TABLE "PRODUCTCAT" 
    (	"ID" NUMBER(10,0), 
-	"productcat_id" NUMBER(10,0), 
-	"naam" NVARCHAR2(255)
+	"PRODUCTCAT_ID" NUMBER(10,0), 
+	"NAAM" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table PRODUCTEXEMPLAAR
+--  DDL FOR TABLE PRODUCTEXEMPLAAR
 --------------------------------------------------------
 
   CREATE TABLE "PRODUCTEXEMPLAAR" 
    (	"ID" NUMBER(10,0), 
-	"product_id" NUMBER(10,0), 
-	"volgnummer" NUMBER(10,0) DEFAULT (0), 
-	"barcode" NVARCHAR2(255)
+	"PRODUCT_ID" NUMBER(10,0), 
+	"VOLGNUMMER" NUMBER(10,0) DEFAULT (0), 
+	"BARCODE" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table RESERVERING
+--  DDL FOR TABLE RESERVERING
 --------------------------------------------------------
 
   CREATE TABLE "RESERVERING" 
    (	"ID" NUMBER(10,0), 
-	"persoon_id" NUMBER(10,0), 
-	"datumStart" DATE, 
-	"datumEinde" DATE, 
-	"betaald" NUMBER(1,0) DEFAULT (0)
+	"PERSOON_ID" NUMBER(10,0), 
+	"DATUMSTART" DATE, 
+	"DATUMEINDE" DATE, 
+	"BETAALD" NUMBER(1,0) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table RESERVERING_POLSBANDJE
+--  DDL FOR TABLE RESERVERING_POLSBANDJE
 --------------------------------------------------------
 
   CREATE TABLE "RESERVERING_POLSBANDJE" 
    (	"ID" NUMBER(10,0), 
-	"reservering_id" NUMBER(10,0), 
-	"polsbandje_id" NUMBER(10,0), 
-	"account_id" NUMBER(10,0), 
-	"aanwezig" NUMBER(1,0) DEFAULT (0)
+	"RESERVERING_ID" NUMBER(10,0), 
+	"POLSBANDJE_ID" NUMBER(10,0), 
+	"ACCOUNT_ID" NUMBER(10,0), 
+	"AANWEZIG" NUMBER(1,0) DEFAULT (0)
    ) ;
 --------------------------------------------------------
---  DDL for Table SPECIFICATIE
+--  DDL FOR TABLE SPECIFICATIE
 --------------------------------------------------------
 
   CREATE TABLE "SPECIFICATIE" 
    (	"ID" NUMBER(10,0), 
-	"naam" NVARCHAR2(255)
+	"NAAM" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
---  DDL for Table VERHUUR
+--  DDL FOR TABLE VERHUUR
 --------------------------------------------------------
 
   CREATE TABLE "VERHUUR" 
    (	"ID" NUMBER(10,0), 
-	"productexemplaar_id" NUMBER(10,0), 
-	"res_pb_id" NUMBER(10,0), 
-	"datumIn" DATE, 
-	"datumUit" DATE, 
-	"prijs" NUMBER(19,2) DEFAULT (0), 
-	"betaald" NUMBER(1,0) DEFAULT (0)
+	"PRODUCTEXEMPLAAR_ID" NUMBER(10,0), 
+	"RES_PB_ID" NUMBER(10,0), 
+	"DATUMIN" DATE, 
+	"DATUMUIT" DATE, 
+	"PRIJS" NUMBER(19,2) DEFAULT (0), 
+	"BETAALD" NUMBER(1,0) DEFAULT (0)
    ) ;
-REM INSERTING into ACCOUNT
+REM INSERTING INTO ACCOUNT
 SET DEFINE OFF;
-Insert into ACCOUNT (ID,"gebruikersnaam","email","activatiehash","geactiveerd") values ('1','admin','admin@bla.nl','af1a67e7919c0e9539fac8eb0828f208','1');
-Insert into ACCOUNT (ID,"gebruikersnaam","email","activatiehash","geactiveerd") values ('2','JanPietersen','JanPietersen@temp.nl','ee41bbbb4c16dfe60f17484439043f97','1');
-Insert into ACCOUNT (ID,"gebruikersnaam","email","activatiehash","geactiveerd") values ('3','WillemVries','WillemVries@jaja.nl','69e60f8670abebc6b4d1cb6f183890b0','1');
-Insert into ACCOUNT (ID,"gebruikersnaam","email","activatiehash","geactiveerd") values ('4','KlaasVaak','KlaasVaak@jaja.nl','47fe977ab3b4ecfc5d6103b3f5dc107f','1');
-REM INSERTING into ACCOUNT_BIJDRAGE
+INSERT INTO ACCOUNT (ID,"GEBRUIKERSNAAM","EMAIL","ACTIVATIEHASH","GEACTIVEERD","PASSWORD", "ROL") VALUES ('1','ADMIN','ADMIN@BLA.NL','sJB7lEpWAQ','1','ADMIN','ADMIN');
+INSERT INTO ACCOUNT (ID,"GEBRUIKERSNAAM","EMAIL","ACTIVATIEHASH","GEACTIVEERD") VALUES ('2','JANPIETERSEN','JANPIETERSEN@TEMP.NL','Qd1vbwAk9i','1');
+INSERT INTO ACCOUNT (ID,"GEBRUIKERSNAAM","EMAIL","ACTIVATIEHASH","GEACTIVEERD") VALUES ('3','WILLEMVRIES','WILLEMVRIES@JAJA.NL','69E60F8670ABEBC6B4D1CB6F183890B0','1');
+INSERT INTO ACCOUNT (ID,"GEBRUIKERSNAAM","EMAIL","ACTIVATIEHASH","GEACTIVEERD") VALUES ('4','KLAASVAAK','KLAASVAAK@JAJA.NL','47FE977AB3B4ECFC5D6103B3F5DC107F','1');
+
+REM INSERTING INTO ACCOUNT_BIJDRAGE
 SET DEFINE OFF;
-Insert into ACCOUNT_BIJDRAGE (ID,"account_id","bijdrage_id","like","ongewenst") values ('1','3','11','1','0');
-Insert into ACCOUNT_BIJDRAGE (ID,"account_id","bijdrage_id","like","ongewenst") values ('2','3','7','1','0');
-Insert into ACCOUNT_BIJDRAGE (ID,"account_id","bijdrage_id","like","ongewenst") values ('3','3','8','1','0');
-Insert into ACCOUNT_BIJDRAGE (ID,"account_id","bijdrage_id","like","ongewenst") values ('4','3','10','0','0');
-REM INSERTING into BERICHT
+INSERT INTO ACCOUNT_BIJDRAGE (ID,"ACCOUNT_ID","BIJDRAGE_ID","LIKE","ONGEWENST") VALUES ('1','3','11','1','0');
+INSERT INTO ACCOUNT_BIJDRAGE (ID,"ACCOUNT_ID","BIJDRAGE_ID","LIKE","ONGEWENST") VALUES ('2','3','7','1','0');
+INSERT INTO ACCOUNT_BIJDRAGE (ID,"ACCOUNT_ID","BIJDRAGE_ID","LIKE","ONGEWENST") VALUES ('3','3','8','1','0');
+INSERT INTO ACCOUNT_BIJDRAGE (ID,"ACCOUNT_ID","BIJDRAGE_ID","LIKE","ONGEWENST") VALUES ('4','3','10','0','0');
+REM INSERTING INTO BERICHT
 SET DEFINE OFF;
-Insert into BERICHT ("bijdrage_id","titel","inhoud") values ('11','Jan Smit - Mij en ik','Ik heb het nieuwe album van Jan Smit gedeeld genaamd Mij en ik. Echt een toppertje!');
-Insert into BERICHT ("bijdrage_id","titel","inhoud") values ('13',null,'Mwha ik vind het niet zo''n goed album. Kwaliteit van de .mp3''s is wel goed!');
-REM INSERTING into BESTAND
+INSERT INTO BERICHT ("BIJDRAGE_ID","TITEL","INHOUD") VALUES ('11','JAN SMIT - MIJ EN IK','IK HEB HET NIEUWE ALBUM VAN JAN SMIT GEDEELD GENAAMD MIJ EN IK. ECHT EEN TOPPERTJE!');
+INSERT INTO BERICHT ("BIJDRAGE_ID","TITEL","INHOUD") VALUES ('13',NULL,'MWHA IK VIND HET NIET ZO''N GOED ALBUM. KWALITEIT VAN DE .MP3''S IS WEL GOED!');
+REM INSERTING INTO BESTAND
 SET DEFINE OFF;
-Insert into BESTAND ("bijdrage_id","categorie_id","bestandslocatie","grootte") values ('7','6','Jij en ik/01 - Mooier dan ik dacht.mp3','3500000');
-Insert into BESTAND ("bijdrage_id","categorie_id","bestandslocatie","grootte") values ('8','6','Jij en ik/02 - Als ik maar even bij jouw kan zijn.mp3','3000000');
-Insert into BESTAND ("bijdrage_id","categorie_id","bestandslocatie","grootte") values ('10','9','terrein.jpg','250000');
-REM INSERTING into BIJDRAGE
+INSERT INTO BESTAND ("BIJDRAGE_ID","CATEGORIE_ID","BESTANDSLOCATIE","GROOTTE") VALUES ('7','6','JIJ EN IK/01 - MOOIER DAN IK DACHT.MP3','3500000');
+INSERT INTO BESTAND ("BIJDRAGE_ID","CATEGORIE_ID","BESTANDSLOCATIE","GROOTTE") VALUES ('8','6','JIJ EN IK/02 - ALS IK MAAR EVEN BIJ JOUW KAN ZIJN.MP3','3000000');
+INSERT INTO BESTAND ("BIJDRAGE_ID","CATEGORIE_ID","BESTANDSLOCATIE","GROOTTE") VALUES ('10','9','TERREIN.JPG','250000');
+REM INSERTING INTO BIJDRAGE
 SET DEFINE OFF;
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('1','1',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'categorie');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('2','1',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'categorie');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('3','1',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'categorie');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('4','1',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'categorie');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('5','1',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'categorie');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('6','2',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'categorie');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('7','2',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'bestand');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('8','2',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'bestand');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('9','2',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'categorie');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('10','2',to_date('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'bestand');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('11','2',to_date('27-OKT-13 00:00:00','DD-MON-RR HH24:MI:SS'),'bericht');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('13','3',to_date('28-OKT-13 00:00:00','DD-MON-RR HH24:MI:SS'),'bericht');
-Insert into BIJDRAGE (ID,"account_id","datum","soort") values ('14','2',to_date('14-OKT-13 00:00:00','DD-MON-RR HH24:MI:SS'),'categorie');
-REM INSERTING into BIJDRAGE_BERICHT
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('1','1',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'CATEGORIE');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('2','1',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'CATEGORIE');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('3','1',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'CATEGORIE');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('4','1',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'CATEGORIE');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('5','1',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'CATEGORIE');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('6','2',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'CATEGORIE');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('7','2',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'BESTAND');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('8','2',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'BESTAND');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('9','2',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'CATEGORIE');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('10','2',TO_DATE('14-OKT-14 00:00:00','DD-MON-RR HH24:MI:SS'),'BESTAND');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('11','2',TO_DATE('27-OKT-13 00:00:00','DD-MON-RR HH24:MI:SS'),'BERICHT');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('13','3',TO_DATE('28-OKT-13 00:00:00','DD-MON-RR HH24:MI:SS'),'BERICHT');
+INSERT INTO BIJDRAGE (ID,"ACCOUNT_ID","DATUM","SOORT") VALUES ('14','2',TO_DATE('14-OKT-13 00:00:00','DD-MON-RR HH24:MI:SS'),'CATEGORIE');
+REM INSERTING INTO BIJDRAGE_BERICHT
 SET DEFINE OFF;
-Insert into BIJDRAGE_BERICHT ("bijdrage_id","bericht_id") values ('14','11');
-Insert into BIJDRAGE_BERICHT ("bijdrage_id","bericht_id") values ('11','13');
-REM INSERTING into CATEGORIE
+INSERT INTO BIJDRAGE_BERICHT ("BIJDRAGE_ID","BERICHT_ID") VALUES ('14','11');
+INSERT INTO BIJDRAGE_BERICHT ("BIJDRAGE_ID","BERICHT_ID") VALUES ('11','13');
+REM INSERTING INTO CATEGORIE
 SET DEFINE OFF;
-Insert into CATEGORIE ("bijdrage_id","categorie_id","naam") values ('1',null,'Muziek');
-Insert into CATEGORIE ("bijdrage_id","categorie_id","naam") values ('2',null,'Films');
-Insert into CATEGORIE ("bijdrage_id","categorie_id","naam") values ('3',null,'TV Shows');
-Insert into CATEGORIE ("bijdrage_id","categorie_id","naam") values ('4',null,'Fotos');
-Insert into CATEGORIE ("bijdrage_id","categorie_id","naam") values ('5','1','Nederlandse artiesten');
-Insert into CATEGORIE ("bijdrage_id","categorie_id","naam") values ('6','5','Jan Smit');
-Insert into CATEGORIE ("bijdrage_id","categorie_id","naam") values ('9','4','SME De Valkenhof 2014');
-Insert into CATEGORIE ("bijdrage_id","categorie_id","naam") values ('14','6','Jij en ik');
-REM INSERTING into EVENT
+INSERT INTO CATEGORIE ("BIJDRAGE_ID","CATEGORIE_ID","NAAM") VALUES ('1',NULL,'MUZIEK');
+INSERT INTO CATEGORIE ("BIJDRAGE_ID","CATEGORIE_ID","NAAM") VALUES ('2',NULL,'FILMS');
+INSERT INTO CATEGORIE ("BIJDRAGE_ID","CATEGORIE_ID","NAAM") VALUES ('3',NULL,'TV SHOWS');
+INSERT INTO CATEGORIE ("BIJDRAGE_ID","CATEGORIE_ID","NAAM") VALUES ('4',NULL,'FOTOS');
+INSERT INTO CATEGORIE ("BIJDRAGE_ID","CATEGORIE_ID","NAAM") VALUES ('5','1','NEDERLANDSE ARTIESTEN');
+INSERT INTO CATEGORIE ("BIJDRAGE_ID","CATEGORIE_ID","NAAM") VALUES ('6','5','JAN SMIT');
+INSERT INTO CATEGORIE ("BIJDRAGE_ID","CATEGORIE_ID","NAAM") VALUES ('9','4','SME DE VALKENHOF 2014');
+INSERT INTO CATEGORIE ("BIJDRAGE_ID","CATEGORIE_ID","NAAM") VALUES ('14','6','JIJ EN IK');
+REM INSERTING INTO EVENT
 SET DEFINE OFF;
-Insert into EVENT (ID,"locatie_id","naam","datumstart","datumEinde","maxBezoekers") values ('1','1','SME De Valkenhof 2014',to_date('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),to_date('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'100');
-REM INSERTING into LOCATIE
+INSERT INTO EVENT (ID,"LOCATIE_ID","NAAM","DATUMSTART","DATUMEINDE","MAXBEZOEKERS") VALUES ('1','1','SME DE VALKENHOF 2014',TO_DATE('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),TO_DATE('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'100');
+REM INSERTING INTO LOCATIE
 SET DEFINE OFF;
-Insert into LOCATIE (ID,"naam","straat","nr","postcode","plaats") values ('1','Camping De Valkenhof',null,null,null,null);
-REM INSERTING into PERSOON
+INSERT INTO LOCATIE (ID,"NAAM","STRAAT","NR","POSTCODE","PLAATS") VALUES ('1','CAMPING DE VALKENHOF',NULL,NULL,NULL,NULL);
+REM INSERTING INTO PERSOON
 SET DEFINE OFF;
-Insert into PERSOON (ID,"voornaam","tussenvoegsel","achternaam","straat","huisnr","woonplaats","banknr","password","rol") values ('1','Jan',null,'Pietersen','Rachelsmolen','1','5611MA','NL91ABNA0417164300','Jan','Admin');
-Insert into PERSOON (ID,"voornaam","tussenvoegsel","achternaam","straat","huisnr","woonplaats","banknr","password","rol") values ('2','Admin',null,'Adminson','Rachelsmolen','1','5611MA','NL91ABNA0417154300','Admin','Admin');
-REM INSERTING into PLEK
+INSERT INTO PERSOON (ID,"VOORNAAM","TUSSENVOEGSEL","ACHTERNAAM","STRAAT","HUISNR","WOONPLAATS","BANKNR") VALUES ('1','JAN',NULL,'PIETERSEN','RACHELSMOLEN','1','5611MA','NL91ABNA0417164300');
+INSERT INTO PERSOON (ID,"VOORNAAM","TUSSENVOEGSEL","ACHTERNAAM","STRAAT","HUISNR","WOONPLAATS","BANKNR") VALUES ('2','ADMIN',NULL,'ADMINSON','RACHELSMOLEN','1','5611MA','NL91ABNA0417154300');
+REM INSERTING INTO PLEK
 SET DEFINE OFF;
-Insert into PLEK (ID,"locatie_id","nummer","capaciteit") values ('1','1','1','5');
-Insert into PLEK (ID,"locatie_id","nummer","capaciteit") values ('2','1','2','5');
-Insert into PLEK (ID,"locatie_id","nummer","capaciteit") values ('3','1','3','5');
-REM INSERTING into PLEK_RESERVERING
+INSERT INTO PLEK (ID,"LOCATIE_ID","NUMMER","CAPACITEIT") VALUES ('1','1','1','5');
+INSERT INTO PLEK (ID,"LOCATIE_ID","NUMMER","CAPACITEIT") VALUES ('2','1','2','5');
+INSERT INTO PLEK (ID,"LOCATIE_ID","NUMMER","CAPACITEIT") VALUES ('3','1','3','5');
+REM INSERTING INTO PLEK_RESERVERING
 SET DEFINE OFF;
-Insert into PLEK_RESERVERING (ID,"plek_id","reservering_id") values ('1','1','1');
-Insert into PLEK_RESERVERING (ID,"plek_id","reservering_id") values ('2','2','1');
-REM INSERTING into PLEK_SPECIFICATIE
+INSERT INTO PLEK_RESERVERING (ID,"PLEK_ID","RESERVERING_ID") VALUES ('1','1','1');
+INSERT INTO PLEK_RESERVERING (ID,"PLEK_ID","RESERVERING_ID") VALUES ('2','2','1');
+REM INSERTING INTO PLEK_SPECIFICATIE
 SET DEFINE OFF;
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('1','2','1','ja');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('2','2','2','ja');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('3','3','3','ja');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('4','4','1','30');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('5','4','2','30');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('6','4','3','30');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('7','5','1','ja');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('8','5','2','ja');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('9','5','3','nee');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('10','6','1','100');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('11','7','1','100');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('12','6','2','200');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('13','7','2','150');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('14','6','3','200');
-Insert into PLEK_SPECIFICATIE ("id","specificatie_id","plek_id","waarde") values ('15','7','3','200');
-REM INSERTING into POLSBANDJE
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('1','2','1','JA');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('2','2','2','JA');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('3','3','3','JA');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('4','4','1','30');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('5','4','2','30');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('6','4','3','30');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('7','5','1','JA');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('8','5','2','JA');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('9','5','3','NEE');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('10','6','1','100');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('11','7','1','100');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('12','6','2','200');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('13','7','2','150');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('14','6','3','200');
+INSERT INTO PLEK_SPECIFICATIE ("ID","SPECIFICATIE_ID","PLEK_ID","WAARDE") VALUES ('15','7','3','200');
+REM INSERTING INTO POLSBANDJE
 SET DEFINE OFF;
-Insert into POLSBANDJE (ID,"barcode","actief") values ('1','027393000146','1');
-Insert into POLSBANDJE (ID,"barcode","actief") values ('2','027393000147','1');
-Insert into POLSBANDJE (ID,"barcode","actief") values ('3','027393000148','1');
-Insert into POLSBANDJE (ID,"barcode","actief") values ('4','027393000149','1');
-REM INSERTING into PRODUCT
+INSERT INTO POLSBANDJE (ID,"BARCODE","ACTIEF") VALUES ('1','027393000146','1');
+INSERT INTO POLSBANDJE (ID,"BARCODE","ACTIEF") VALUES ('2','027393000147','1');
+INSERT INTO POLSBANDJE (ID,"BARCODE","ACTIEF") VALUES ('3','027393000148','1');
+INSERT INTO POLSBANDJE (ID,"BARCODE","ACTIEF") VALUES ('4','027393000149','1');
+REM INSERTING INTO PRODUCT
 SET DEFINE OFF;
-Insert into PRODUCT (ID,"productcat_id","merk","serie","typenummer","prijs") values ('1','1','Samsung','Nexus 10','1000','10');
-Insert into PRODUCT (ID,"productcat_id","merk","serie","typenummer","prijs") values ('2','2','Logitech','Mouse MX Revolution Laser Cordless','1001','2');
-Insert into PRODUCT (ID,"productcat_id","merk","serie","typenummer","prijs") values ('3','3','Asus','RT-N66U','1002','4');
-REM INSERTING into PRODUCTCAT
+INSERT INTO PRODUCT (ID,"PRODUCTCAT_ID","MERK","SERIE","TYPENUMMER","PRIJS") VALUES ('1','1','SAMSUNG','NEXUS 10','1000','10');
+INSERT INTO PRODUCT (ID,"PRODUCTCAT_ID","MERK","SERIE","TYPENUMMER","PRIJS") VALUES ('2','2','LOGITECH','MOUSE MX REVOLUTION LASER CORDLESS','1001','2');
+INSERT INTO PRODUCT (ID,"PRODUCTCAT_ID","MERK","SERIE","TYPENUMMER","PRIJS") VALUES ('3','3','ASUS','RT-N66U','1002','4');
+REM INSERTING INTO PRODUCTCAT
 SET DEFINE OFF;
-Insert into PRODUCTCAT (ID,"productcat_id","naam") values ('1','4','>9.0 inch');
-Insert into PRODUCTCAT (ID,"productcat_id","naam") values ('2',null,'Muis (USB)');
-Insert into PRODUCTCAT (ID,"productcat_id","naam") values ('3',null,'Wireless n Router');
-Insert into PRODUCTCAT (ID,"productcat_id","naam") values ('4',null,'Tablets');
-REM INSERTING into PRODUCTEXEMPLAAR
+INSERT INTO PRODUCTCAT (ID,"PRODUCTCAT_ID","NAAM") VALUES ('1','4','>9.0 INCH');
+INSERT INTO PRODUCTCAT (ID,"PRODUCTCAT_ID","NAAM") VALUES ('2',NULL,'MUIS (USB)');
+INSERT INTO PRODUCTCAT (ID,"PRODUCTCAT_ID","NAAM") VALUES ('3',NULL,'WIRELESS N ROUTER');
+INSERT INTO PRODUCTCAT (ID,"PRODUCTCAT_ID","NAAM") VALUES ('4',NULL,'TABLETS');
+REM INSERTING INTO PRODUCTEXEMPLAAR
 SET DEFINE OFF;
-Insert into PRODUCTEXEMPLAAR (ID,"product_id","volgnummer","barcode") values ('1','1','1','1000.001');
-Insert into PRODUCTEXEMPLAAR (ID,"product_id","volgnummer","barcode") values ('2','1','2','1000.002');
-Insert into PRODUCTEXEMPLAAR (ID,"product_id","volgnummer","barcode") values ('3','1','3','1000.003');
-Insert into PRODUCTEXEMPLAAR (ID,"product_id","volgnummer","barcode") values ('4','2','1','1001.001');
-Insert into PRODUCTEXEMPLAAR (ID,"product_id","volgnummer","barcode") values ('5','2','2','1001.002');
-Insert into PRODUCTEXEMPLAAR (ID,"product_id","volgnummer","barcode") values ('6','3','1','1002.001');
-REM INSERTING into RESERVERING
+INSERT INTO PRODUCTEXEMPLAAR (ID,"PRODUCT_ID","VOLGNUMMER","BARCODE") VALUES ('1','1','1','1000.001');
+INSERT INTO PRODUCTEXEMPLAAR (ID,"PRODUCT_ID","VOLGNUMMER","BARCODE") VALUES ('2','1','2','1000.002');
+INSERT INTO PRODUCTEXEMPLAAR (ID,"PRODUCT_ID","VOLGNUMMER","BARCODE") VALUES ('3','1','3','1000.003');
+INSERT INTO PRODUCTEXEMPLAAR (ID,"PRODUCT_ID","VOLGNUMMER","BARCODE") VALUES ('4','2','1','1001.001');
+INSERT INTO PRODUCTEXEMPLAAR (ID,"PRODUCT_ID","VOLGNUMMER","BARCODE") VALUES ('5','2','2','1001.002');
+INSERT INTO PRODUCTEXEMPLAAR (ID,"PRODUCT_ID","VOLGNUMMER","BARCODE") VALUES ('6','3','1','1002.001');
+REM INSERTING INTO RESERVERING
 SET DEFINE OFF;
-Insert into RESERVERING (ID,"persoon_id","datumStart","datumEinde","betaald") values ('1','1',to_date('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),to_date('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'1');
-REM INSERTING into RESERVERING_POLSBANDJE
+INSERT INTO RESERVERING (ID,"PERSOON_ID","DATUMSTART","DATUMEINDE","BETAALD") VALUES ('1','1',TO_DATE('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),TO_DATE('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'1');
+REM INSERTING INTO RESERVERING_POLSBANDJE
 SET DEFINE OFF;
-Insert into RESERVERING_POLSBANDJE (ID,"reservering_id","polsbandje_id","account_id","aanwezig") values ('1','1','1','1','1');
-Insert into RESERVERING_POLSBANDJE (ID,"reservering_id","polsbandje_id","account_id","aanwezig") values ('2','1','2','2','1');
-Insert into RESERVERING_POLSBANDJE (ID,"reservering_id","polsbandje_id","account_id","aanwezig") values ('3','1','3','3','0');
-Insert into RESERVERING_POLSBANDJE (ID,"reservering_id","polsbandje_id","account_id","aanwezig") values ('4','1','4','4','0');
-REM INSERTING into SPECIFICATIE
+INSERT INTO RESERVERING_POLSBANDJE (ID,"RESERVERING_ID","POLSBANDJE_ID","ACCOUNT_ID","AANWEZIG") VALUES ('1','1','1','1','1');
+INSERT INTO RESERVERING_POLSBANDJE (ID,"RESERVERING_ID","POLSBANDJE_ID","ACCOUNT_ID","AANWEZIG") VALUES ('2','1','2','2','1');
+INSERT INTO RESERVERING_POLSBANDJE (ID,"RESERVERING_ID","POLSBANDJE_ID","ACCOUNT_ID","AANWEZIG") VALUES ('3','1','3','3','0');
+INSERT INTO RESERVERING_POLSBANDJE (ID,"RESERVERING_ID","POLSBANDJE_ID","ACCOUNT_ID","AANWEZIG") VALUES ('4','1','4','4','0');
+REM INSERTING INTO SPECIFICATIE
 SET DEFINE OFF;
-Insert into SPECIFICATIE (ID,"naam") values ('4','afmeting');
-Insert into SPECIFICATIE (ID,"naam") values ('2','comfortplek');
-Insert into SPECIFICATIE (ID,"naam") values ('6','coordinaat x');
-Insert into SPECIFICATIE (ID,"naam") values ('7','coordinaat y');
-Insert into SPECIFICATIE (ID,"naam") values ('3','handicap geschikt');
-Insert into SPECIFICATIE (ID,"naam") values ('5','kraan beschikbaar');
-REM INSERTING into VERHUUR
+INSERT INTO SPECIFICATIE (ID,"NAAM") VALUES ('4','AFMETING');
+INSERT INTO SPECIFICATIE (ID,"NAAM") VALUES ('2','COMFORTPLEK');
+INSERT INTO SPECIFICATIE (ID,"NAAM") VALUES ('6','COORDINAAT X');
+INSERT INTO SPECIFICATIE (ID,"NAAM") VALUES ('7','COORDINAAT Y');
+INSERT INTO SPECIFICATIE (ID,"NAAM") VALUES ('3','HANDICAP GESCHIKT');
+INSERT INTO SPECIFICATIE (ID,"NAAM") VALUES ('5','KRAAN BESCHIKBAAR');
+REM INSERTING INTO VERHUUR
 SET DEFINE OFF;
-Insert into VERHUUR (ID,"productexemplaar_id","res_pb_id","datumIn","datumUit","prijs","betaald") values ('1','1','1',to_date('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),to_date('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'10','1');
-Insert into VERHUUR (ID,"productexemplaar_id","res_pb_id","datumIn","datumUit","prijs","betaald") values ('2','2','2',to_date('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),to_date('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'10','1');
-Insert into VERHUUR (ID,"productexemplaar_id","res_pb_id","datumIn","datumUit","prijs","betaald") values ('3','4','3',to_date('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),to_date('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'2','1');
-Insert into VERHUUR (ID,"productexemplaar_id","res_pb_id","datumIn","datumUit","prijs","betaald") values ('4','6','3',to_date('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),to_date('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'4','1');
+INSERT INTO VERHUUR (ID,"PRODUCTEXEMPLAAR_ID","RES_PB_ID","DATUMIN","DATUMUIT","PRIJS","BETAALD") VALUES ('1','1','1',TO_DATE('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),TO_DATE('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'10','1');
+INSERT INTO VERHUUR (ID,"PRODUCTEXEMPLAAR_ID","RES_PB_ID","DATUMIN","DATUMUIT","PRIJS","BETAALD") VALUES ('2','2','2',TO_DATE('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),TO_DATE('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'10','1');
+INSERT INTO VERHUUR (ID,"PRODUCTEXEMPLAAR_ID","RES_PB_ID","DATUMIN","DATUMUIT","PRIJS","BETAALD") VALUES ('3','4','3',TO_DATE('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),TO_DATE('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'2','1');
+INSERT INTO VERHUUR (ID,"PRODUCTEXEMPLAAR_ID","RES_PB_ID","DATUMIN","DATUMUIT","PRIJS","BETAALD") VALUES ('4','6','3',TO_DATE('27-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),TO_DATE('30-DEC-13 00:00:00','DD-MON-RR HH24:MI:SS'),'4','1');
 --------------------------------------------------------
---  DDL for Index reservering_id2
+--  DDL FOR INDEX RESERVERING_ID2
 --------------------------------------------------------
 
-  CREATE INDEX "reservering_id2" ON "PLEK_RESERVERING" ("reservering_id") 
+  CREATE INDEX "RESERVERING_ID2" ON "PLEK_RESERVERING" ("RESERVERING_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index categorie_id
+--  DDL FOR INDEX CATEGORIE_ID
 --------------------------------------------------------
 
-  CREATE INDEX "categorie_id" ON "CATEGORIE" ("categorie_id") 
+  CREATE INDEX "CATEGORIE_ID" ON "CATEGORIE" ("CATEGORIE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey8
+--  DDL FOR INDEX PRIMARYKEY8
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey8" ON "PRODUCTCAT" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY8" ON "PRODUCTCAT" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index bijdrage_id
+--  DDL FOR INDEX BIJDRAGE_ID
 --------------------------------------------------------
 
-  CREATE INDEX "bijdrage_id" ON "ACCOUNT_BIJDRAGE" ("bijdrage_id") 
+  CREATE INDEX "BIJDRAGE_ID" ON "ACCOUNT_BIJDRAGE" ("BIJDRAGE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index postcode
+--  DDL FOR INDEX POSTCODE
 --------------------------------------------------------
 
-  CREATE INDEX "postcode" ON "LOCATIE" ("postcode") 
+  CREATE INDEX "POSTCODE" ON "LOCATIE" ("POSTCODE") 
   ;
 --------------------------------------------------------
---  DDL for Index account_id1
+--  DDL FOR INDEX ACCOUNT_ID1
 --------------------------------------------------------
 
-  CREATE INDEX "account_id1" ON "BIJDRAGE" ("account_id") 
+  CREATE INDEX "ACCOUNT_ID1" ON "BIJDRAGE" ("ACCOUNT_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index account_id2
+--  DDL FOR INDEX ACCOUNT_ID2
 --------------------------------------------------------
 
-  CREATE INDEX "account_id2" ON "ACCOUNT_BIJDRAGE" ("account_id") 
+  CREATE INDEX "ACCOUNT_ID2" ON "ACCOUNT_BIJDRAGE" ("ACCOUNT_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index locatie_id
+--  DDL FOR INDEX LOCATIE_ID
 --------------------------------------------------------
 
-  CREATE INDEX "locatie_id" ON "EVENT" ("locatie_id") 
+  CREATE INDEX "LOCATIE_ID" ON "EVENT" ("LOCATIE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey17
+--  DDL FOR INDEX PRIMARYKEY17
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey17" ON "PRODUCT" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY17" ON "PRODUCT" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index gebruikersnaam
+--  DDL FOR INDEX GEBRUIKERSNAAM
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "gebruikersnaam" ON "ACCOUNT" ("gebruikersnaam") 
+  CREATE UNIQUE INDEX "GEBRUIKERSNAAM" ON "ACCOUNT" ("GEBRUIKERSNAAM") 
   ;
 --------------------------------------------------------
---  DDL for Index BIJDRAGE_BERICHTbijdrage_id
+--  DDL FOR INDEX BIJDRAGE_BERICHTBIJDRAGE_ID
 --------------------------------------------------------
 
-  CREATE INDEX "BIJDRAGE_BERICHTbijdrage_id" ON "BIJDRAGE_BERICHT" ("bijdrage_id") 
+  CREATE INDEX "BIJDRAGE_BERICHTBIJDRAGE_ID" ON "BIJDRAGE_BERICHT" ("BIJDRAGE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index plek_reservering
+--  DDL FOR INDEX PLEK_RESERVERING
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "plek_reservering" ON "PLEK_RESERVERING" ("plek_id", "reservering_id") 
+  CREATE UNIQUE INDEX "PLEK_RESERVERING" ON "PLEK_RESERVERING" ("PLEK_ID", "RESERVERING_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey11
+--  DDL FOR INDEX PRIMARYKEY11
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey11" ON "ACCOUNT_BIJDRAGE" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY11" ON "ACCOUNT_BIJDRAGE" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index plek_specificatie
+--  DDL FOR INDEX PLEK_SPECIFICATIE
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "plek_specificatie" ON "PLEK_SPECIFICATIE" ("plek_id", "specificatie_id") 
+  CREATE UNIQUE INDEX "PLEK_SPECIFICATIE" ON "PLEK_SPECIFICATIE" ("PLEK_ID", "SPECIFICATIE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index account_id
+--  DDL FOR INDEX ACCOUNT_ID
 --------------------------------------------------------
 
-  CREATE INDEX "account_id" ON "RESERVERING_POLSBANDJE" ("account_id") 
+  CREATE INDEX "ACCOUNT_ID" ON "RESERVERING_POLSBANDJE" ("ACCOUNT_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey7
+--  DDL FOR INDEX PRIMARYKEY7
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey7" ON "EVENT" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY7" ON "EVENT" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index polsbandje_id
+--  DDL FOR INDEX POLSBANDJE_ID
 --------------------------------------------------------
 
-  CREATE INDEX "polsbandje_id" ON "RESERVERING_POLSBANDJE" ("polsbandje_id") 
+  CREATE INDEX "POLSBANDJE_ID" ON "RESERVERING_POLSBANDJE" ("POLSBANDJE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey9
+--  DDL FOR INDEX PRIMARYKEY9
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey9" ON "CATEGORIE" ("bijdrage_id") 
+  CREATE UNIQUE INDEX "PRIMARYKEY9" ON "CATEGORIE" ("BIJDRAGE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index plek_id
+--  DDL FOR INDEX PLEK_ID
 --------------------------------------------------------
 
-  CREATE INDEX "plek_id" ON "PLEK_RESERVERING" ("plek_id") 
+  CREATE INDEX "PLEK_ID" ON "PLEK_RESERVERING" ("PLEK_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index locatie_id1
+--  DDL FOR INDEX LOCATIE_ID1
 --------------------------------------------------------
 
-  CREATE INDEX "locatie_id1" ON "PLEK" ("locatie_id") 
+  CREATE INDEX "LOCATIE_ID1" ON "PLEK" ("LOCATIE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey2
+--  DDL FOR INDEX PRIMARYKEY2
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey2" ON "PERSOON" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY2" ON "PERSOON" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index naam
+--  DDL FOR INDEX NAAM
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "naam" ON "LOCATIE" ("naam") 
+  CREATE UNIQUE INDEX "NAAM" ON "LOCATIE" ("NAAM") 
   ;
 --------------------------------------------------------
---  DDL for Index reservering_account
+--  DDL FOR INDEX RESERVERING_ACCOUNT
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "reservering_account" ON "RESERVERING_POLSBANDJE" ("reservering_id", "account_id") 
+  CREATE UNIQUE INDEX "RESERVERING_ACCOUNT" ON "RESERVERING_POLSBANDJE" ("RESERVERING_ID", "ACCOUNT_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey6
+--  DDL FOR INDEX PRIMARYKEY6
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey6" ON "RESERVERING" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY6" ON "RESERVERING" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index naam1
+--  DDL FOR INDEX NAAM1
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "naam1" ON "PRODUCTCAT" ("naam") 
+  CREATE UNIQUE INDEX "NAAM1" ON "PRODUCTCAT" ("NAAM") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey1
+--  DDL FOR INDEX PRIMARYKEY1
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey1" ON "RESERVERING_POLSBANDJE" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY1" ON "RESERVERING_POLSBANDJE" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index RFID
+--  DDL FOR INDEX RFID
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "RFID" ON "POLSBANDJE" ("barcode") 
+  CREATE UNIQUE INDEX "RFID" ON "POLSBANDJE" ("BARCODE") 
   ;
 --------------------------------------------------------
---  DDL for Index locatie_nummer
+--  DDL FOR INDEX LOCATIE_NUMMER
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "locatie_nummer" ON "PLEK" ("locatie_id", "nummer") 
+  CREATE UNIQUE INDEX "LOCATIE_NUMMER" ON "PLEK" ("LOCATIE_ID", "NUMMER") 
   ;
 --------------------------------------------------------
---  DDL for Index PRODUCTVERHUUR
+--  DDL FOR INDEX PRODUCTVERHUUR
 --------------------------------------------------------
 
-  CREATE INDEX "PRODUCTVERHUUR" ON "VERHUUR" ("productexemplaar_id") 
+  CREATE INDEX "PRODUCTVERHUUR" ON "VERHUUR" ("PRODUCTEXEMPLAAR_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey13
+--  DDL FOR INDEX PRIMARYKEY13
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey13" ON "BIJDRAGE" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY13" ON "BIJDRAGE" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index persoon_id
+--  DDL FOR INDEX PERSOON_ID
 --------------------------------------------------------
 
-  CREATE INDEX "persoon_id" ON "RESERVERING" ("persoon_id") 
+  CREATE INDEX "PERSOON_ID" ON "RESERVERING" ("PERSOON_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index naam_datumStart
+--  DDL FOR INDEX NAAM_DATUMSTART
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "naam_datumStart" ON "EVENT" ("naam", "datumstart") 
+  CREATE UNIQUE INDEX "NAAM_DATUMSTART" ON "EVENT" ("NAAM", "DATUMSTART") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey14
+--  DDL FOR INDEX PRIMARYKEY14
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey14" ON "LOCATIE" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY14" ON "LOCATIE" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey16
+--  DDL FOR INDEX PRIMARYKEY16
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey16" ON "POLSBANDJE" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY16" ON "POLSBANDJE" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index productcat_id
+--  DDL FOR INDEX PRODUCTCAT_ID
 --------------------------------------------------------
 
-  CREATE INDEX "productcat_id" ON "PRODUCTCAT" ("productcat_id") 
+  CREATE INDEX "PRODUCTCAT_ID" ON "PRODUCTCAT" ("PRODUCTCAT_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index reservering_polsbandje
+--  DDL FOR INDEX RESERVERING_POLSBANDJE
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "reservering_polsbandje" ON "RESERVERING_POLSBANDJE" ("reservering_id", "polsbandje_id") 
+  CREATE UNIQUE INDEX "RESERVERING_POLSBANDJE" ON "RESERVERING_POLSBANDJE" ("RESERVERING_ID", "POLSBANDJE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index bericht_id
+--  DDL FOR INDEX BERICHT_ID
 --------------------------------------------------------
 
-  CREATE INDEX "bericht_id" ON "BIJDRAGE_BERICHT" ("bericht_id") 
+  CREATE INDEX "BERICHT_ID" ON "BIJDRAGE_BERICHT" ("BERICHT_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index naam2
+--  DDL FOR INDEX NAAM2
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "naam2" ON "SPECIFICATIE" ("naam") 
+  CREATE UNIQUE INDEX "NAAM2" ON "SPECIFICATIE" ("NAAM") 
   ;
 --------------------------------------------------------
---  DDL for Index nummer
+--  DDL FOR INDEX NUMMER
 --------------------------------------------------------
 
-  CREATE INDEX "nummer" ON "PLEK" ("nummer") 
+  CREATE INDEX "NUMMER" ON "PLEK" ("NUMMER") 
   ;
 --------------------------------------------------------
---  DDL for Index reservering_id
+--  DDL FOR INDEX RESERVERING_ID
 --------------------------------------------------------
 
-  CREATE INDEX "reservering_id" ON "VERHUUR" ("res_pb_id") 
+  CREATE INDEX "RESERVERING_ID" ON "VERHUUR" ("RES_PB_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey15
+--  DDL FOR INDEX PRIMARYKEY15
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey15" ON "VERHUUR" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY15" ON "VERHUUR" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index categorie_id1
+--  DDL FOR INDEX CATEGORIE_ID1
 --------------------------------------------------------
 
-  CREATE INDEX "categorie_id1" ON "BESTAND" ("categorie_id") 
+  CREATE INDEX "CATEGORIE_ID1" ON "BESTAND" ("CATEGORIE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey4
+--  DDL FOR INDEX PRIMARYKEY4
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey4" ON "BESTAND" ("bijdrage_id") 
+  CREATE UNIQUE INDEX "PRIMARYKEY4" ON "BESTAND" ("BIJDRAGE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey18
+--  DDL FOR INDEX PRIMARYKEY18
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey18" ON "PRODUCTEXEMPLAAR" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY18" ON "PRODUCTEXEMPLAAR" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey19
+--  DDL FOR INDEX PRIMARYKEY19
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey19" ON "PLEK" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY19" ON "PLEK" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey3
+--  DDL FOR INDEX PRIMARYKEY3
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey3" ON "ACCOUNT" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY3" ON "ACCOUNT" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index plek_id1
+--  DDL FOR INDEX PLEK_ID1
 --------------------------------------------------------
 
-  CREATE INDEX "plek_id1" ON "PLEK_SPECIFICATIE" ("plek_id") 
+  CREATE INDEX "PLEK_ID1" ON "PLEK_SPECIFICATIE" ("PLEK_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index email
+--  DDL FOR INDEX EMAIL
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "email" ON "ACCOUNT" ("email") 
+  CREATE UNIQUE INDEX "EMAIL" ON "ACCOUNT" ("EMAIL") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey12
+--  DDL FOR INDEX PRIMARYKEY12
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey12" ON "PLEK_RESERVERING" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY12" ON "PLEK_RESERVERING" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index account_bijdrage
+--  DDL FOR INDEX ACCOUNT_BIJDRAGE
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "account_bijdrage" ON "ACCOUNT_BIJDRAGE" ("account_id", "bijdrage_id") 
+  CREATE UNIQUE INDEX "ACCOUNT_BIJDRAGE" ON "ACCOUNT_BIJDRAGE" ("ACCOUNT_ID", "BIJDRAGE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index SPECIFICATIEPLEK_SPECIFICATIE
+--  DDL FOR INDEX SPECIFICATIEPLEK_SPECIFICATIE
 --------------------------------------------------------
 
-  CREATE INDEX "SPECIFICATIEPLEK_SPECIFICATIE" ON "PLEK_SPECIFICATIE" ("specificatie_id") 
+  CREATE INDEX "SPECIFICATIEPLEK_SPECIFICATIE" ON "PLEK_SPECIFICATIE" ("SPECIFICATIE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index product_volgnummer
+--  DDL FOR INDEX PRODUCT_VOLGNUMMER
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "product_volgnummer" ON "PRODUCTEXEMPLAAR" ("product_id", "volgnummer") 
+  CREATE UNIQUE INDEX "PRODUCT_VOLGNUMMER" ON "PRODUCTEXEMPLAAR" ("PRODUCT_ID", "VOLGNUMMER") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey10
+--  DDL FOR INDEX PRIMARYKEY10
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey10" ON "SPECIFICATIE" ("ID") 
+  CREATE UNIQUE INDEX "PRIMARYKEY10" ON "SPECIFICATIE" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey5
+--  DDL FOR INDEX PRIMARYKEY5
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey5" ON "PLEK_SPECIFICATIE" ("id") 
+  CREATE UNIQUE INDEX "PRIMARYKEY5" ON "PLEK_SPECIFICATIE" ("ID") 
   ;
 --------------------------------------------------------
---  DDL for Index reservering_id1
+--  DDL FOR INDEX RESERVERING_ID1
 --------------------------------------------------------
 
-  CREATE INDEX "reservering_id1" ON "RESERVERING_POLSBANDJE" ("reservering_id") 
+  CREATE INDEX "RESERVERING_ID1" ON "RESERVERING_POLSBANDJE" ("RESERVERING_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index productcat_id1
+--  DDL FOR INDEX PRODUCTCAT_ID1
 --------------------------------------------------------
 
-  CREATE INDEX "productcat_id1" ON "PRODUCT" ("productcat_id") 
+  CREATE INDEX "PRODUCTCAT_ID1" ON "PRODUCT" ("PRODUCTCAT_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PRODUCTPRODUCTEXEMPLAAR
+--  DDL FOR INDEX PRODUCTPRODUCTEXEMPLAAR
 --------------------------------------------------------
 
-  CREATE INDEX "PRODUCTPRODUCTEXEMPLAAR" ON "PRODUCTEXEMPLAAR" ("product_id") 
+  CREATE INDEX "PRODUCTPRODUCTEXEMPLAAR" ON "PRODUCTEXEMPLAAR" ("PRODUCT_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index PrimaryKey
+--  DDL FOR INDEX PRIMARYKEY
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "PrimaryKey" ON "BERICHT" ("bijdrage_id") 
+  CREATE UNIQUE INDEX "PRIMARYKEY" ON "BERICHT" ("BIJDRAGE_ID") 
   ;
 --------------------------------------------------------
---  DDL for Index barcode
+--  DDL FOR INDEX BARCODE
 --------------------------------------------------------
 
-  CREATE UNIQUE INDEX "barcode" ON "PRODUCTEXEMPLAAR" ("barcode") 
+  CREATE UNIQUE INDEX "BARCODE" ON "PRODUCTEXEMPLAAR" ("BARCODE") 
   ;
 --------------------------------------------------------
---  Constraints for Table ACCOUNT_BIJDRAGE
+--  CONSTRAINTS FOR TABLE ACCOUNT_BIJDRAGE
 --------------------------------------------------------
 
-  ALTER TABLE "ACCOUNT_BIJDRAGE" ADD CONSTRAINT "PrimaryKey11" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "ACCOUNT_BIJDRAGE" ADD CONSTRAINT "PRIMARYKEY11" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("account_id" NOT NULL ENABLE);
+  ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("ACCOUNT_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("bijdrage_id" NOT NULL ENABLE);
+  ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("BIJDRAGE_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("like" NOT NULL ENABLE);
+  ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("LIKE" NOT NULL ENABLE);
  
-  ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("ongewenst" NOT NULL ENABLE);
+  ALTER TABLE "ACCOUNT_BIJDRAGE" MODIFY ("ONGEWENST" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table LOCATIE
+--  CONSTRAINTS FOR TABLE LOCATIE
 --------------------------------------------------------
 
-  ALTER TABLE "LOCATIE" ADD CONSTRAINT "PrimaryKey14" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "LOCATIE" ADD CONSTRAINT "PRIMARYKEY14" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "LOCATIE" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "LOCATIE" MODIFY ("naam" NOT NULL ENABLE);
+  ALTER TABLE "LOCATIE" MODIFY ("NAAM" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table RESERVERING
+--  CONSTRAINTS FOR TABLE RESERVERING
 --------------------------------------------------------
 
-  ALTER TABLE "RESERVERING" ADD CONSTRAINT "PrimaryKey6" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "RESERVERING" ADD CONSTRAINT "PRIMARYKEY6" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "RESERVERING" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "RESERVERING" MODIFY ("persoon_id" NOT NULL ENABLE);
+  ALTER TABLE "RESERVERING" MODIFY ("PERSOON_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "RESERVERING" MODIFY ("betaald" NOT NULL ENABLE);
+  ALTER TABLE "RESERVERING" MODIFY ("BETAALD" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table PLEK
+--  CONSTRAINTS FOR TABLE PLEK
 --------------------------------------------------------
 
-  ALTER TABLE "PLEK" ADD CONSTRAINT "PrimaryKey19" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "PLEK" ADD CONSTRAINT "PRIMARYKEY19" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "PLEK" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "PLEK" MODIFY ("locatie_id" NOT NULL ENABLE);
+  ALTER TABLE "PLEK" MODIFY ("LOCATIE_ID" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table EVENT
+--  CONSTRAINTS FOR TABLE EVENT
 --------------------------------------------------------
 
-  ALTER TABLE "EVENT" ADD CONSTRAINT "PrimaryKey7" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "EVENT" ADD CONSTRAINT "PRIMARYKEY7" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "EVENT" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "EVENT" MODIFY ("naam" NOT NULL ENABLE);
+  ALTER TABLE "EVENT" MODIFY ("NAAM" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table PRODUCTCAT
+--  CONSTRAINTS FOR TABLE PRODUCTCAT
 --------------------------------------------------------
 
-  ALTER TABLE "PRODUCTCAT" ADD CONSTRAINT "PrimaryKey8" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "PRODUCTCAT" ADD CONSTRAINT "PRIMARYKEY8" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "PRODUCTCAT" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "PRODUCTCAT" MODIFY ("naam" NOT NULL ENABLE);
+  ALTER TABLE "PRODUCTCAT" MODIFY ("NAAM" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table SPECIFICATIE
+--  CONSTRAINTS FOR TABLE SPECIFICATIE
 --------------------------------------------------------
 
-  ALTER TABLE "SPECIFICATIE" ADD CONSTRAINT "PrimaryKey10" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "SPECIFICATIE" ADD CONSTRAINT "PRIMARYKEY10" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "SPECIFICATIE" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "SPECIFICATIE" MODIFY ("naam" NOT NULL ENABLE);
+  ALTER TABLE "SPECIFICATIE" MODIFY ("NAAM" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table RESERVERING_POLSBANDJE
+--  CONSTRAINTS FOR TABLE RESERVERING_POLSBANDJE
 --------------------------------------------------------
 
-  ALTER TABLE "RESERVERING_POLSBANDJE" ADD CONSTRAINT "PrimaryKey1" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "RESERVERING_POLSBANDJE" ADD CONSTRAINT "PRIMARYKEY1" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("reservering_id" NOT NULL ENABLE);
+  ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("RESERVERING_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("polsbandje_id" NOT NULL ENABLE);
+  ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("POLSBANDJE_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("account_id" NOT NULL ENABLE);
+  ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("ACCOUNT_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("aanwezig" NOT NULL ENABLE);
+  ALTER TABLE "RESERVERING_POLSBANDJE" MODIFY ("AANWEZIG" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table CATEGORIE
---------------------------------------------------------
-
-  ALTER TABLE "CATEGORIE" ADD CONSTRAINT "PrimaryKey9" PRIMARY KEY ("bijdrage_id") ENABLE;
- 
-  ALTER TABLE "CATEGORIE" MODIFY ("bijdrage_id" NOT NULL ENABLE);
- 
-  ALTER TABLE "CATEGORIE" MODIFY ("naam" NOT NULL ENABLE);
---------------------------------------------------------
---  Constraints for Table PERSOON
+--  CONSTRAINTS FOR TABLE CATEGORIE
 --------------------------------------------------------
 
-  ALTER TABLE "PERSOON" ADD CONSTRAINT "PrimaryKey2" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "CATEGORIE" ADD CONSTRAINT "PRIMARYKEY9" PRIMARY KEY ("BIJDRAGE_ID") ENABLE;
+ 
+  ALTER TABLE "CATEGORIE" MODIFY ("BIJDRAGE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "CATEGORIE" MODIFY ("NAAM" NOT NULL ENABLE);
+--------------------------------------------------------
+--  CONSTRAINTS FOR TABLE PERSOON
+--------------------------------------------------------
+
+  ALTER TABLE "PERSOON" ADD CONSTRAINT "PRIMARYKEY2" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "PERSOON" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "PERSOON" MODIFY ("voornaam" NOT NULL ENABLE);
+  ALTER TABLE "PERSOON" MODIFY ("VOORNAAM" NOT NULL ENABLE);
  
-  ALTER TABLE "PERSOON" MODIFY ("achternaam" NOT NULL ENABLE);
+  ALTER TABLE "PERSOON" MODIFY ("ACHTERNAAM" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table PLEK_RESERVERING
+--  CONSTRAINTS FOR TABLE PLEK_RESERVERING
 --------------------------------------------------------
 
-  ALTER TABLE "PLEK_RESERVERING" ADD CONSTRAINT "PrimaryKey12" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "PLEK_RESERVERING" ADD CONSTRAINT "PRIMARYKEY12" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "PLEK_RESERVERING" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "PLEK_RESERVERING" MODIFY ("plek_id" NOT NULL ENABLE);
+  ALTER TABLE "PLEK_RESERVERING" MODIFY ("PLEK_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "PLEK_RESERVERING" MODIFY ("reservering_id" NOT NULL ENABLE);
+  ALTER TABLE "PLEK_RESERVERING" MODIFY ("RESERVERING_ID" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table PLEK_SPECIFICATIE
---------------------------------------------------------
-
-  ALTER TABLE "PLEK_SPECIFICATIE" ADD CONSTRAINT "PrimaryKey5" PRIMARY KEY ("id") ENABLE;
- 
-  ALTER TABLE "PLEK_SPECIFICATIE" MODIFY ("id" NOT NULL ENABLE);
- 
-  ALTER TABLE "PLEK_SPECIFICATIE" MODIFY ("specificatie_id" NOT NULL ENABLE);
- 
-  ALTER TABLE "PLEK_SPECIFICATIE" MODIFY ("plek_id" NOT NULL ENABLE);
- 
-  ALTER TABLE "PLEK_SPECIFICATIE" MODIFY ("waarde" NOT NULL ENABLE);
---------------------------------------------------------
---  Constraints for Table ACCOUNT
+--  CONSTRAINTS FOR TABLE PLEK_SPECIFICATIE
 --------------------------------------------------------
 
-  ALTER TABLE "ACCOUNT" ADD CONSTRAINT "PrimaryKey3" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "PLEK_SPECIFICATIE" ADD CONSTRAINT "PRIMARYKEY5" PRIMARY KEY ("ID") ENABLE;
+ 
+  ALTER TABLE "PLEK_SPECIFICATIE" MODIFY ("ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "PLEK_SPECIFICATIE" MODIFY ("SPECIFICATIE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "PLEK_SPECIFICATIE" MODIFY ("PLEK_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "PLEK_SPECIFICATIE" MODIFY ("WAARDE" NOT NULL ENABLE);
+--------------------------------------------------------
+--  CONSTRAINTS FOR TABLE ACCOUNT
+--------------------------------------------------------
+
+  ALTER TABLE "ACCOUNT" ADD CONSTRAINT "PRIMARYKEY3" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "ACCOUNT" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "ACCOUNT" MODIFY ("email" NOT NULL ENABLE);
+  ALTER TABLE "ACCOUNT" MODIFY ("EMAIL" NOT NULL ENABLE);
  
-  ALTER TABLE "ACCOUNT" MODIFY ("activatiehash" NOT NULL ENABLE);
+  ALTER TABLE "ACCOUNT" MODIFY ("ACTIVATIEHASH" NOT NULL ENABLE);
  
-  ALTER TABLE "ACCOUNT" MODIFY ("geactiveerd" NOT NULL ENABLE);
+  ALTER TABLE "ACCOUNT" MODIFY ("GEACTIVEERD" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table BIJDRAGE
+--  CONSTRAINTS FOR TABLE BIJDRAGE
 --------------------------------------------------------
 
-  ALTER TABLE "BIJDRAGE" ADD CONSTRAINT "PrimaryKey13" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "BIJDRAGE" ADD CONSTRAINT "PRIMARYKEY13" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "BIJDRAGE" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "BIJDRAGE" MODIFY ("account_id" NOT NULL ENABLE);
+  ALTER TABLE "BIJDRAGE" MODIFY ("ACCOUNT_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "BIJDRAGE" MODIFY ("soort" NOT NULL ENABLE);
+  ALTER TABLE "BIJDRAGE" MODIFY ("SOORT" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table PRODUCT
+--  CONSTRAINTS FOR TABLE PRODUCT
 --------------------------------------------------------
 
-  ALTER TABLE "PRODUCT" ADD CONSTRAINT "PrimaryKey17" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "PRODUCT" ADD CONSTRAINT "PRIMARYKEY17" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "PRODUCT" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "PRODUCT" MODIFY ("productcat_id" NOT NULL ENABLE);
+  ALTER TABLE "PRODUCT" MODIFY ("PRODUCTCAT_ID" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table BERICHT
---------------------------------------------------------
-
-  ALTER TABLE "BERICHT" ADD CONSTRAINT "PrimaryKey" PRIMARY KEY ("bijdrage_id") ENABLE;
- 
-  ALTER TABLE "BERICHT" MODIFY ("bijdrage_id" NOT NULL ENABLE);
- 
-  ALTER TABLE "BERICHT" MODIFY ("inhoud" NOT NULL ENABLE);
---------------------------------------------------------
---  Constraints for Table BESTAND
+--  CONSTRAINTS FOR TABLE BERICHT
 --------------------------------------------------------
 
-  ALTER TABLE "BESTAND" ADD CONSTRAINT "PrimaryKey4" PRIMARY KEY ("bijdrage_id") ENABLE;
+  ALTER TABLE "BERICHT" ADD CONSTRAINT "PRIMARYKEY" PRIMARY KEY ("BIJDRAGE_ID") ENABLE;
  
-  ALTER TABLE "BESTAND" MODIFY ("bijdrage_id" NOT NULL ENABLE);
+  ALTER TABLE "BERICHT" MODIFY ("BIJDRAGE_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "BESTAND" MODIFY ("categorie_id" NOT NULL ENABLE);
- 
-  ALTER TABLE "BESTAND" MODIFY ("bestandslocatie" NOT NULL ENABLE);
+  ALTER TABLE "BERICHT" MODIFY ("INHOUD" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table VERHUUR
+--  CONSTRAINTS FOR TABLE BESTAND
 --------------------------------------------------------
 
-  ALTER TABLE "VERHUUR" ADD CONSTRAINT "PrimaryKey15" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "BESTAND" ADD CONSTRAINT "PRIMARYKEY4" PRIMARY KEY ("BIJDRAGE_ID") ENABLE;
+ 
+  ALTER TABLE "BESTAND" MODIFY ("BIJDRAGE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "BESTAND" MODIFY ("CATEGORIE_ID" NOT NULL ENABLE);
+ 
+  ALTER TABLE "BESTAND" MODIFY ("BESTANDSLOCATIE" NOT NULL ENABLE);
+--------------------------------------------------------
+--  CONSTRAINTS FOR TABLE VERHUUR
+--------------------------------------------------------
+
+  ALTER TABLE "VERHUUR" ADD CONSTRAINT "PRIMARYKEY15" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "VERHUUR" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "VERHUUR" MODIFY ("betaald" NOT NULL ENABLE);
+  ALTER TABLE "VERHUUR" MODIFY ("BETAALD" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table PRODUCTEXEMPLAAR
+--  CONSTRAINTS FOR TABLE PRODUCTEXEMPLAAR
 --------------------------------------------------------
 
-  ALTER TABLE "PRODUCTEXEMPLAAR" ADD CONSTRAINT "PrimaryKey18" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "PRODUCTEXEMPLAAR" ADD CONSTRAINT "PRIMARYKEY18" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "PRODUCTEXEMPLAAR" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "PRODUCTEXEMPLAAR" MODIFY ("product_id" NOT NULL ENABLE);
+  ALTER TABLE "PRODUCTEXEMPLAAR" MODIFY ("PRODUCT_ID" NOT NULL ENABLE);
  
-  ALTER TABLE "PRODUCTEXEMPLAAR" MODIFY ("volgnummer" NOT NULL ENABLE);
+  ALTER TABLE "PRODUCTEXEMPLAAR" MODIFY ("VOLGNUMMER" NOT NULL ENABLE);
 --------------------------------------------------------
---  Constraints for Table POLSBANDJE
+--  CONSTRAINTS FOR TABLE POLSBANDJE
 --------------------------------------------------------
 
-  ALTER TABLE "POLSBANDJE" ADD CONSTRAINT "PrimaryKey16" PRIMARY KEY ("ID") ENABLE;
+  ALTER TABLE "POLSBANDJE" ADD CONSTRAINT "PRIMARYKEY16" PRIMARY KEY ("ID") ENABLE;
  
   ALTER TABLE "POLSBANDJE" MODIFY ("ID" NOT NULL ENABLE);
  
-  ALTER TABLE "POLSBANDJE" MODIFY ("barcode" NOT NULL ENABLE);
+  ALTER TABLE "POLSBANDJE" MODIFY ("BARCODE" NOT NULL ENABLE);
  
-  ALTER TABLE "POLSBANDJE" MODIFY ("actief" NOT NULL ENABLE);
+  ALTER TABLE "POLSBANDJE" MODIFY ("ACTIEF" NOT NULL ENABLE);
 --------------------------------------------------------
---  Ref Constraints for Table ACCOUNT_BIJDRAGE
+--  REF CONSTRAINTS FOR TABLE ACCOUNT_BIJDRAGE
 --------------------------------------------------------
 
-  ALTER TABLE "ACCOUNT_BIJDRAGE" ADD CONSTRAINT "ACCOUNTACCOUNT_BIJDRAGE" FOREIGN KEY ("account_id")
+  ALTER TABLE "ACCOUNT_BIJDRAGE" ADD CONSTRAINT "ACCOUNTACCOUNT_BIJDRAGE" FOREIGN KEY ("ACCOUNT_ID")
 	  REFERENCES "ACCOUNT" ("ID") ENABLE;
  
-  ALTER TABLE "ACCOUNT_BIJDRAGE" ADD CONSTRAINT "BIJDRAGEACCOUNT_BIJDRAGE" FOREIGN KEY ("bijdrage_id")
+  ALTER TABLE "ACCOUNT_BIJDRAGE" ADD CONSTRAINT "BIJDRAGEACCOUNT_BIJDRAGE" FOREIGN KEY ("BIJDRAGE_ID")
 	  REFERENCES "BIJDRAGE" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table BERICHT
+--  REF CONSTRAINTS FOR TABLE BERICHT
 --------------------------------------------------------
 
-  ALTER TABLE "BERICHT" ADD CONSTRAINT "BIJDRAGEBERICHT" FOREIGN KEY ("bijdrage_id")
+  ALTER TABLE "BERICHT" ADD CONSTRAINT "BIJDRAGEBERICHT" FOREIGN KEY ("BIJDRAGE_ID")
 	  REFERENCES "BIJDRAGE" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table BESTAND
+--  REF CONSTRAINTS FOR TABLE BESTAND
 --------------------------------------------------------
 
-  ALTER TABLE "BESTAND" ADD CONSTRAINT "BIJDRAGEBESTAND" FOREIGN KEY ("bijdrage_id")
+  ALTER TABLE "BESTAND" ADD CONSTRAINT "BIJDRAGEBESTAND" FOREIGN KEY ("BIJDRAGE_ID")
 	  REFERENCES "BIJDRAGE" ("ID") ENABLE;
  
-  ALTER TABLE "BESTAND" ADD CONSTRAINT "CATEGORIEBESTAND" FOREIGN KEY ("categorie_id")
-	  REFERENCES "CATEGORIE" ("bijdrage_id") ENABLE;
+  ALTER TABLE "BESTAND" ADD CONSTRAINT "CATEGORIEBESTAND" FOREIGN KEY ("CATEGORIE_ID")
+	  REFERENCES "CATEGORIE" ("BIJDRAGE_ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table BIJDRAGE
+--  REF CONSTRAINTS FOR TABLE BIJDRAGE
 --------------------------------------------------------
 
-  ALTER TABLE "BIJDRAGE" ADD CONSTRAINT "ACCOUNTBIJDRAGE" FOREIGN KEY ("account_id")
+  ALTER TABLE "BIJDRAGE" ADD CONSTRAINT "ACCOUNTBIJDRAGE" FOREIGN KEY ("ACCOUNT_ID")
 	  REFERENCES "ACCOUNT" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table BIJDRAGE_BERICHT
+--  REF CONSTRAINTS FOR TABLE BIJDRAGE_BERICHT
 --------------------------------------------------------
 
-  ALTER TABLE "BIJDRAGE_BERICHT" ADD CONSTRAINT "BERICHTBIJDRAGE_BERICHT" FOREIGN KEY ("bericht_id")
-	  REFERENCES "BERICHT" ("bijdrage_id") ENABLE;
+  ALTER TABLE "BIJDRAGE_BERICHT" ADD CONSTRAINT "BERICHTBIJDRAGE_BERICHT" FOREIGN KEY ("BERICHT_ID")
+	  REFERENCES "BERICHT" ("BIJDRAGE_ID") ENABLE;
  
-  ALTER TABLE "BIJDRAGE_BERICHT" ADD CONSTRAINT "BIJDRAGEBIJDRAGE_BERICHT" FOREIGN KEY ("bijdrage_id")
+  ALTER TABLE "BIJDRAGE_BERICHT" ADD CONSTRAINT "BIJDRAGEBIJDRAGE_BERICHT" FOREIGN KEY ("BIJDRAGE_ID")
 	  REFERENCES "BIJDRAGE" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table CATEGORIE
+--  REF CONSTRAINTS FOR TABLE CATEGORIE
 --------------------------------------------------------
 
-  ALTER TABLE "CATEGORIE" ADD CONSTRAINT "BIJDRAGECATEGORIE" FOREIGN KEY ("bijdrage_id")
+  ALTER TABLE "CATEGORIE" ADD CONSTRAINT "BIJDRAGECATEGORIE" FOREIGN KEY ("BIJDRAGE_ID")
 	  REFERENCES "BIJDRAGE" ("ID") ENABLE;
  
-  ALTER TABLE "CATEGORIE" ADD CONSTRAINT "CATEGORIECATEGORIE" FOREIGN KEY ("categorie_id")
-	  REFERENCES "CATEGORIE" ("bijdrage_id") ENABLE;
+  ALTER TABLE "CATEGORIE" ADD CONSTRAINT "CATEGORIECATEGORIE" FOREIGN KEY ("CATEGORIE_ID")
+	  REFERENCES "CATEGORIE" ("BIJDRAGE_ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table EVENT
+--  REF CONSTRAINTS FOR TABLE EVENT
 --------------------------------------------------------
 
-  ALTER TABLE "EVENT" ADD CONSTRAINT "LOCATIEEVENT" FOREIGN KEY ("locatie_id")
+  ALTER TABLE "EVENT" ADD CONSTRAINT "LOCATIEEVENT" FOREIGN KEY ("LOCATIE_ID")
 	  REFERENCES "LOCATIE" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table PLEK
+--  REF CONSTRAINTS FOR TABLE PLEK
 --------------------------------------------------------
 
-  ALTER TABLE "PLEK" ADD CONSTRAINT "LOCATIEPLEK" FOREIGN KEY ("locatie_id")
+  ALTER TABLE "PLEK" ADD CONSTRAINT "LOCATIEPLEK" FOREIGN KEY ("LOCATIE_ID")
 	  REFERENCES "LOCATIE" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table PLEK_RESERVERING
+--  REF CONSTRAINTS FOR TABLE PLEK_RESERVERING
 --------------------------------------------------------
 
-  ALTER TABLE "PLEK_RESERVERING" ADD CONSTRAINT "PLEKPLEK_RESERVERING" FOREIGN KEY ("plek_id")
+  ALTER TABLE "PLEK_RESERVERING" ADD CONSTRAINT "PLEKPLEK_RESERVERING" FOREIGN KEY ("PLEK_ID")
 	  REFERENCES "PLEK" ("ID") ENABLE;
  
-  ALTER TABLE "PLEK_RESERVERING" ADD CONSTRAINT "RESERVERINGPLEK_RESERVERING" FOREIGN KEY ("reservering_id")
+  ALTER TABLE "PLEK_RESERVERING" ADD CONSTRAINT "RESERVERINGPLEK_RESERVERING" FOREIGN KEY ("RESERVERING_ID")
 	  REFERENCES "RESERVERING" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table PLEK_SPECIFICATIE
+--  REF CONSTRAINTS FOR TABLE PLEK_SPECIFICATIE
 --------------------------------------------------------
 
-  ALTER TABLE "PLEK_SPECIFICATIE" ADD CONSTRAINT "PLEKPLEK_SPECIFICATIE" FOREIGN KEY ("plek_id")
+  ALTER TABLE "PLEK_SPECIFICATIE" ADD CONSTRAINT "PLEKPLEK_SPECIFICATIE" FOREIGN KEY ("PLEK_ID")
 	  REFERENCES "PLEK" ("ID") ENABLE;
  
-  ALTER TABLE "PLEK_SPECIFICATIE" ADD CONSTRAINT "SPECIFICATIEPLEK_SPECIFICATIE" FOREIGN KEY ("specificatie_id")
+  ALTER TABLE "PLEK_SPECIFICATIE" ADD CONSTRAINT "SPECIFICATIEPLEK_SPECIFICATIE" FOREIGN KEY ("SPECIFICATIE_ID")
 	  REFERENCES "SPECIFICATIE" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table PRODUCT
+--  REF CONSTRAINTS FOR TABLE PRODUCT
 --------------------------------------------------------
 
-  ALTER TABLE "PRODUCT" ADD CONSTRAINT "PRODUCTCATPRODUCT" FOREIGN KEY ("productcat_id")
+  ALTER TABLE "PRODUCT" ADD CONSTRAINT "PRODUCTCATPRODUCT" FOREIGN KEY ("PRODUCTCAT_ID")
 	  REFERENCES "PRODUCTCAT" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table PRODUCTCAT
+--  REF CONSTRAINTS FOR TABLE PRODUCTCAT
 --------------------------------------------------------
 
-  ALTER TABLE "PRODUCTCAT" ADD CONSTRAINT "PRODUCTCATPRODUCTCAT" FOREIGN KEY ("productcat_id")
+  ALTER TABLE "PRODUCTCAT" ADD CONSTRAINT "PRODUCTCATPRODUCTCAT" FOREIGN KEY ("PRODUCTCAT_ID")
 	  REFERENCES "PRODUCTCAT" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table PRODUCTEXEMPLAAR
+--  REF CONSTRAINTS FOR TABLE PRODUCTEXEMPLAAR
 --------------------------------------------------------
 
-  ALTER TABLE "PRODUCTEXEMPLAAR" ADD CONSTRAINT "PRODUCTPRODUCTEXEMPLAAR" FOREIGN KEY ("product_id")
+  ALTER TABLE "PRODUCTEXEMPLAAR" ADD CONSTRAINT "PRODUCTPRODUCTEXEMPLAAR" FOREIGN KEY ("PRODUCT_ID")
 	  REFERENCES "PRODUCT" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table RESERVERING
+--  REF CONSTRAINTS FOR TABLE RESERVERING
 --------------------------------------------------------
 
-  ALTER TABLE "RESERVERING" ADD CONSTRAINT "PERSOONRESERVERING" FOREIGN KEY ("persoon_id")
+  ALTER TABLE "RESERVERING" ADD CONSTRAINT "PERSOONRESERVERING" FOREIGN KEY ("PERSOON_ID")
 	  REFERENCES "PERSOON" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table RESERVERING_POLSBANDJE
+--  REF CONSTRAINTS FOR TABLE RESERVERING_POLSBANDJE
 --------------------------------------------------------
 
-  ALTER TABLE "RESERVERING_POLSBANDJE" ADD CONSTRAINT "ACCOUNTRESERVERING_POLSBANDJE" FOREIGN KEY ("account_id")
+  ALTER TABLE "RESERVERING_POLSBANDJE" ADD CONSTRAINT "ACCOUNTRESERVERING_POLSBANDJE" FOREIGN KEY ("ACCOUNT_ID")
 	  REFERENCES "ACCOUNT" ("ID") ENABLE;
  
-  ALTER TABLE "RESERVERING_POLSBANDJE" ADD CONSTRAINT "POLSBANDJERESERVERING_POLSBAND" FOREIGN KEY ("polsbandje_id")
+  ALTER TABLE "RESERVERING_POLSBANDJE" ADD CONSTRAINT "POLSBANDJERESERVERING_POLSBAND" FOREIGN KEY ("POLSBANDJE_ID")
 	  REFERENCES "POLSBANDJE" ("ID") ENABLE;
  
-  ALTER TABLE "RESERVERING_POLSBANDJE" ADD CONSTRAINT "RESERVERINGRESERVERING_POLSBAN" FOREIGN KEY ("reservering_id")
+  ALTER TABLE "RESERVERING_POLSBANDJE" ADD CONSTRAINT "RESERVERINGRESERVERING_POLSBAN" FOREIGN KEY ("RESERVERING_ID")
 	  REFERENCES "RESERVERING" ("ID") ENABLE;
 --------------------------------------------------------
---  Ref Constraints for Table VERHUUR
+--  REF CONSTRAINTS FOR TABLE VERHUUR
 --------------------------------------------------------
 
-  ALTER TABLE "VERHUUR" ADD CONSTRAINT "PRODUCTVERHUUR" FOREIGN KEY ("productexemplaar_id")
+  ALTER TABLE "VERHUUR" ADD CONSTRAINT "PRODUCTVERHUUR" FOREIGN KEY ("PRODUCTEXEMPLAAR_ID")
 	  REFERENCES "PRODUCTEXEMPLAAR" ("ID") ENABLE;
  
-  ALTER TABLE "VERHUUR" ADD CONSTRAINT "RESERVERING_POLSBANDJEVERHUUR" FOREIGN KEY ("res_pb_id")
+  ALTER TABLE "VERHUUR" ADD CONSTRAINT "RESERVERING_POLSBANDJEVERHUUR" FOREIGN KEY ("RES_PB_ID")
 	  REFERENCES "RESERVERING_POLSBANDJE" ("ID") ENABLE;
 --------------------------------------------------------
---  DDL for Trigger ACCOUNT_BIJDRAGE_FCTG_BI
+--  DDL FOR TRIGGER ACCOUNT_BIJDRAGE_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "ACCOUNT_BIJDRAGE_FCTG_BI" BEFORE INSERT ON "ACCOUNT_BIJDRAGE"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT ACCOUNT_BIJDRAGE_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT ACCOUNT_BIJDRAGE_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "ACCOUNT_BIJDRAGE_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger ACCOUNT_FCTG_BI
+--  DDL FOR TRIGGER ACCOUNT_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "ACCOUNT_FCTG_BI" BEFORE INSERT ON "ACCOUNT"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT ACCOUNT_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT ACCOUNT_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "ACCOUNT_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger BIJDRAGE_FCTG_BI
+--  DDL FOR TRIGGER BIJDRAGE_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "BIJDRAGE_FCTG_BI" BEFORE INSERT ON "BIJDRAGE"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT BIJDRAGE_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT BIJDRAGE_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "BIJDRAGE_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger EVENT_FCTG_BI
+--  DDL FOR TRIGGER EVENT_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "EVENT_FCTG_BI" BEFORE INSERT ON "EVENT"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT EVENT_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT EVENT_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "EVENT_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger LOCATIE_FCTG_BI
+--  DDL FOR TRIGGER LOCATIE_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "LOCATIE_FCTG_BI" BEFORE INSERT ON "LOCATIE"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT LOCATIE_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT LOCATIE_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "LOCATIE_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger PERSOON_FCTG_BI
+--  DDL FOR TRIGGER PERSOON_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "PERSOON_FCTG_BI" BEFORE INSERT ON "PERSOON"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT PERSOON_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT PERSOON_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "PERSOON_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger PLEK_FCTG_BI
+--  DDL FOR TRIGGER PLEK_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "PLEK_FCTG_BI" BEFORE INSERT ON "PLEK"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT PLEK_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT PLEK_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "PLEK_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger PLEK_RESERVERING_FCTG_BI
+--  DDL FOR TRIGGER PLEK_RESERVERING_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "PLEK_RESERVERING_FCTG_BI" BEFORE INSERT ON "PLEK_RESERVERING"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT PLEK_RESERVERING_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT PLEK_RESERVERING_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "PLEK_RESERVERING_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger PLEK_SPECIFICATIE_FCTG_BI
+--  DDL FOR TRIGGER PLEK_SPECIFICATIE_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "PLEK_SPECIFICATIE_FCTG_BI" BEFORE INSERT ON "PLEK_SPECIFICATIE"
 FOR EACH ROW
- WHEN (new."id" IS NULL) BEGIN
-  SELECT PLEK_SPECIFICATIE_FCSEQ.NEXTVAL INTO :new."id" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT PLEK_SPECIFICATIE_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "PLEK_SPECIFICATIE_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger POLSBANDJE_FCTG_BI
+--  DDL FOR TRIGGER POLSBANDJE_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "POLSBANDJE_FCTG_BI" BEFORE INSERT ON "POLSBANDJE"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT POLSBANDJE_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT POLSBANDJE_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "POLSBANDJE_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger PRODUCTCAT_FCTG_BI
+--  DDL FOR TRIGGER PRODUCTCAT_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "PRODUCTCAT_FCTG_BI" BEFORE INSERT ON "PRODUCTCAT"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT PRODUCTCAT_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT PRODUCTCAT_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "PRODUCTCAT_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger PRODUCTEXEMPLAAR_FCTG_BI
+--  DDL FOR TRIGGER PRODUCTEXEMPLAAR_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "PRODUCTEXEMPLAAR_FCTG_BI" BEFORE INSERT ON "PRODUCTEXEMPLAAR"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT PRODUCTEXEMPLAAR_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT PRODUCTEXEMPLAAR_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "PRODUCTEXEMPLAAR_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger PRODUCT_FCTG_BI
+--  DDL FOR TRIGGER PRODUCT_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "PRODUCT_FCTG_BI" BEFORE INSERT ON "PRODUCT"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT PRODUCT_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT PRODUCT_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "PRODUCT_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger RESERVERING_FCTG_BI
+--  DDL FOR TRIGGER RESERVERING_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "RESERVERING_FCTG_BI" BEFORE INSERT ON "RESERVERING"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT RESERVERING_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT RESERVERING_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "RESERVERING_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger RESERVERING_POLSBANDJE_FCTG_BI
+--  DDL FOR TRIGGER RESERVERING_POLSBANDJE_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "RESERVERING_POLSBANDJE_FCTG_BI" BEFORE INSERT ON "RESERVERING_POLSBANDJE"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT RESERVERING_POLSBANDJE_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT RESERVERING_POLSBANDJE_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "RESERVERING_POLSBANDJE_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger SPECIFICATIE_FCTG_BI
+--  DDL FOR TRIGGER SPECIFICATIE_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "SPECIFICATIE_FCTG_BI" BEFORE INSERT ON "SPECIFICATIE"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT SPECIFICATIE_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT SPECIFICATIE_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "SPECIFICATIE_FCTG_BI" ENABLE;
 --------------------------------------------------------
---  DDL for Trigger VERHUUR_FCTG_BI
+--  DDL FOR TRIGGER VERHUUR_FCTG_BI
 --------------------------------------------------------
 
   CREATE OR REPLACE TRIGGER "VERHUUR_FCTG_BI" BEFORE INSERT ON "VERHUUR"
 FOR EACH ROW
- WHEN (new."ID" IS NULL) BEGIN
-  SELECT VERHUUR_FCSEQ.NEXTVAL INTO :new."ID" FROM dual;
+ WHEN (NEW."ID" IS NULL) BEGIN
+  SELECT VERHUUR_FCSEQ.NEXTVAL INTO :NEW."ID" FROM DUAL;
 END;
 /
 ALTER TRIGGER "VERHUUR_FCTG_BI" ENABLE;
