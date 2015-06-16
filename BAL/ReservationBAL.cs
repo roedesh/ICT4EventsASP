@@ -25,6 +25,11 @@
             return new ReservationDAL().Insert(personID, beginDate, endDate);
         }
 
+        public int DeleteReservation(int reservationID)
+        {
+            return new ReservationDAL().Delete(reservationID);
+        }
+
 
     }
 }

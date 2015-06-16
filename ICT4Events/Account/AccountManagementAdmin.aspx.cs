@@ -1,6 +1,4 @@
-﻿
-
-namespace ICT4Events.Account
+﻿namespace ICT4Events.Account
 {
 
     using System;

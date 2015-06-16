@@ -97,6 +97,33 @@
         }
 
         /// <summary>
+        /// Method for deleting a reservation
+        /// </summary>
+        /// <param name="reservationID">ID of the reservation to be deleted</param>
+        /// <returns>0 or 1</returns>
+        public int Delete(int reservationID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "DELETE FROM Reservering WHERE ID = :reservationID";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("reservationID", reservationID));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Method for returning Oracle exceptions as string
         /// </summary>
         /// <param name="ex">Oracle exception</param>
