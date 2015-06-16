@@ -8,6 +8,7 @@ namespace DAL
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -68,6 +69,33 @@ namespace DAL
             }
         }
 
+        public int InsertFile(string account_ID, string date, string type, string category_id, string location, int)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, wachtwoord, email, activatiehash, geactiveerd) 
+                VALUES (ACCOUNT_FCSEQ, :username, :password, :email, :hash, 0)";
+                string hash = Guid.NewGuid().ToString();
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("username", username));
+                    cmd.Parameters.Add(new OracleParameter("password", password));
+                    cmd.Parameters.Add(new OracleParameter("email", email));
+                    cmd.Parameters.Add(new OracleParameter("hash", hash));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ex.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Message Queries
@@ -76,7 +104,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT bd.ID, bd.ACCOUNT_ID, bd.DATUM, br.TITEL, br.INHOUD FROM BIJDRAGE bd, BERICHT br, BIJDRAGE_BERICHT bb WHERE bd.ID = bb.BERICHT_ID, AND br.BIJDRAGE_ID = bb.BERICHT_ID AND bb.BIJDRAGE_ID = :post_id";
+                string loadQuery = "SELECT bd.ID, bd.ACCOUNT_ID, bd.DATUM, br.TITEL, br.INHOUD FROM BIJDRAGE bd, BERICHT br, BIJDRAGE_BERICHT bb WHERE bd.ID = bb.BERICHT_ID AND br.BIJDRAGE_ID = bb.BERICHT_ID AND bb.BIJDRAGE_ID = :post_id";
 
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
