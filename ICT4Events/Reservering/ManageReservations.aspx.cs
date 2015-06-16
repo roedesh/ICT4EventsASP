@@ -39,7 +39,7 @@ namespace ICT4Events.Reservering
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            int resID = (int)GridView1.DataKeys[e.RowIndex].Value;
+            int resID = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Value);
             new ReservationBAL().DeleteReservation(resID);
         }
     }

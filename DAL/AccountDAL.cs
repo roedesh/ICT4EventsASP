@@ -32,7 +32,7 @@ namespace DAL
             {
                 conn.Open();
                 string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, wachtwoord, email, activatiehash, geactiveerd) 
-                VALUES (ACCOUNT_FCSEQ, :username, :password, :email, :hash, 0)";
+                VALUES (ACCOUNT_FCSEQ.nextval, :username, :password, :email, :hash, 0)";
                 string hash = Guid.NewGuid().ToString();
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
