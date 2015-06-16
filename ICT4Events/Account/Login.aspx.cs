@@ -27,22 +27,15 @@ namespace ICT4Events
 
             if (IsValid)
             {
-                DataTable table = new AccountBAL().GetAccountLogin(((TextBox)Login1.FindControl("username")).Text,
-                    ((TextBox)Login1.FindControl("password")).Text);
-                //if (table.Rows.Count > 0)
-                if (((TextBox)Login1.FindControl("username")).Text.Length > 0)
+
+                string username = ((TextBox)Login1.FindControl("username")).Text;
+                string password = ((TextBox)Login1.FindControl("password")).Text;
+                int login = new AccountBAL().GetAccountLogin(username, password);
+                if (login > 0)
                 {
-                    Session["USER_ID"] = ((TextBox)Login1.FindControl("username")).Text;
-                    if (Session["USER_ID"].ToString() == "admin")
-                    {
-                        Session["USER_ROLE"] = "admin";
-                    }
-                    else
-                    {
-                        Session["USER_ROLE"] = "gast";
-                    }
-                    /*Session["USER_ID"] = table.Rows[0]["GEBRUIKERSNAAM"];
-                    Session["USER_ROLE"] = table.Rows[0]["ROL"];*/
+                    DataTable table = new AccountBAL().GetAccount(username, password);
+                    Session["USER_ID"] = table.Rows[0]["GEBRUIKERSNAAM"];
+                    Session["USER_ROLE"] = table.Rows[0]["ROL"];
                     Response.Redirect("../Default.aspx");
                 }
                 else

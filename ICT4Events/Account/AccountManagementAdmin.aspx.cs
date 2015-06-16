@@ -31,35 +31,16 @@ namespace ICT4Events.Account
         {
             try
             {
-               /* // hier nog de extra velden toevoegen
-                DataTable table = new AccountBAL().GetAccount(tbSearchUserName.Text);
-                tbActivated.Text = table.Rows[0]["GEACTIVEERD"].ToString();
-                tbEmailAdress.Text = table.Rows[0]["EMAIL"].ToString();
-                tbUserName.Text = table.Rows[0]["GEBRUIKERSNAAM"].ToString();
-                //tbFirstName.Text = table.Rows[0]["VOORNAAM"].ToString();
-                //tbLastName.Text = table.Rows[0]["ACHTERNAAM"].ToString();
-                //tbAddress.Text = table.Rows[0]["ADRES"].ToString();
-                //tbCity.Text = table.Rows[0]["STAD"].ToString();
-                //tbZipCode.Text = table.Rows[0]["POSTCODE"].ToString();
-                //tbPhoneNumber.Text = table.Rows[0]["TELEFOONNUMMER"].ToString();
-                * */
-                if (tbSearchUserName.Text == "admin")
-                {
-                    tbActivated.Text = "1";
-                    tbEmailAdress.Text = "admin@ict4events.nl";
-                    tbUserName.Text = "admin";
-                    tbFirstName.Text = "admin";
-                    tbLastName.Text = "admin";
-                    tbAddress.Text = "Rachelsmolen 1";
-                    tbCity.Text = "Eindhoven";
-                    tbZipCode.Text = "1234AA";
-                    tbPhoneNumber.Text = "06 23 41 42 12";
-                }
-                else
-                {
-                    Response.Write("<script>alert('Geen gebruiker gevonden');</script>");
-                }
-
+                DataTable table = new AccountBAL().GetAccount(this.tbSearchUserName.Text);
+                this.tbActivated.Text = table.Rows[0]["GEACTIVEERD"].ToString();
+                this.tbEmailAdress.Text = table.Rows[0]["EMAIL"].ToString();
+                this.tbUserName.Text = table.Rows[0]["GEBRUIKERSNAAM"].ToString();
+                this.tbFirstName.Text = table.Rows[0]["VOORNAAM"].ToString();
+                this.tbLastName.Text = table.Rows[0]["ACHTERNAAM"].ToString();
+                this.tbRank.Text = table.Rows[0]["ROL"].ToString();
+                this.tbAddress.Text = table.Rows[0]["STRAATNR"].ToString();
+                this.tbCity.Text = table.Rows[0]["WOONPLAATS"].ToString();
+                this.tbBankrek.Text = table.Rows[0]["BANKNR"].ToString();
             }
             catch (NullReferenceException)
             {
@@ -71,31 +52,22 @@ namespace ICT4Events.Account
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Response.Write("<script>alert('Gegevens opgeslagen');</script>");
-            tbActivated.Text = string.Empty;
-            tbEmailAdress.Text = string.Empty;
-            tbUserName.Text = string.Empty;
-            tbFirstName.Text = string.Empty;
-            tbLastName.Text = string.Empty;
-            tbAddress.Text = string.Empty;
-            tbCity.Text = string.Empty;
-            tbZipCode.Text = string.Empty;
-            tbPhoneNumber.Text = string.Empty;
-            /*try
+            try
             {
                 if (IsValid)
                 {
                     DataTable table = new AccountBAL().GetAccount(tbUserName.Text);
-                    new AccountBAL().UpdateAccount(Convert.ToInt32(table.Rows[0].Table.Columns["ACCOUNTID"]),
-                        Convert.ToInt32(tbRank.Text), tbUserName.Text,
-                        table.Rows[0].Table.Columns["WACHTWOORD"].ToString(), Convert.ToInt32(tbAge),
-                        tbInterests.Text, table.Rows[0].Table.Columns["SIGNATURE"].ToString());
+                    new AccountBAL().UpdateAccount(
+                        Convert.ToInt32(tbAccountID.Text),
+                        tbRank.Text,
+                        tbUserName.Text,
+                        tbPassword.Text);
                 }
             }
             catch(InvalidOperationException)
             {
                 Response.Write("<script>alert('Opslaan is mislukt');</script>");
-            }*/
+            }
         }
 
         protected void btnCreate_Click(object sender, EventArgs e)

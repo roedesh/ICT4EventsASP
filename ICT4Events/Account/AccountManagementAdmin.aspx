@@ -12,8 +12,11 @@
         <asp:Button ID="btSearchAccount" runat="server" Text="Zoeken" OnClick="btSearchAccount_Click" />
         <hr />
         <br />
+        <h2>AccountID:</h2>
+        <asp:TextBox ID="tbAccountID" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
+        <br />
         <h2>Is geactiveerd:</h2>
-        <asp:TextBox ID="tbActivated" TextMode="Email" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
+        <asp:TextBox ID="tbActivated" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <br />
         <h2>E-mailadres:</h2>
         <asp:TextBox ID="tbEmailAdress" TextMode="Email" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
@@ -27,7 +30,7 @@
 
         <h2>Wachtwoord:</h2>
         <br />
-        <asp:TextBox ID="tbPassword" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
+        <asp:TextBox ID="tbPassword" ReadOnly="true" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
 
         <a href="ChangePassword.aspx">Klik hier om uw wachtwoord veranderen</a>
         <br />
@@ -39,14 +42,6 @@
         <br />
         <asp:TextBox ID="tbLastName" runat="server" Height="25px" Width="250px"></asp:TextBox>
 
-        <h2>Leeftijd:</h2>
-        <br />
-        <asp:TextBox ID="tbAge" textmode="Number" runat="server" Height="25px" Width="250px"></asp:TextBox>
-
-        <h2>Intresses:</h2>
-        <br />
-        <asp:TextBox ID="tbInterests" runat="server" Height="100px" Width="400px"></asp:TextBox>
-
         <h2>Adres:</h2>
         <br />
         <asp:TextBox ID="tbAddress" runat="server" Height="25px" Width="250px"></asp:TextBox>
@@ -55,13 +50,13 @@
         <br />
         <asp:TextBox ID="tbCity" runat="server" Height="25px" Width="250px"></asp:TextBox>
 
-        <h2>Postcode:</h2>
-        <br />
-        <asp:TextBox ID="tbZipCode" runat="server" Height="25px" Width="250px"></asp:TextBox>
-
         <h2>TelefoonNummer:</h2>
         <br />
         <asp:TextBox ID="tbPhoneNumber" TextMode="Phone" runat="server" Height="25px" Width="250px"></asp:TextBox>
+
+        <h2>Bankrekening:</h2>
+        <br />
+        <asp:TextBox ID="tbBankrek" runat="server" Height="25px" Width="250px"></asp:TextBox>
 
         <br />
         <br />
