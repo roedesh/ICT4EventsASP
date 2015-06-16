@@ -35,28 +35,18 @@ namespace ICT4Events
 
         protected void CheckUsername(object source, ServerValidateEventArgs args)
         {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            if (Page.IsValid)
             {
-                conn.Open();
-                string checkUser = "select count(*) from dual where exists(select username from account where Username = :username)";
-                using (OracleCommand cmd = new OracleCommand(checkUser, conn))
+                try
                 {
-                    cmd.Parameters.Add(new OracleParameter("username", tbUsername.Text));
-                    try
-                    {
-                        int temp = Convert.ToInt32(cmd.ExecuteScalar().ToString());
-                        // If temp is higher than 0, user already exists
-                        if (temp > 0)
-                        {
-                            args.IsValid = false;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Response.Write("Error: " + ex.Message.ToString());
-                    }
+                    AccountBAL accountbal = new AccountBAL();
+                    accountbal.CheckUsername(tbUsername.Text);
                 }
-            }
+                catch (Exception)
+                {
+                    Response.Write("<script language=javascript>alert('Username in use!');</script>");
+                }
+            }            
         }
     }
 }
