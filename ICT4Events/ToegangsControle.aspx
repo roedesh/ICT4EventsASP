@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ToegangsControle.aspx.cs" Inherits="ICT4Events.ToegangsControle" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ToegangsControle.aspx.cs" Inherits="ICT4Events.ToegangsControle" EnableEventValidation = "false" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -14,24 +14,16 @@
     <asp:Button ID="btnSearchPerson" runat="server" Text="Zoek Persoon" Width="94px" OnClick="btnSearchPerson_Click" />
     <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="btnCheckInOut" runat="server" Text="Check in/uit" Width="94px" />
-&nbsp;<asp:Label ID="Label1" runat="server" Text="Betaalstatus:"></asp:Label>
+    <asp:Button ID="btnCheckInOut" runat="server" Text="Check in/uit" Width="94px" OnClick="btnCheckInOut_Click" />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Label ID="Label2" runat="server" Text="Gevonden personen:"></asp:Label>
     <br />
-    <asp:Button ID="btnShowAttendants" runat="server" Text="Toon alle aanwezige" Width="139px" />
+    <asp:Button ID="btnShowAttendants" runat="server" Text="Toon alle aanwezige" Width="139px" OnClick="btnShowAttendants_Click" />
 &nbsp;
-    <canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
 
-<script>
-
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-ctx.fillStyle = "#848484";
-ctx.fillRect(0, 0, 80, 100);
-
-</script>
-    <asp:ListBox ID="lbPersonInfo" runat="server" Height="77px" style="margin-top: 0px" Width="411px"></asp:ListBox>
     <br />
-&nbsp;
+&nbsp;<asp:TextBox ID="tbBetaald" runat="server" Height="44px" ReadOnly="True" style="margin-bottom: 0px"></asp:TextBox>
+&nbsp;<asp:GridView ID="gvData" runat="server" OnRowDataBound="gvData_RowDataBound" OnSelectedIndexChanged="gvData_SelectedIndexChanged">
+        </asp:GridView>
 </asp:Content>

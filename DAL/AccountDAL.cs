@@ -132,7 +132,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT p.*, r.BETAALD FROM ACCOUNT a, RESERVERING_POLSBANDJE rp, RESERVERING r, PERSOON p WHERE a.ID = rp.ACCOUNT_ID AND p.ID = r.PERSOON_ID AND r.ID = rp.RESERVERING_ID AND a.ACTIVATIEHASH = :barcode ";
+                string loadQuery = "SELECT p.*,rp.AANWEZIG, r.BETAALD FROM POLSBANDJE pb, RESERVERING_POLSBANDJE rp, RESERVERING r, PERSOON p WHERE p.ID = r.PERSOON_ID AND r.ID = rp.RESERVERING_ID AND pb.ID = POLSBANDJE_ID AND pb.BARCODE =  :barcode ";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -188,6 +188,30 @@ namespace DAL
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
                     DataTable t = new DataTable();
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
+        public DataTable LoadAllPersons(int aanwezig)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = "SELECT p.*,rp.AANWEZIG, r.BETAALD FROM PERSOON p, RESERVERING r, RESERVERING_POLSBANDJE rp WHERE p.ID = r.PERSOON_ID AND rp.RESERVERING_ID = r.ID AND rp.AANWEZIG = :aanwezig ";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    cmd.Parameters.Add(new OracleParameter("aanwezig", aanwezig));
                     try
                     {
                         a.Fill(t);

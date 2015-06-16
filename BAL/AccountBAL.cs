@@ -41,7 +41,17 @@
         {
             return new AccountDAL().LoadPerson(barcode);
         }
-
+        public DataTable GetPersonByAanwezig(int aanwezig)
+        {
+            if (aanwezig == 1 || aanwezig == 0)
+            {
+                return new AccountDAL().LoadAllPersons(aanwezig);
+            }
+            else
+            {
+                return null;
+            }
+        }
         public DataTable GetAccountLogin(string username, string password)
         {
             return new AccountDAL().Load(username, password);
