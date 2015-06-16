@@ -1,4 +1,8 @@
-﻿namespace DAL
+﻿// <copyright file="ReservationDAL.cs" company="RuudIT">
+//      Copyright (c) GHMusic. All rights reserved.
+// </copyright>
+// <author>Ruud Schroën</author>
+namespace DAL
 {
     using System;
     using System.Collections.Generic;
@@ -10,11 +14,16 @@
     using System.Threading.Tasks;
     using Oracle.DataAccess.Client;
 
+    /// <summary>
+    /// Class for storing, retrieving and deleting reservations
+    /// </summary>
     public class ReservationDAL
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ReservationDAL"/> class
+        /// </summary>
         public ReservationDAL()
         {
-
         }
 
         /// <summary>
@@ -54,7 +63,7 @@
                     }
                     catch (OracleException ex)
                     {
-                        Debug.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
@@ -62,13 +71,14 @@
         }
 
         /// <summary>
-        /// Method for inserting a Reservering record
+        /// Method for inserting a Reservation record
         /// </summary>
         /// <param name="personID">ID of person who created the reservation</param>
         /// <param name="beginDate">The start date of the reservation</param>
         /// <param name="endDate">The end date of the reservation</param>
         /// <returns>ID of the new reservation</returns>
-        public int Insert(int personID, DateTime beginDate, DateTime endDate){
+        public int Insert(int personID, DateTime beginDate, DateTime endDate) 
+        {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
@@ -89,7 +99,7 @@
                     }
                     catch (OracleException ex)
                     {
-                        Debug.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
@@ -121,7 +131,7 @@
                     }
                     catch (OracleException ex)
                     {
-                        Debug.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
@@ -148,7 +158,7 @@
                     }
                     catch (OracleException ex)
                     {
-                        Debug.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }

@@ -8,5 +8,10 @@ namespace DAL
 {
     public class EventDAL
     {
+        public EventDAL()
+        {
+
+        }
+
     }
 }
