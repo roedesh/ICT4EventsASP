@@ -1,8 +1,8 @@
-// <copyright file="MailHandling.cs" company="ICT4EventsASP">
+﻿// <copyright file="MailBAL.cs" company="ICT4EventsASP">
 //     Copyright (c) mailwithhmailserver. All rights reserved.
 // </copyright>
 // <author>Berry Verschueren</author>
-namespace mailwithhmailserver
+namespace BAL
 {
     using System;
     using System.Collections.Generic;
@@ -11,11 +11,7 @@ namespace mailwithhmailserver
     using System.Threading.Tasks;
     using System.Net.Mail;
     using System.Net;
-
-    /// <summary>
-    /// Class to handle mailing.
-    /// </summary>
-    class MailHandling
+    class MailBAL
     {
         /// <summary>
         /// Array value to work with.
@@ -28,9 +24,9 @@ namespace mailwithhmailserver
         int counter;
 
         /// <summary>
-        /// Initializes an instance of the MailHandling class.
+        /// Initializes an instance of the MailBAL class.
         /// </summary>
-        public MailHandling()
+        public MailBAL()
         {
             this.counter = 0;
         }
@@ -45,7 +41,7 @@ namespace mailwithhmailserver
         public string[] SendMail(string userID, string mailto, string hash)
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("{0}! <br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />", user);
+            sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
             string link = string.Format("http://www.PTS23.com/Register.aspx?RegistrationCode={0}{1}",
                                         userID.ToString(),
                                         hash.ToString());

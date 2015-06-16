@@ -15,9 +15,6 @@ namespace ICT4Events
         protected void Page_Load(object sender, EventArgs e)
         {
             tbBarcode.Focus();
-            imgPaymentStatus.ImageUrl = "";
-            imgPaymentStatus.ImageUrl = "";
-            imgPaymentStatus.ImageUrl = "";
         }
 
         protected void btnSearchPerson0_Click(object sender, EventArgs e)
@@ -50,6 +47,13 @@ namespace ICT4Events
             {
 
             }
+        }
+
+        protected void btnSearchPerson_Click(object sender, EventArgs e)
+        {
+            lbPersonInfo.Items.Clear();
+            DataTable dt = this.accountBal.GetAccount(tbSearchPerson.Text);
+
         }
     }
 }

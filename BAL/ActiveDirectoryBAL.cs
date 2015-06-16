@@ -1,8 +1,8 @@
-// <copyright file="ActiveDirectoryHandling.cs" company="ICT4EventsASP">
+﻿// <copyright file="ActiveDirectoryHandling.cs" company="ICT4EventsASP">
 //     Copyright (c) ADonderzoek. All rights reserved.
 // </copyright>
 // <author>Berry Verschueren</author>
-namespace ADonderzoek
+namespace BAL
 {
     using System;
     using System.Collections.Generic;
@@ -10,14 +10,12 @@ namespace ADonderzoek
     using System.Text;
     using System.Threading.Tasks;
     using System.DirectoryServices;
-    using System.Windows.Forms;
     using System.DirectoryServices.ActiveDirectory;
-
-    /// <summary>
-    /// Class to handle active directory.
-    /// </summary>
-    class ActiveDirectoryHandling
+    class ActiveDirectoryBAL
     {
+        /// <summary>
+        /// Class to handle active directory.
+        /// </summary>
 
         /// <summary>
         /// Integer value to work with.
@@ -37,9 +35,9 @@ namespace ADonderzoek
         const string url = "LDAP://CN=Users,DC=ICT4EVENTS,DC=PARENT";
 
         /// <summary>
-        /// Initializes an instance of the ActiveDirectoryHandling class.
+        /// Initializes an instance of the ActiveDirectoryBAL class.
         /// </summary>
-        public ActiveDirectoryHandling()
+        public ActiveDirectoryBAL()
         {
             this.counter = 0;
         }
@@ -228,6 +226,6 @@ namespace ADonderzoek
             }
 
             return this.returnValues;
-        }    
+        }
     }
 }

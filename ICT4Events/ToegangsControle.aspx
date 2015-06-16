@@ -11,7 +11,7 @@
     <br />
 &nbsp;<asp:Button ID="btnSearchPerson0" runat="server" Text="Zoek Persoon" Width="94px" OnClick="btnSearchPerson0_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <asp:Button ID="btnSearchPerson" runat="server" Text="Zoek Persoon" Width="94px" />
+    <asp:Button ID="btnSearchPerson" runat="server" Text="Zoek Persoon" Width="94px" OnClick="btnSearchPerson_Click" />
     <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <asp:Button ID="btnCheckInOut" runat="server" Text="Check in/uit" Width="94px" />
@@ -20,7 +20,17 @@
     <asp:Label ID="Label2" runat="server" Text="Gevonden personen:"></asp:Label>
     <br />
     <asp:Button ID="btnShowAttendants" runat="server" Text="Toon alle aanwezige" Width="139px" />
-&nbsp;<asp:Image ID="imgPaymentStatus" runat="server" Height="78px" Width="186px" BackColor="#CCCCCC" CssClass=" " ForeColor="#CCCCCC" ImageUrl="http://mineblocks.com/1/wiki/images/5/59/Empty.png" />
+&nbsp;
+    <canvas id="myCanvas">Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.fillStyle = "#848484";
+ctx.fillRect(0, 0, 80, 100);
+
+</script>
     <asp:ListBox ID="lbPersonInfo" runat="server" Height="77px" style="margin-top: 0px" Width="411px"></asp:ListBox>
     <br />
 &nbsp;
