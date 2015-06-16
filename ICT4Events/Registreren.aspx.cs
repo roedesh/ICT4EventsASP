@@ -48,5 +48,13 @@ namespace ICT4Events
                 }
             }            
         }
+
+        protected void btReset_Click(object sender, EventArgs e)
+        {
+            tbUsername.Text = String.Empty;
+            tbPassword.Text = String.Empty;
+            tbConfirmPassword.Text = String.Empty;
+            tbEmail.Text = String.Empty;
+        }
     }
 }
