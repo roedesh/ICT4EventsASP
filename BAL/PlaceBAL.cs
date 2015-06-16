@@ -18,5 +18,10 @@ namespace BAL
         {
             return new PlaceDAL().Insert(placeID, reservationID);
         }
+
+        public int DeletePlaceReservation(int reservationID)
+        {
+            return new PlaceDAL().DeletePlaceReservation(reservationID);
+        }
     }
 }

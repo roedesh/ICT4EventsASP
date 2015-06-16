@@ -1132,7 +1132,7 @@ INSERT INTO VERHUUR (ID,"PRODUCTEXEMPLAAR_ID","RES_PB_ID","DATUMIN","DATUMUIT","
 	  REFERENCES "PLEK" ("ID") ENABLE;
  
   ALTER TABLE "PLEK_RESERVERING" ADD CONSTRAINT "RESERVERINGPLEK_RESERVERING" FOREIGN KEY ("RESERVERING_ID")
-	  REFERENCES "RESERVERING" ("ID") ENABLE;
+	  REFERENCES "RESERVERING" ("ID") ON DELETE CASCADE ENABLE;
 --------------------------------------------------------
 --  REF CONSTRAINTS FOR TABLE PLEK_SPECIFICATIE
 --------------------------------------------------------
@@ -1374,3 +1374,29 @@ FOR EACH ROW
 END;
 /
 ALTER TRIGGER "VERHUUR_FCTG_BI" ENABLE;
+
+--------------------------------------------------------
+--  PROCEDURE VOOR HET VERWIJDEREN VAN RESERVERINGEN EN DE CHILD TABLES
+--------------------------------------------------------
+CREATE OR REPLACE PROCEDURE verwijderReservering(
+  reserveringID NUMBER
+)
+AS
+  isReservation NUMBER(10);
+  ex_custom EXCEPTION;
+  PRAGMA EXCEPTION_INIT( ex_custom, -20001 );
+BEGIN
+
+  SELECT COUNT(*) INTO isReservation FROM dual WHERE EXISTS(SELECT ID FROM Reservering WHERE ID = reserveringID);
+  IF isReservation = 0 THEN
+    RAISE_APPLICATION_ERROR(-20001,'My exception was raised');
+  END IF;
+  
+  DELETE FROM Verhuur WHERE RES_PB_ID IN (SELECT ID FROM Reservering_Polsbandje WHERE Reservering_ID = reserveringID);
+  DELETE FROM Reservering_Polsbandje WHERE Reservering_ID = reserveringID;
+  DELETE FROM Plek_Reservering WHERE Reservering_ID = reserveringID;
+  DELETE FROM Reservering WHERE ID = reserveringID; 
+  DELETE FROM Persoon WHERE ID IN (SELECT p.ID FROM Persoon p, Reservering r WHERE p.ID = r.Persoon_ID AND r.ID = reserveringID);
+  
+END verwijderReservering;
+/

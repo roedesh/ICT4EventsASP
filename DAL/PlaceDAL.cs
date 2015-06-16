@@ -43,6 +43,60 @@ namespace DAL
         }
 
         /// <summary>
+        /// Method for deleting a reservation
+        /// </summary>
+        /// <param name="placeID">ID of the place</param>
+        /// <returns>0 or 1</returns>
+        public int Delete(int placeID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM Plek WHERE ID = :placeID";
+                using (OracleCommand cmd = new OracleCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("placeID", placeID));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method for deleting a place reservation
+        /// </summary>
+        /// <param name="placeID">ID of the place</param>
+        /// <returns>0 or 1</returns>
+        public int DeletePlaceReservation(int reservationID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string query = "DELETE FROM Plek_Reservering WHERE RESERVERING_ID = :reservationID";
+                using (OracleCommand cmd = new OracleCommand(query, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("reservationID", reservationID));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Method for returning Oracle exceptions as string
         /// </summary>
         /// <param name="ex">Oracle exception</param>

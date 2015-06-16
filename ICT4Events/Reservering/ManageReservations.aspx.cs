@@ -28,19 +28,16 @@ namespace ICT4Events.Reservering
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if (e.CommandName == "Delete")
+            if (e.CommandName == "DeleteRow")
             {
                 // get the categoryID of the clicked row
                 int resID = Convert.ToInt32(e.CommandArgument);
                 // Delete the record 
                 new ReservationBAL().DeleteReservation(resID);
+                Response.Redirect(Request.RawUrl);
             }
         }
 
-        protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            int resID = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Value);
-            new ReservationBAL().DeleteReservation(resID);
-        }
+
     }
 }

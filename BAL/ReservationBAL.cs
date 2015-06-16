@@ -30,6 +30,11 @@
             return new ReservationDAL().Delete(reservationID);
         }
 
+        public int DeletePerson(int reservationID)
+        {
+            return new ReservationDAL().DeletePerson(reservationID);
+        }
+
 
     }
 }

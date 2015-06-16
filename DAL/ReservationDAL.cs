@@ -106,7 +106,39 @@
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = "DELETE FROM Reservering WHERE ID = :reservationID";
+                string insertQuery = "verwijderReservering";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    OracleParameter inval = new OracleParameter("reserveringID", OracleDbType.Int32);
+                    inval.Direction = ParameterDirection.Input;
+                    inval.Value = reservationID;
+                    cmd.Parameters.Add(inval);
+
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Method for deleting a person
+        /// </summary>
+        /// <param name="reservationID">ID of the reservation</param>
+        /// <returns>0 or 1</returns>
+        public int DeletePerson(int reservationID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "DELETE FROM Persoon WHERE ID = :reservationID";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("reservationID", reservationID));
