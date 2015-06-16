@@ -1,5 +1,5 @@
 ﻿// <copyright file="ReservationDAL.cs" company="RuudIT">
-//      Copyright (c) GHMusic. All rights reserved.
+//      Copyright (c) ICT4Events. All rights reserved.
 // </copyright>
 // <author>Ruud Schroën</author>
 namespace DAL
