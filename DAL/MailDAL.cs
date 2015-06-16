@@ -1,5 +1,4 @@
-﻿
-// <copyright file="MailDAL.cs" company="ICT4Events">
+﻿// <copyright file="MailDAL.cs" company="ICT4Events">
 //      Copyright (c) ICT4Events. All rights reserved.
 // </copyright>
 // <author>Berry Verschueren</author>
@@ -22,20 +21,25 @@ namespace DAL
         /// <summary>
         /// Integer value to work with.
         /// </summary>
-        int counter;
+        private int counter;
 
         /// <summary>
         /// String value to store the hash in.
         /// </summary>
-        string hash;
+        private string hash;
 
         /// <summary>
         /// String value to store the email in.
         /// </summary>
-        string email;
+        private string email;
 
         /// <summary>
-        /// Initializes an instance of the MailDAL class.
+        /// Integer to return in a method.
+        /// </summary>
+        private int resultValue;
+
+        /// <summary>
+        /// Initializes a new instance of the MailDAL class.
         /// </summary>
         public MailDAL()
         {
@@ -70,7 +74,7 @@ namespace DAL
                     }
                     finally
                     {
-                        if (counter > 0)
+                        if (this.counter > 0)
                         {
                             this.hash = null;
                             this.email = null;
@@ -82,5 +86,63 @@ namespace DAL
             return new string[] { this.hash, this.email };
         }
 
+        /// <summary>
+        /// Method to activate the account after clicking the activation link.
+        /// </summary>
+        /// <param name="userID">userID value</param>
+        /// <param name="hash">hash value</param>
+        /// <returns>Returns an integer value to see if the activation succeeded.</returns>
+        public int ActivateAccount(string userID, string hash)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                this.resultValue = 0;
+                string selectQuery = "SELECT COUNT(*) FROM DUAL WHERE EXISTS (SELECT * FROM ACCOUNT WHERE ID = :v1 AND ACTIVATIEHASH = :v2)";
+                using (OracleCommand cmd = new OracleCommand(selectQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("v1", userID));
+                    cmd.Parameters.Add(new OracleParameter("v2", hash));
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            this.counter = Convert.ToInt32(reader[0]);
+                        }
+
+                        if (this.counter > 0)
+                        {
+                            string updateQuery = "UPDATE ACCOUNT SET GEACTIVEERD = 1 WHERE ID = :v1";
+                            using (OracleCommand cmd1 = new OracleCommand(updateQuery, conn))
+                            {
+                                cmd1.Parameters.Add(new OracleParameter("v1", userID));
+                                try
+                                {
+                                    cmd1.ExecuteNonQuery();
+                                }
+                                catch (OracleException)
+                                {
+                                    this.counter = 0;
+                                }
+                                finally
+                                {
+                                    if (this.counter > 0)
+                                    {
+                                        this.resultValue = 1;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    catch (OracleException)
+                    {
+                        this.counter = 0;
+                    }
+
+                    return this.resultValue;
+                }
+            }
+        }
     }
 }

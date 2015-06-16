@@ -49,6 +49,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
@@ -65,7 +67,7 @@
     <Content Include="Event\EventManagementAdmin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Account\Login.aspx" />
-    <Content Include="LoginForm.aspx" />
+    <Content Include="ItemRental.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Post\Category.aspx" />
     <Content Include="Post\CreatePost.aspx" />
@@ -111,7 +113,6 @@
     <Compile Include="Account\MyAccount.aspx.designer.cs">
       <DependentUpon>MyAccount.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseConnectionClass.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -136,12 +137,12 @@
     <Compile Include="Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="LoginForm.aspx.cs">
-      <DependentUpon>LoginForm.aspx</DependentUpon>
+    <Compile Include="ItemRental.aspx.cs">
+      <DependentUpon>ItemRental.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="LoginForm.aspx.designer.cs">
-      <DependentUpon>LoginForm.aspx</DependentUpon>
+    <Compile Include="ItemRental.aspx.designer.cs">
+      <DependentUpon>ItemRental.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\Logout.aspx.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
@@ -152,18 +153,21 @@
     </Compile>
     <Compile Include="Post\Category.aspx.cs">
       <DependentUpon>Category.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Post\Category.aspx.designer.cs">
       <DependentUpon>Category.aspx</DependentUpon>
     </Compile>
     <Compile Include="Post\CreatePost.aspx.cs">
       <DependentUpon>CreatePost.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Post\CreatePost.aspx.designer.cs">
       <DependentUpon>CreatePost.aspx</DependentUpon>
     </Compile>
     <Compile Include="Post\Post.aspx.cs">
       <DependentUpon>Post.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Post\Post.aspx.designer.cs">
       <DependentUpon>Post.aspx</DependentUpon>

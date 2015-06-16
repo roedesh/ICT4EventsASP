@@ -31,7 +31,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, wachtwoord, email, activatiehash, geactiveerd) 
+                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, password, email, activatiehash, geactiveerd) 
                 VALUES (ACCOUNT_FCSEQ.nextval, :username, :password, :email, :hash, 0)";
                 string hash = Guid.NewGuid().ToString();
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
@@ -129,7 +129,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT p.*, r.BETAALD FROM ACCOUNT a, RESERVERING_POLSBANDJE rp, RESERVERING r, PERSOON p WHERE a.ID = rp.ACCOUNT_ID AND p.ID = r.PERSOON_ID AND r.ID = rp.RESERVERING_ID AND a.ACTIVATIEHASH = :barcode ";
+                string loadQuery = "SELECT p.*,rp.AANWEZIG, r.BETAALD FROM POLSBANDJE pb, RESERVERING_POLSBANDJE rp, RESERVERING r, PERSOON p WHERE p.ID = r.PERSOON_ID AND r.ID = rp.RESERVERING_ID AND pb.ID = POLSBANDJE_ID AND pb.BARCODE =  :barcode ";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -154,7 +154,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT * FROM Account WHERE Gebruikersnaam = :username AND Wachtwoord = :password";
+                string loadQuery = "SELECT * FROM Account WHERE Gebruikersnaam = :username AND password = :password";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -198,13 +198,37 @@ namespace DAL
                 }
             }
         }
+        public DataTable LoadAllPersons(int aanwezig)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = "SELECT p.*,rp.AANWEZIG, r.BETAALD FROM PERSOON p, RESERVERING r, RESERVERING_POLSBANDJE rp WHERE p.ID = r.PERSOON_ID AND rp.RESERVERING_ID = r.ID AND rp.AANWEZIG = :aanwezig ";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    cmd.Parameters.Add(new OracleParameter("aanwezig", aanwezig));
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
 
         public int Login(string username, string password)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT AccountID FROM Account WHERE Gebruikersnaam = :username AND Wachtwoord = :password)";
+                string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT ID FROM Account WHERE Gebruikersnaam = :username AND password = :password)";
                 using (OracleCommand cmd = new OracleCommand(checkUser, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("username", username));
