@@ -5,8 +5,8 @@
         width: 100%;
     }
     .auto-style2 {
-            width: 253px;
-        }
+        width: 253px;
+    }
     .auto-style3 {
         width: 253px;
         height: 30px;
@@ -146,7 +146,7 @@
     <tr>
         <td class="auto-style2">&nbsp;</td>
         <td>
-            <asp:Button ID="Button1" runat="server" Text="Reservering plaatsen" />
+            <asp:Button ID="Button1" runat="server" Text="Reservering plaatsen" OnClick="Button1_Click" />
         </td>
         <td>&nbsp;</td>
     </tr>

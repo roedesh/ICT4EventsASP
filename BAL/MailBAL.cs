@@ -1,8 +1,8 @@
-// <copyright file="MailHandling.cs" company="ICT4EventsASP">
+﻿// <copyright file="MailBAL.cs" company="ICT4EventsASP">
 //     Copyright (c) mailwithhmailserver. All rights reserved.
 // </copyright>
 // <author>Berry Verschueren</author>
-namespace mailwithhmailserver
+namespace BAL
 {
     using System;
     using System.Collections.Generic;
@@ -11,11 +11,8 @@ namespace mailwithhmailserver
     using System.Threading.Tasks;
     using System.Net.Mail;
     using System.Net;
-
-    /// <summary>
-    /// Class to handle mailing.
-    /// </summary>
-    class MailHandling
+    using DAL;
+    public class MailBAL
     {
         /// <summary>
         /// Array value to work with.
@@ -28,9 +25,9 @@ namespace mailwithhmailserver
         int counter;
 
         /// <summary>
-        /// Initializes an instance of the MailHandling class.
+        /// Initializes an instance of the MailBAL class.
         /// </summary>
-        public MailHandling()
+        public MailBAL()
         {
             this.counter = 0;
         }
@@ -42,11 +39,20 @@ namespace mailwithhmailserver
         /// <param name="mailto">mailto value</param>
         /// <param name="hash">hash value</param>
         /// <returns>an array with the userID, mailto, hash and an (1/0) errorOccurance index</returns>
-        public string[] SendMail(string userID, string mailto, string hash)
+        public string[] SendMail(string userID)
         {
+            MailDAL maildal = new MailDAL();
+            string[] personData = maildal.SelectHash(userID);
+            if (personData[0] == null && personData[1] == null)
+            {
+                return null;
+            }
+
+            string hash = personData[0];
+            string mailto = personData[1];
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("{0}! <br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />", user);
-            string link = string.Format("http://www.PTS23.com/Register.aspx?RegistrationCode={0}{1}",
+            sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
+            string link = string.Format("http://localhost:2359/Registreren.aspx?RegistrationCode={1}&AccountID={0}",
                                         userID.ToString(),
                                         hash.ToString());
             sb.AppendFormat(@"<a href=""{0}"">PTS23.com Complete Registration</a>", link);
@@ -83,6 +89,19 @@ namespace mailwithhmailserver
             }
 
             return this.returnValues;
+        }
+
+        /// <summary>
+        /// Activate the specified account by checking the hash.
+        /// </summary>
+        /// <param name="userID">userID value</param>
+        /// <param name="hash">hash value</param>
+        /// <returns>Returns the result of the method.</returns>
+        public bool ActivateAccount(string userID, string hash)
+        {
+            MailDAL maildal = new MailDAL();
+            int succesnumber = maildal.ActivateAccount(userID, hash);
+            return succesnumber == 0 ? false : true;
         }
     }
 }

@@ -14,15 +14,14 @@
         {
         }
 
-        public int CreateAccount(int rankID, string username, string password, int age, string interests, string signature)
+        public int CreateAccount(string username, string password, string email)
         {
-            return new AccountDAL().Insert(rankID, username, password, age, interests, signature);
-
+            return new AccountDAL().Insert(username, password, email);
         }
 
-        public int UpdateAccount(int accountID, int rankID, string username, string password, int age, string interests, string signature)
+        public int UpdateAccount(int accountID, string username, string password, string role)
         {
-            return new AccountDAL().Update(accountID, rankID, username, password, age, interests, signature);
+            return new AccountDAL().Update(accountID, username, password, role);
 
         }
 
@@ -41,6 +40,7 @@
         {
             return new AccountDAL().LoadPerson(barcode);
         }
+<<<<<<< HEAD
         public DataTable GetPersonByAanwezig(int aanwezig)
         {
             if (aanwezig == 1 || aanwezig == 0)
@@ -53,8 +53,12 @@
             }
         }
         public DataTable GetAccountLogin(string username, string password)
+=======
+
+        public int GetAccountLogin(string username, string password)
+>>>>>>> origin/master
         {
-            return new AccountDAL().Load(username, password);
+            return new AccountDAL().Login(username, password);
 
         }
 

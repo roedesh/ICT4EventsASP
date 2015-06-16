@@ -8,6 +8,7 @@ namespace DAL
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -25,56 +26,52 @@ namespace DAL
         { 
         }
 
-        public int Insert(int rankID, string username, string password, int age, string interests, string signature)
+        public int Insert(string username, string password, string email)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, wachtwoord, email, activatiehash, geactiveerd) 
-                VALUES (ACCOUNT_FCSEQ, :username, :password, :email, :hash, :activated)";
+                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, password, email, activatiehash, geactiveerd) 
+                VALUES (ACCOUNT_FCSEQ.nextval, :username, :password, :email, :hash, 0)";
+                string hash = Guid.NewGuid().ToString();
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
-                    cmd.Parameters.Add(new OracleParameter("rankID", rankID));
                     cmd.Parameters.Add(new OracleParameter("username", username));
                     cmd.Parameters.Add(new OracleParameter("password", password));
-                    cmd.Parameters.Add(new OracleParameter("age", age));
-                    cmd.Parameters.Add(new OracleParameter("interests", interests));
-                    cmd.Parameters.Add(new OracleParameter("signature", signature));
+                    cmd.Parameters.Add(new OracleParameter("email", email));
+                    cmd.Parameters.Add(new OracleParameter("hash", hash));
                     try
                     {
                         return cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                    catch (OracleException ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
             }
         }
 
-        public int Update(int accountID, int rankID, string username, string password, int age, string interests, string signature)
+        public int Update(int accountID, string username, string password, string role)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"UPDATE Account SET Gebruikersnaam = :username, Wachtwoord = :password, Leeftijd = :age, 
-                Interesses = :interests, Handtekening = :signature WHERE AccountID = :accountID";
+                string insertQuery = @"UPDATE Account SET Gebruikersnaam = :username, Wachtwoord = :password, ROL = :role WHERE AccountID = :accountID";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("username", username));
-                    cmd.Parameters.Add(new OracleParameter("password", password));
-                    cmd.Parameters.Add(new OracleParameter("age", age));
-                    cmd.Parameters.Add(new OracleParameter("interests", interests));
-                    cmd.Parameters.Add(new OracleParameter("signature", signature));
+                    cmd.Parameters.Add(new OracleParameter("password", password));;
                     cmd.Parameters.Add(new OracleParameter("accountID", accountID));
+                    cmd.Parameters.Add(new OracleParameter("role", role));
                     try
                     {
                         return cmd.ExecuteNonQuery();
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return 0;
                     }
                 }
@@ -96,7 +93,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return 0;
                     }
                 }
@@ -108,7 +105,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT * FROM Account WHERE gebruikersnaam = :gebruikersnaam";
+                string loadQuery = "SELECT * FROM ACCOUNT, PERSOON WHERE GEBRUIKERSNAAM = :gebruikersnaam";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -121,7 +118,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return t;
                     }
                 }
@@ -145,7 +142,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return t;
                     }
                 }
@@ -157,7 +154,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT * FROM Account WHERE Gebruikersnaam = :username AND Wachtwoord = :password";
+                string loadQuery = "SELECT * FROM Account WHERE Gebruikersnaam = :username AND password = :password";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -171,7 +168,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return t;
                     }
                 }
@@ -195,7 +192,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return t;
                     }
                 }
@@ -231,7 +228,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT AccountID FROM Account WHERE Gebruikersnaam = :username AND Wachtwoord = :password)";
+                string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT ID FROM Account WHERE Gebruikersnaam = :username AND password = :password)";
                 using (OracleCommand cmd = new OracleCommand(checkUser, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("username", username));
@@ -242,7 +239,7 @@ namespace DAL
                     }
                     catch (OracleException ex)
                     {
-                        Console.WriteLine(this.ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
@@ -264,13 +261,18 @@ namespace DAL
                     }
                     catch (OracleException ex)
                     {
-                        Console.WriteLine(this.ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Method for returning Oracle exceptions as string
+        /// </summary>
+        /// <param name="ex">Oracle exception</param>
+        /// <returns>Oracle exception as string</returns>
         public string ErrorString(OracleException ex)
         {
             return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;

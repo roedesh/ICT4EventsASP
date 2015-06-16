@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Oracle.DataAccess.Client;
+using System.Data;
+using BAL;
 
 namespace ICT4Events
 {
@@ -13,60 +15,68 @@ namespace ICT4Events
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Request.QueryString.Count != 0)
+            {
+                try
+                {
+                    string hash = Request.QueryString["RegistrationCode"].ToString();
+                    string userID = Request.QueryString["AccountID"].ToString();
+                    MailBAL mailbal = new MailBAL();
+                    bool b = mailbal.ActivateAccount(userID, hash);
+                    if (b)
+                    {
+                        Response.Write("<script language=javascript>alert('Registratie succesvol!');</script>");
+                    }
+                }
+                catch(Exception)
+                {
+                    Response.Write("<script language=javascript>alert('Er is iets mis gegaan bij de activatie van uw account.');</script>");
+                }
+            }
         }
 
         protected void btSubmit_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                try
                 {
-                    conn.Open();
-                    string insertQuery = "insert into ACCOUNT (Username, Email, Password) values (:username, :email, :password)";
-                    using (OracleCommand cmd2 = new OracleCommand(insertQuery, conn))
-                    {
-                        cmd2.Parameters.Add(new OracleParameter("username", tbUsername.Text));
-                        cmd2.Parameters.Add(new OracleParameter("email", tbEmail.Text));
-                        cmd2.Parameters.Add(new OracleParameter("password", tbPassword.Text));
-                        try
-                        {
-                            cmd2.ExecuteNonQuery();
-                            Response.Write("Registratie is succesvol voltooid!");
-                        }
-                        catch (Exception ex)
-                        {
-                            Response.Write("Error: " + ex.Message.ToString());
-                        }
-                    }
+                    AccountBAL accountbal = new AccountBAL();
+                    accountbal.CreateAccount(tbUsername.Text, tbPassword.Text, tbEmail.Text);
+                    DataTable t = accountbal.GetAccount(tbUsername.Text);
+                    string accountID = t.Rows[0]["ID"].ToString();
+                    MailBAL mailbal = new MailBAL();
+                    mailbal.SendMail(accountID);
+                }
+                catch (Exception)
+                {
+                    Response.Write("<script language=javascript>alert('Something went wrong during the account creation!');</script>");
                 }
             }
         }
 
         protected void CheckUsername(object source, ServerValidateEventArgs args)
         {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            if (Page.IsValid)
             {
-                conn.Open();
-                string checkUser = "select count(*) from dual where exists(select username from account where Username = :username)";
-                using (OracleCommand cmd = new OracleCommand(checkUser, conn))
+                try
                 {
-                    cmd.Parameters.Add(new OracleParameter("username", tbUsername.Text));
-                    try
-                    {
-                        int temp = Convert.ToInt32(cmd.ExecuteScalar().ToString());
-                        // If temp is higher than 0, user already exists
-                        if (temp > 0)
-                        {
-                            args.IsValid = false;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Response.Write("Error: " + ex.Message.ToString());
-                    }
+                    AccountBAL accountbal = new AccountBAL();
+                    accountbal.CheckUsername(tbUsername.Text);
                 }
-            }
+                catch (Exception)
+                {
+                    Response.Write("<script language=javascript>alert('Username in use!');</script>");
+                }
+            }            
+        }
+
+        protected void btReset_Click(object sender, EventArgs e)
+        {
+            tbUsername.Text = String.Empty;
+            tbPassword.Text = String.Empty;
+            tbConfirmPassword.Text = String.Empty;
+            tbEmail.Text = String.Empty;
         }
     }
 }
