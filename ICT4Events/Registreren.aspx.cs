@@ -21,7 +21,15 @@ namespace ICT4Events
         {
             if (Page.IsValid)
             {
-                
+                try
+                {
+                    AccountBAL accountbal = new AccountBAL();
+                    accountbal.CreateAccount(tbUsername.Text, tbPassword.Text, tbEmail.Text);
+                }
+                catch (Exception)
+                {
+                    Response.Write("<script language=javascript>alert('Something went wrong during the account creation!');</script>");
+                }
             }
         }
 
