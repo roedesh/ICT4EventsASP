@@ -74,3 +74,18 @@ V_ERRORCODE BOOLEAN;
 BEGIN
 InschrijvingPlaatsen('Berry','','Verschueren','Goudbergseweg','11','Strijbeek','NL33RABO0178902284','16-06-2015','18-06-2015',0,V_ERRORCODE);
 END;
+/
+CREATE OR REPLACE PROCEDURE DELETEUNACTIVE
+IS
+BEGIN
+DELETE FROM ACCOUNT WHERE GEACTIVEERD = 0;
+END;
+/
+BEGIN
+DBMS_SCHEDULER.CREATE_JOB (
+   job_name             => 'Delete_Not_Activated_Accounts', 
+   job_type             => 'STORED_PROCEDURE',
+   job_action           => 'DELETEUNACTIVE',
+   repeat_interval      => 'FREQ=MINUTELY;BYMINUTE=5',
+   comments             => 'Deletes all the accounts that are not activated within 5 minutes');
+END;
