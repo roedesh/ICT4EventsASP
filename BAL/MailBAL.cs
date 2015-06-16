@@ -39,12 +39,20 @@ namespace BAL
         /// <param name="mailto">mailto value</param>
         /// <param name="hash">hash value</param>
         /// <returns>an array with the userID, mailto, hash and an (1/0) errorOccurance index</returns>
-        public string[] SendMail(string userID, string hash, string mailto)
+        public string[] SendMail(string userID)
         {
+            MailDAL maildal = new MailDAL();
+            string[] personData = maildal.SelectHash(userID);
+            if (personData[0] == null && personData[1] == null)
+            {
+                return null;
+            }
 
+            string hash = personData[0];
+            string mailto = personData[1];
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
-            string link = string.Format("http://www.PTS23.com/Register.aspx?RegistrationCode={0}{1}",
+            string link = string.Format("http://www.pts23.com/Register.aspx?RegistrationCode={0}{1}",
                                         userID.ToString(),
                                         hash.ToString());
             sb.AppendFormat(@"<a href=""{0}"">PTS23.com Complete Registration</a>", link);

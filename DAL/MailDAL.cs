@@ -17,7 +17,7 @@ namespace DAL
     /// <summary>
     /// Class to retrieve data from the database, required to mail.
     /// </summary>
-    class MailDAL
+    public class MailDAL
     {
         /// <summary>
         /// Integer value to work with.
@@ -28,6 +28,11 @@ namespace DAL
         /// String value to store the hash in.
         /// </summary>
         string hash;
+
+        /// <summary>
+        /// String value to store the email in.
+        /// </summary>
+        string email;
 
         /// <summary>
         /// Initializes an instance of the MailDAL class.
@@ -41,12 +46,12 @@ namespace DAL
         /// </summary>
         /// <param name="userID">ID value of the requested person.</param>
         /// <returns>Returns a string value containing the hash.</returns>
-        public string SelectHash(string userID)
+        public string[] SelectHash(string userID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string selectQuery = "SELECT ACTIVATIEHASH FROM ACCOUNT WHERE ID = :v1";
+                string selectQuery = "SELECT ACTIVATIEHASH, EMAIL FROM ACCOUNT WHERE ID = :v1";
                 using (OracleCommand cmd = new OracleCommand(selectQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("v1", userID));
@@ -56,6 +61,7 @@ namespace DAL
                         if (reader.Read())
                         {
                             this.hash = reader[0].ToString();
+                            this.email = reader[1].ToString();
                         }
                     }
                     catch (OracleException)
@@ -67,12 +73,13 @@ namespace DAL
                         if (counter > 0)
                         {
                             this.hash = null;
+                            this.email = null;
                         }
                     }
                 }
             }
 
-            return this.hash;
+            return new string[] { this.hash, this.email };
         }
 
     }

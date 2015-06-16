@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Oracle.DataAccess.Client;
+using BAL;
 
 namespace ICT4Events
 {
@@ -20,26 +21,7 @@ namespace ICT4Events
         {
             if (Page.IsValid)
             {
-                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-                {
-                    conn.Open();
-                    string insertQuery = "insert into ACCOUNT (Username, Email, Password) values (:username, :email, :password)";
-                    using (OracleCommand cmd2 = new OracleCommand(insertQuery, conn))
-                    {
-                        cmd2.Parameters.Add(new OracleParameter("username", tbUsername.Text));
-                        cmd2.Parameters.Add(new OracleParameter("email", tbEmail.Text));
-                        cmd2.Parameters.Add(new OracleParameter("password", tbPassword.Text));
-                        try
-                        {
-                            cmd2.ExecuteNonQuery();
-                            Response.Write("Registratie is succesvol voltooid!");
-                        }
-                        catch (Exception ex)
-                        {
-                            Response.Write("Error: " + ex.Message.ToString());
-                        }
-                    }
-                }
+                
             }
         }
 
