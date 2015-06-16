@@ -34,16 +34,16 @@
             {
                 conn.Open();
                 string query = @"INSERT INTO Persoon VALUES 
-                (PERSOON_FCSEQ, :firstName, :insertion, :lastName, :street, :house_nr, :city, :iban) RETURNING id INTO :returnID";
+                (PERSOON_FCSEQ.nextval, :firstName, :insertion, :lastName, :street, :house_nr, :city, :iban) RETURNING id INTO :returnID";
                 using (OracleCommand cmd = new OracleCommand(query, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("firstName", firstName));
                     cmd.Parameters.Add(new OracleParameter("insertion", insertion));
                     cmd.Parameters.Add(new OracleParameter("lastName", lastName));
-                    cmd.Parameters.Add(new OracleParameter("street", lastName));
-                    cmd.Parameters.Add(new OracleParameter("house_nr", lastName));
-                    cmd.Parameters.Add(new OracleParameter("city", lastName));
-                    cmd.Parameters.Add(new OracleParameter("iban", lastName));
+                    cmd.Parameters.Add(new OracleParameter("street", street));
+                    cmd.Parameters.Add(new OracleParameter("house_nr", house_nr));
+                    cmd.Parameters.Add(new OracleParameter("city", city));
+                    cmd.Parameters.Add(new OracleParameter("iban", iban));
                     OracleParameter p1 = new OracleParameter("returnID", OracleDbType.Int32);
                     p1.Direction = ParameterDirection.Output;
                     cmd.Parameters.Add(p1);
@@ -73,12 +73,12 @@
             {
                 conn.Open();
                 string query = @"INSERT INTO Reservering VALUES 
-                (RESERVERING_FCSEQ.nextval, :personID, :beginDate, :endDate, 0) RETURNING id INTO :returnID";
+                (RESERVERING_FCSEQ.nextval, :personID, TO_DATE(:beginDate, 'dd/mm/yyyy'), TO_DATE(:endDate, 'dd/mm/yyyy'), 0) RETURNING id INTO :returnID";
                 using (OracleCommand cmd = new OracleCommand(query, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("personID", personID));
-                    cmd.Parameters.Add(new OracleParameter("beginDate", beginDate));
-                    cmd.Parameters.Add(new OracleParameter("endDate", endDate));
+                    cmd.Parameters.Add(new OracleParameter("beginDate", beginDate.ToString("dd-MM-yyyy")));
+                    cmd.Parameters.Add(new OracleParameter("endDate", endDate.ToString("dd-MM-yyyy")));
                     OracleParameter p1 = new OracleParameter("returnID", OracleDbType.Int32);
                     p1.Direction = ParameterDirection.Output;
                     cmd.Parameters.Add(p1);

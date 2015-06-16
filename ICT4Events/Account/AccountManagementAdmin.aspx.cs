@@ -80,7 +80,7 @@ namespace ICT4Events.Account
             tbLastName.Text = string.Empty;
             tbAddress.Text = string.Empty;
             tbCity.Text = string.Empty;
-            tbZipCode.Text = string.Empty;
+            //tbZipCode.Text = string.Empty;
             tbPhoneNumber.Text = string.Empty;
             /*try
             {
@@ -107,7 +107,7 @@ namespace ICT4Events.Account
             tbLastName.Text = string.Empty;
             tbAddress.Text = string.Empty;
             tbCity.Text = string.Empty;
-            tbZipCode.Text = string.Empty;
+            //tbZipCode.Text = string.Empty;
             tbPhoneNumber.Text = string.Empty;
             /*try
             {

@@ -50,7 +50,13 @@ namespace ICT4Events.Reservering
             ReservationBAL rBal = new ReservationBAL();
             PlaceBAL pBal = new PlaceBAL();
 
-            int personID = rBal.CreatePerson(tbFirstName.Text, tbMiddleName.Text, tbLastName.Text,
+            string insertion = tbMiddleName.Text;
+            if (string.IsNullOrEmpty(insertion))
+            {
+                insertion = "";
+            }
+
+            int personID = rBal.CreatePerson(tbFirstName.Text, insertion, tbLastName.Text,
                 tbStreet.Text, tbHouseNr.Text, tbCity.Text, tbBankAccount.Text);
             if (personID > 0)
             {

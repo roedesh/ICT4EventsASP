@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace DAL
             {
                 conn.Open();
                 string query = @"INSERT INTO Plek_Reservering VALUES 
-                (PLEK_RESERVERING_FCSEQ, :placeID, :reservationID)";
+                (PLEK_RESERVERING_FCSEQ.nextval, :placeID, :reservationID)";
                 using (OracleCommand cmd = new OracleCommand(query, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("placeID", placeID));
@@ -32,13 +33,23 @@ namespace DAL
                     {
                         return cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                    catch (OracleException ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine(ErrorString(ex));
                         return 0;
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Method for returning Oracle exceptions as string
+        /// </summary>
+        /// <param name="ex">Oracle exception</param>
+        /// <returns>Oracle exception as string</returns>
+        public string ErrorString(OracleException ex)
+        {
+            return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;
         }
     }
 }
