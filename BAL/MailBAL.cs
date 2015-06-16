@@ -11,6 +11,7 @@ namespace BAL
     using System.Threading.Tasks;
     using System.Net.Mail;
     using System.Net;
+    using DAL;
     class MailBAL
     {
         /// <summary>
@@ -38,8 +39,9 @@ namespace BAL
         /// <param name="mailto">mailto value</param>
         /// <param name="hash">hash value</param>
         /// <returns>an array with the userID, mailto, hash and an (1/0) errorOccurance index</returns>
-        public string[] SendMail(string userID, string mailto, string hash)
+        public string[] SendMail(string userID)
         {
+            string hash = 
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
             string link = string.Format("http://www.PTS23.com/Register.aspx?RegistrationCode={0}{1}",
