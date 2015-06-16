@@ -73,6 +73,15 @@ namespace ICT4Events.Account
         protected void btnCreate_Click(object sender, EventArgs e)
         {
             Response.Write("<script>alert('Account aangemaakt');</script>");
+            tbActivated.Text = string.Empty;
+            tbEmailAdress.Text = string.Empty;
+            tbUserName.Text = string.Empty;
+            tbFirstName.Text = string.Empty;
+            tbLastName.Text = string.Empty;
+            tbAddress.Text = string.Empty;
+            tbCity.Text = string.Empty;
+            tbZipCode.Text = string.Empty;
+            tbPhoneNumber.Text = string.Empty;
 
             /*try
             {
@@ -91,6 +100,16 @@ namespace ICT4Events.Account
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
+            Response.Write("<script>alert('Account verwijderd');</script>");
+            tbActivated.Text = string.Empty;
+            tbEmailAdress.Text = string.Empty;
+            tbUserName.Text = string.Empty;
+            tbFirstName.Text = string.Empty;
+            tbLastName.Text = string.Empty;
+            tbAddress.Text = string.Empty;
+            tbCity.Text = string.Empty;
+            tbZipCode.Text = string.Empty;
+            tbPhoneNumber.Text = string.Empty;
 
             /*try
             {
