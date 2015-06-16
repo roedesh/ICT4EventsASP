@@ -25,21 +25,20 @@ namespace DAL
         { 
         }
 
-        public int Insert(int rankID, string username, string password, int age, string interests, string signature)
+        public int Insert(string username, string password, string email)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
                 string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, wachtwoord, email, activatiehash, geactiveerd) 
-                VALUES (ACCOUNT_FCSEQ, :username, :password, :email, :hash, :activated)";
+                VALUES (ACCOUNT_FCSEQ, :username, :password, :email, :hash, 0)";
+                string hash = Guid.NewGuid().ToString();
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
-                    cmd.Parameters.Add(new OracleParameter("rankID", rankID));
                     cmd.Parameters.Add(new OracleParameter("username", username));
                     cmd.Parameters.Add(new OracleParameter("password", password));
-                    cmd.Parameters.Add(new OracleParameter("age", age));
-                    cmd.Parameters.Add(new OracleParameter("interests", interests));
-                    cmd.Parameters.Add(new OracleParameter("signature", signature));
+                    cmd.Parameters.Add(new OracleParameter("email", email));
+                    cmd.Parameters.Add(new OracleParameter("hash", hash));
                     try
                     {
                         return cmd.ExecuteNonQuery();
@@ -53,21 +52,18 @@ namespace DAL
             }
         }
 
-        public int Update(int accountID, int rankID, string username, string password, int age, string interests, string signature)
+        public int Update(int accountID, string username, string password, string role)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"UPDATE Account SET Gebruikersnaam = :username, Wachtwoord = :password, Leeftijd = :age, 
-                Interesses = :interests, Handtekening = :signature WHERE AccountID = :accountID";
+                string insertQuery = @"UPDATE Account SET Gebruikersnaam = :username, Wachtwoord = :password, ROL = :role WHERE AccountID = :accountID";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("username", username));
-                    cmd.Parameters.Add(new OracleParameter("password", password));
-                    cmd.Parameters.Add(new OracleParameter("age", age));
-                    cmd.Parameters.Add(new OracleParameter("interests", interests));
-                    cmd.Parameters.Add(new OracleParameter("signature", signature));
+                    cmd.Parameters.Add(new OracleParameter("password", password));;
                     cmd.Parameters.Add(new OracleParameter("accountID", accountID));
+                    cmd.Parameters.Add(new OracleParameter("role", role));
                     try
                     {
                         return cmd.ExecuteNonQuery();
@@ -108,7 +104,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT * FROM Account WHERE gebruikersnaam = :gebruikersnaam";
+                string loadQuery = "SELECT * FROM ACCOUNT, PERSOON WHERE GEBRUIKERSNAAM = :gebruikersnaam";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
