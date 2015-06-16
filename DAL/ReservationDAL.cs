@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Oracle.DataAccess.Client;
-
-namespace DAL
+﻿namespace DAL
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Oracle.DataAccess.Client;
+
     public class ReservationDAL
     {
         public ReservationDAL()
@@ -53,7 +54,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Console.WriteLine(ErrorString(ex));
                         return 0;
                     }
                 }
@@ -86,13 +87,23 @@ namespace DAL
                         cmd.ExecuteNonQuery();
                         return Convert.ToInt32(p1.Value.ToString());
                     }
-                    catch (Exception ex)
+                    catch (OracleException ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Console.WriteLine(ErrorString(ex));
                         return 0;
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Method for returning Oracle exceptions as string
+        /// </summary>
+        /// <param name="ex">Oracle exception</param>
+        /// <returns>Oracle exception as string</returns>
+        public string ErrorString(OracleException ex)
+        {
+            return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;
         }
     }
 }

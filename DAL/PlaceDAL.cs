@@ -9,7 +9,7 @@ using Oracle.DataAccess.Client;
 
 namespace DAL
 {
-    class PlaceDAL
+    public class PlaceDAL
     {
         public PlaceDAL()
         {
@@ -21,8 +21,8 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string query = @"INSERT INTO Persoon VALUES 
-                (PERSOON_FCSEQ, :placeID, :reservationID)";
+                string query = @"INSERT INTO Plek_Reservering VALUES 
+                (PLEK_RESERVERING_FCSEQ, :placeID, :reservationID)";
                 using (OracleCommand cmd = new OracleCommand(query, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("placeID", placeID));
