@@ -31,7 +31,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, wachtwoord, email, activatiehash, geactiveerd) 
+                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, password, email, activatiehash, geactiveerd) 
                 VALUES (ACCOUNT_FCSEQ.nextval, :username, :password, :email, :hash, 0)";
                 string hash = Guid.NewGuid().ToString();
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))

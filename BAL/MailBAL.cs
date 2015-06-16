@@ -12,7 +12,7 @@ namespace BAL
     using System.Net.Mail;
     using System.Net;
     using DAL;
-    class MailBAL
+    public class MailBAL
     {
         /// <summary>
         /// Array value to work with.
@@ -52,7 +52,7 @@ namespace BAL
             string mailto = personData[1];
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
-            string link = string.Format("http://www.pts23.com/Register.aspx?RegistrationCode={0}{1}",
+            string link = string.Format("http://localhost:2359/Registreren.aspx?RegistrationCode={1}&AccountID={0}",
                                         userID.ToString(),
                                         hash.ToString());
             sb.AppendFormat(@"<a href=""{0}"">PTS23.com Complete Registration</a>", link);
@@ -89,6 +89,19 @@ namespace BAL
             }
 
             return this.returnValues;
+        }
+
+        /// <summary>
+        /// Activate the specified account by checking the hash.
+        /// </summary>
+        /// <param name="userID">userID value</param>
+        /// <param name="hash">hash value</param>
+        /// <returns>Returns the result of the method.</returns>
+        public bool ActivateAccount(string userID, string hash)
+        {
+            MailDAL maildal = new MailDAL();
+            int succesnumber = maildal.ActivateAccount(userID, hash);
+            return succesnumber == 0 ? false : true;
         }
     }
 }
