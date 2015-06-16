@@ -15,6 +15,17 @@ namespace ICT4Events.Reservering
 
         }
 
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                LinkButton l = (LinkButton)e.Row.FindControl("btDelete");
+                l.Attributes.Add("onclick", "javascript:return " +
+                "confirm('Weet je zeker dat je dit record wil verwijderen? " +
+                DataBinder.Eval(e.Row.DataItem, "ID") + "')");
+            }
+        }
+
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             if (e.CommandName == "Delete")
@@ -22,14 +33,14 @@ namespace ICT4Events.Reservering
                 // get the categoryID of the clicked row
                 int resID = Convert.ToInt32(e.CommandArgument);
                 // Delete the record 
-                new ReservationBAL().Delete(resID);
+                new ReservationBAL().DeleteReservation(resID);
             }
         }
 
         protected void GridView1_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             int resID = (int)GridView1.DataKeys[e.RowIndex].Value;
-            new ReservationBAL().Delete(resID);
+            new ReservationBAL().DeleteReservation(resID);
         }
     }
 }
