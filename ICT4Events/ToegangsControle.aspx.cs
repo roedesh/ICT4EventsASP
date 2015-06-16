@@ -72,7 +72,27 @@ namespace ICT4Events
 
         protected void btnCheckInOut_Click(object sender, EventArgs e)
         {
-
+            string id = gvData.SelectedRow.Cells[0].Text;
+            string aanwezig = gvData.SelectedRow.Cells[8].Text;
+            try
+            {
+                int id2 = Convert.ToInt32(id);
+                int aanwezig2 = Convert.ToInt32(aanwezig);
+                if(aanwezig2 == 1 )
+                {
+                    int test = this.accountBal.UpdatePresence(id2, 0);
+                }
+                else if (aanwezig2 == 0)
+                {
+                    this.accountBal.UpdatePresence(id2, 1);
+                }
+                Response.Redirect("ToegangsControle.aspx");
+            }
+            catch
+            {
+                //foutmelding
+            }
+            
         }
 
         protected void btnShowAttendants_Click(object sender, EventArgs e)

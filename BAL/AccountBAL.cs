@@ -58,7 +58,6 @@
         public int GetAccountLogin(string username, string password)
         {
             return new AccountDAL().Login(username, password);
-
         }
 
         public DataTable GetAccount(string username, string password)
@@ -84,7 +83,11 @@
             return new AccountDAL().CheckUsername(username);
 
         }
+        public int UpdatePresence(int personID,int aanwezig)
+        {
+            return new AccountDAL().UpdatePresence(personID, aanwezig);
 
+        }
     }
 
 }
