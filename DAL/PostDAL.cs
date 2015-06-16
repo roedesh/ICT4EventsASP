@@ -69,20 +69,19 @@ namespace DAL
             }
         }
 
-        public int InsertFile(string account_ID, string date, string type, string category_id, string location, int)
+        public int InsertFile(string account_ID, string date, string type, string category_id, string location, string size)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"INSERT INTO Account (id, gebruikersnaam, wachtwoord, email, activatiehash, geactiveerd) 
-                VALUES (ACCOUNT_FCSEQ, :username, :password, :email, :hash, 0)";
-                string hash = Guid.NewGuid().ToString();
+                string insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) 
+                VALUES (BIJDRAGE_FCSEQ, :account_ID, :date, :type)";
+
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
-                    cmd.Parameters.Add(new OracleParameter("username", username));
-                    cmd.Parameters.Add(new OracleParameter("password", password));
-                    cmd.Parameters.Add(new OracleParameter("email", email));
-                    cmd.Parameters.Add(new OracleParameter("hash", hash));
+                    cmd.Parameters.Add(new OracleParameter("account_ID", account_ID));
+                    cmd.Parameters.Add(new OracleParameter("date", date));
+                    cmd.Parameters.Add(new OracleParameter("type", type));
                     try
                     {
                         return cmd.ExecuteNonQuery();
