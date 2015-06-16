@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BAL;
 
 namespace ICT4Events.Reservering
 {
@@ -38,6 +39,15 @@ namespace ICT4Events.Reservering
             {
                 args.IsValid = false;
             }
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            if (!Page.IsValid)
+                return;
+
+            ReservationBAL rBal = new ReservationBAL();
+            BerichtBAL bBal = new BerichtBAL();
         }
 
     }
