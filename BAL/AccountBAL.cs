@@ -14,9 +14,9 @@
         {
         }
 
-        public int CreateAccount(string username, string password, string email, string activationHash, int activated, string email)
+        public int CreateAccount(string username, string password, string email)
         {
-            return new AccountDAL().Insert(rankID, username, password, age, interests, signature);
+            return new AccountDAL().Insert(username, password, email);
         }
 
         public int UpdateAccount(int accountID, string username, string password, string role)

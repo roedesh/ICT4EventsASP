@@ -52,9 +52,9 @@
                         cmd.ExecuteNonQuery();
                         return Convert.ToInt32(p1.Value.ToString());
                     }
-                    catch (Exception ex)
+                    catch (OracleException ex)
                     {
-                        Console.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(ErrorString(ex));
                         return 0;
                     }
                 }
@@ -89,7 +89,7 @@
                     }
                     catch (OracleException ex)
                     {
-                        Console.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(ErrorString(ex));
                         return 0;
                     }
                 }

@@ -8,6 +8,7 @@ namespace DAL
     using System.Collections.Generic;
     using System.Configuration;
     using System.Data;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -43,9 +44,9 @@ namespace DAL
                     {
                         return cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                    catch (OracleException ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
@@ -70,7 +71,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return 0;
                     }
                 }
@@ -92,7 +93,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return 0;
                     }
                 }
@@ -117,7 +118,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return t;
                     }
                 }
@@ -141,7 +142,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return t;
                     }
                 }
@@ -167,7 +168,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return t;
                     }
                 }
@@ -191,7 +192,7 @@ namespace DAL
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
                         return t;
                     }
                 }
@@ -214,7 +215,7 @@ namespace DAL
                     }
                     catch (OracleException ex)
                     {
-                        Console.WriteLine(this.ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
@@ -236,13 +237,18 @@ namespace DAL
                     }
                     catch (OracleException ex)
                     {
-                        Console.WriteLine(this.ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// Method for returning Oracle exceptions as string
+        /// </summary>
+        /// <param name="ex">Oracle exception</param>
+        /// <returns>Oracle exception as string</returns>
         public string ErrorString(OracleException ex)
         {
             return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;
