@@ -71,6 +71,7 @@
     <Content Include="Post\CreatePost.aspx" />
     <Content Include="Post\Post.aspx" />
     <Content Include="Registreren.aspx" />
+    <Content Include="Reservering\ManageReservations.aspx" />
     <Content Include="Reservering\PlaatsReservering.aspx" />
     <Content Include="Site.Master" />
     <None Include="Properties\PublishProfiles\Berry.pubxml" />
@@ -174,6 +175,13 @@
     </Compile>
     <Compile Include="Registreren.aspx.designer.cs">
       <DependentUpon>Registreren.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reservering\ManageReservations.aspx.cs">
+      <DependentUpon>ManageReservations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reservering\ManageReservations.aspx.designer.cs">
+      <DependentUpon>ManageReservations.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reservering\PlaatsReservering.aspx.cs">
       <DependentUpon>PlaatsReservering.aspx</DependentUpon>

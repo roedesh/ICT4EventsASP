@@ -56,7 +56,11 @@
     <Compile Include="LocationDAL.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="MailDAL.cs" />
+=======
+    <Compile Include="PlaceDAL.cs" />
+>>>>>>> 54be41c773c81806a4292091e351683c12cd8b8d
     <Compile Include="PostDAL.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

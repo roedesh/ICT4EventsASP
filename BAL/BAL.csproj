@@ -53,6 +53,7 @@
     <Compile Include="LocationBAL.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="PlaceBAL.cs" />
     <Compile Include="MailBAL.cs" />
     <Compile Include="PostBAL.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
