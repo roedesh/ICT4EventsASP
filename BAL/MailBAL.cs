@@ -6,11 +6,15 @@ namespace BAL
 {
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
     using System.Linq;
     using System.Net;    
     using System.Net.Mail;
+    using System.Net.Mime;
     using System.Text;
     using System.Threading.Tasks;
+    using System.Web;
     using DAL;
 
     public class MailBAL
@@ -26,10 +30,21 @@ namespace BAL
         private int counter;
 
         /// <summary>
+        /// Boolean value indictating whether it's an activation e-mail or not.
+        /// </summary>
+        private bool activation;
+
+        /// <summary>
+        /// Filestream to use for attachments.
+        /// </summary>
+        private FileStream fs;
+
+        /// <summary>
         /// Initializes an instance of the MailBAL class.
         /// </summary>
-        public MailBAL()
+        public MailBAL(bool activation)
         {
+            this.activation = activation;
             this.counter = 0;
         }
 
@@ -65,22 +80,48 @@ namespace BAL
             {
                 MailMessage msg = new MailMessage();
                 msg.Subject = "Activation E-mail";
-                msg.From = new MailAddress("fontyspts23@gmail.com");
-                msg.Body = sb.ToString();
-                msg.To.Add(new MailAddress(mailto));
-                msg.IsBodyHtml = true;
-                SmtpClient smtp = new SmtpClient();
-                smtp.Host = "smtp.gmail.com";
-                smtp.Port = 587;
-                smtp.UseDefaultCredentials = false;
-                smtp.EnableSsl = true;
-                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                NetworkCredential loginCredentials = new NetworkCredential("fontyspts23@gmail.com", "PTS23PTS23");
-                smtp.Credentials = loginCredentials;
-                smtp.Send(msg);
+                
+                    maildal.GenerateBarcode();
+                    string appPath = HttpContext.Current.Request.ApplicationPath;
+                    string physicalPath = HttpContext.Current.Request.MapPath(appPath);
+                    using (fs = File.Open(physicalPath + "bitmap.jpeg", FileMode.Open))
+                    {
+                        if (!activation)
+                        {
+                        msg.Attachments.Add(new Attachment(fs, new ContentType(MediaTypeNames.Image.Jpeg)));
+                        sb.Clear();
+                        sb.Append("<br /><br /> Thank you for placing your reservation. " +
+                           "<br /><br />Please make sure to bring the attached <b>barcode</b> with you," +
+                           "<br />you will have to show this at the entrance of the event." +
+                           "<br />A digital version is also allowed, i.e. showing us this e-mail." +
+                           "<br />See you there!");
+                        msg.Subject = "Reservation E-mail";
+                        }
+                    msg.From = new MailAddress("fontyspts23@gmail.com");
+                    msg.Body = sb.ToString();
+                    msg.To.Add(new MailAddress(mailto));
+                    msg.IsBodyHtml = true;
+                    SmtpClient smtp = new SmtpClient();
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.UseDefaultCredentials = false;
+                    smtp.EnableSsl = true;
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    NetworkCredential loginCredentials = new NetworkCredential("fontyspts23@gmail.com", "PTS23PTS23");
+                    smtp.Credentials = loginCredentials;
+                    smtp.Send(msg);
+                    fs.Close();
+                }
+                    if (!activation)
+                    {
+                        string appP = HttpContext.Current.Request.ApplicationPath;
+                        string physicalP = HttpContext.Current.Request.MapPath(appP);
+                        File.Delete(physicalP + "bitmap.jpeg");
+                    }
             }
-            catch (SmtpException)
+            catch (SmtpException x)
             {
+                x.ToString();
                 this.counter++;
             }
             finally
@@ -103,5 +144,10 @@ namespace BAL
             int succesnumber = maildal.ActivateAccount(userID, hash);
             return succesnumber == 0 ? false : true;
         }
+
+        //public void InsertValuesPolsbandje()
+        //{
+        //    MailDAL maildal = new MailDAL();
+        //}
     }
 }
