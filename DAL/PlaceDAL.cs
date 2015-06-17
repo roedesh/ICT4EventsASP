@@ -9,11 +9,11 @@
     using System.Text;
     using System.Threading.Tasks;
     using Oracle.DataAccess.Client;
+
     public class PlaceDAL
     {
         public PlaceDAL()
         {
-
         }
 
         public int Insert(int placeID, int reservationID)

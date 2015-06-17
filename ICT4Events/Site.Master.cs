@@ -6,6 +6,7 @@
     using System.Web;
     using System.Web.UI;
     using System.Web.UI.WebControls;
+
     public partial class Site : System.Web.UI.MasterPage
     {
         public bool IsLoggedIn
@@ -13,6 +14,7 @@
             get;
             set;
         }
+
         public bool IsLoggedInAsAdmin
         {
             get;
@@ -33,7 +35,6 @@
             }
             else
             {
-
                 this.lbWelkom.Text = string.Empty;
                 this.IsLoggedIn = false;
                 this.IsLoggedInAsAdmin = false;

@@ -12,7 +12,8 @@
 
     public partial class ToegangsControle : System.Web.UI.Page
     {
-        BAL.AccountBAL accountBal = new BAL.AccountBAL();
+        private BAL.AccountBAL accountBal = new BAL.AccountBAL();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.tbBarcode.Focus();
@@ -32,8 +33,7 @@
         }
 
         protected void btnSearchPerson_Click(object sender, EventArgs e)
-        {
-            
+        {            
         }
 
         protected void gvData_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -51,6 +51,7 @@
             {
                 row.BackColor = Color.White;
             }
+
             this.gvData.SelectedRow.BackColor = Color.Pink;
             string betaald = this.gvData.SelectedRow.Cells[9].Text;
             try
@@ -90,8 +91,7 @@
             }
             catch
             {
-            }
-            
+            }            
         }
 
         protected void btnShowAttendants_Click(object sender, EventArgs e)

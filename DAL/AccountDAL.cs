@@ -124,6 +124,7 @@ namespace DAL
                 }
             }
         }
+
         public DataTable LoadPerson(string barcode)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -148,6 +149,7 @@ namespace DAL
                 }
             }
         }
+
         public int UpdatePresence(int personID, int aanwezig)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -220,6 +222,7 @@ namespace DAL
                 }
             }
         }
+
         public DataTable LoadAllPersons(int aanwezig)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))

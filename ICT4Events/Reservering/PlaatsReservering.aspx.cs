@@ -8,11 +8,11 @@
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using BAL;
+
     public partial class PlaatsReservering : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void calBeginData_SelectionChanged(object sender, EventArgs e)
@@ -43,8 +43,10 @@
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            if (!Page.IsValid)
-                return;
+            if (!Page.IsValid) 
+            { 
+                return; 
+            }
 
             ReservationBAL rBal = new ReservationBAL();
             PlaceBAL pBal = new PlaceBAL();
@@ -60,17 +62,18 @@
             {
                 Debug.WriteLine("Persoon aangemaakt!");
             }
+
             int reservationID = rBal.CreateReservation(personID, this.calBeginData.SelectedDate.Date, this.calEndDate.SelectedDate.Date);
             if (reservationID > 0)
             {
                 Debug.WriteLine("Reservering aangemaakt!");
             }
+
             int placeReservation = pBal.CreatePlaceReservation(Convert.ToInt32(this.ddPlace.SelectedItem.Value), reservationID);
             if (placeReservation > 0)
             {
                 Debug.WriteLine("Plek_Reservering aangemaakt!");
             }
         }
-
     }
 }

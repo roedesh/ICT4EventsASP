@@ -1,16 +1,15 @@
 ﻿namespace ICT4Events
 {
     using System;
-    using System.Configuration;
-    using System.Collections.Generic;    
+    using System.Collections.Generic;  
+    using System.Configuration;  
     using System.Data;
     using System.Linq;
     using System.Web;
     using System.Web.UI;
     using System.Web.UI.WebControls;
-    using Oracle.DataAccess.Client;
-
     using BAL;
+    using Oracle.DataAccess.Client;
 
     public partial class Registreren : System.Web.UI.Page
     {

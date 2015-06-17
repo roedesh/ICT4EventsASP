@@ -1,8 +1,5 @@
-﻿
-
-namespace ICT4Events.Account
+﻿namespace ICT4Events.Account
 {
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -27,8 +24,7 @@ namespace ICT4Events.Account
                 this.tbAddress.Text = "Rachelsmolen 1";
                 this.tbCity.Text = "Eindhoven";
                 this.tbZipCode.Text = "1234AA";
-                this.tbPhoneNumber.Text = "06 12 34 56 78";
-                
+                this.tbPhoneNumber.Text = "06 12 34 56 78";                
             }
         }
 

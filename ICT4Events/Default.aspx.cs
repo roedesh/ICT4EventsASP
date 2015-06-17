@@ -1,8 +1,5 @@
-﻿
-
-namespace ICT4Events
+﻿namespace ICT4Events
 {
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,7 +11,6 @@ namespace ICT4Events
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

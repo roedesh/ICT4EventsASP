@@ -6,11 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
     using DAL;
+
     public class PlaceBAL
     {
         public PlaceBAL()
         {
-
         }
 
         public int CreatePlaceReservation(int placeID, int reservationID)

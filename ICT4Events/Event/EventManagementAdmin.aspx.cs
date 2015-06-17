@@ -1,8 +1,5 @@
-﻿
-
-namespace ICT4Events.Event
+﻿namespace ICT4Events.Event
 {
-
     using System;
     using System.Collections.Generic;    
     using System.Data;
@@ -20,6 +17,7 @@ namespace ICT4Events.Event
             {
                 Response.Redirect("../Registreren.aspx");
             }
+
             if (Session["USER_ID"].ToString() != "admin")
             {
                 Response.Redirect("../Default.aspx");
@@ -33,11 +31,10 @@ namespace ICT4Events.Event
             this.tbCity.Text = string.Empty;
             this.tbEventname.Text = string.Empty;
             this.tbZipCode.Text = string.Empty;
-
         }
+
         protected void btnSave_Click(object sender, EventArgs e)
-        {
-            
+        {            
             Response.Write("<script>alert('Gegevens opgeslagen');</script>");
             this.tbAddress.Text = string.Empty;
             this.tbCity.Text = string.Empty;
@@ -58,8 +55,6 @@ namespace ICT4Events.Event
             {
                 Response.Write("<script>alert('Geen event gevonden');</script>");
             }
-        }
-
-        
+        }        
     }
 }

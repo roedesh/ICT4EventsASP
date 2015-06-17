@@ -7,11 +7,11 @@
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using BAL;
+
     public partial class ManageReservations : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -35,7 +35,5 @@
                 Response.Redirect(Request.RawUrl);
             }
         }
-
-
     }
 }

@@ -1,7 +1,5 @@
-﻿
-namespace ICT4Events
+﻿namespace ICT4Events
 {
-
     using System;
     using System.Collections.Generic; 
     using System.Data;
@@ -10,7 +8,6 @@ namespace ICT4Events
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using BAL;
-
 
     public partial class Login : System.Web.UI.Page
     {
@@ -22,13 +19,10 @@ namespace ICT4Events
             }
         }
 
-        
             protected void OnLoggingIn(object sender, System.Web.UI.WebControls.LoginCancelEventArgs e)
         {
-
             if (this.IsValid)
             {
-
                 string username = ((TextBox)this.Login1.FindControl("username")).Text;
                 string password = ((TextBox)this.Login1.FindControl("password")).Text;
                 int login = new AccountBAL().GetAccountLogin(username, password);
@@ -43,10 +37,8 @@ namespace ICT4Events
                 {
                     ((Literal)this.Login1.FindControl("FailureText")).Text = "Gebruikersnaam en/of wachtwoord is fout";
                     e.Cancel = true;
-                }
-                
-            }
-        
+                }                
+            }        
         }
     }
 }

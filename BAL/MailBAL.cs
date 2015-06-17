@@ -7,22 +7,23 @@ namespace BAL
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;    
+    using System.Net.Mail;
     using System.Text;
     using System.Threading.Tasks;
-    using System.Net.Mail;
-    using System.Net;
     using DAL;
+
     public class MailBAL
     {
         /// <summary>
         /// Array value to work with.
         /// </summary>
-        string[] returnValues;
+        private string[] returnValues;
 
         /// <summary>
         /// Integer value to work with.
         /// </summary>
-        int counter;
+        private int counter;
 
         /// <summary>
         /// Initializes an instance of the MailBAL class.
@@ -33,12 +34,12 @@ namespace BAL
         }
 
         /// <summary>
-        /// Method to send an activation email to a specified emailadress.
+        /// Method to send an activation email to a specified email address.
         /// </summary>
         /// <param name="userID">userID value</param>
         /// <param name="mailto">mailto value</param>
         /// <param name="hash">hash value</param>
-        /// <returns>an array with the userID, mailto, hash and an (1/0) errorOccurance index</returns>
+        /// <returns>an array with the userID, mailto, hash and an (1/0) error index</returns>
         public string[] SendMail(string userID)
         {
             MailDAL maildal = new MailDAL();
