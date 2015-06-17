@@ -5,9 +5,15 @@
 
         <div>
         <h1>Zoek naar een event:</h1>
+            <br />
             <asp:DropDownList ID="ddlAllEvents" runat="server"></asp:DropDownList>
             <br />
             <asp:Button ID="btnSearchEvent" runat="server" Text="Laad event" OnClick="btnSearchEvent_Click" />
+        <br />
+        <br />
+        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" />
+        <asp:Button ID="btnDelete" runat="server" Text="Verwijder event" />
+        &nbsp&nbsp&nbsp&nbsp<asp:Button ID="btnCreate" runat="server" Text="Maak event aan" OnClick="btnCreate_Click" />
         <hr />
         <br />
         <h2>EventID:</h2>
@@ -33,10 +39,6 @@
         <asp:TextBox ID="tbZipCode" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <br />
         <asp:TextBox ID="tbCity" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <br />
-        <br />
-        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" />
-        <asp:Button ID="btnCreate" runat="server" Text="Maak event aan" OnClick="btnCreate_Click" />
-        <asp:Button ID="btnDelete" runat="server" Text="Verwijder Event" />
+
     </div>
 </asp:Content>

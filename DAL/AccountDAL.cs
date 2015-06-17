@@ -120,7 +120,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = "DELETE FROM Account WHERE gebruikersnaam = :gebruikersnaam";
+                string insertQuery = "UPDATE Account SET geactiveerd = 0 WHERE gebruikersnaam = :gebruikersnaam";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("gebruikersnaam", username));
@@ -216,7 +216,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT ID FROM Account WHERE Gebruikersnaam = :username AND password = :password)";
+                string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT ID FROM Account WHERE Gebruikersnaam = :username AND password = :password AND geactiveerd = 1)";
                 using (OracleCommand cmd = new OracleCommand(checkUser, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("username", username));

@@ -26,7 +26,7 @@
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-            
+            Response.Redirect("../Event/CreateNewEvent.aspx");
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
