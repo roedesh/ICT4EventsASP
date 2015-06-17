@@ -38,22 +38,6 @@
             return new AccountDAL().Load(username);
 
         }
-        public DataTable GetAccountByBarcode(string barcode)
-        {
-            return new AccountDAL().LoadPerson(barcode);
-        }
-
-        public DataTable GetPersonByAanwezig(int aanwezig)
-        {
-            if (aanwezig == 1 || aanwezig == 0)
-            {
-                return new AccountDAL().LoadAllPersons(aanwezig);
-            }
-            else
-            {
-                return null;
-            }
-        }
 
         public int GetAccountLogin(string username, string password)
         {
@@ -83,11 +67,7 @@
             return new AccountDAL().CheckUsername(username);
 
         }
-        public int UpdatePresence(int personID,int aanwezig)
-        {
-            return new AccountDAL().UpdatePresence(personID, aanwezig);
 
-        }
     }
 
 }

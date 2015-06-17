@@ -12,13 +12,13 @@ namespace ICT4Events
 {
     public partial class ToegangsControle : System.Web.UI.Page
     {
-        BAL.AccountBAL accountBal = new BAL.AccountBAL();
+        BAL.RentalBAL rentalBal = new BAL.RentalBAL();
         protected void Page_Load(object sender, EventArgs e)
         {
             tbBarcode.Focus();
             if(!IsPostBack)
             {
-                DataTable dt = this.accountBal.GetPersonByAanwezig(1);
+                DataTable dt = this.rentalBal.GetPersonByAanwezig(1);
                 gvData.DataSource = dt;
                 gvData.DataBind();
             }
@@ -26,14 +26,26 @@ namespace ICT4Events
 
         protected void btnSearchPerson0_Click(object sender, EventArgs e)
         {
-            DataTable dt = this.accountBal.GetAccountByBarcode(tbBarcode.Text);
+            DataTable dt = this.rentalBal.GetAccountByBarcode(tbBarcode.Text);
             gvData.DataSource = dt;
             gvData.DataBind();
         }
 
         protected void btnSearchPerson_Click(object sender, EventArgs e)
         {
-            
+            DataTable dt;
+            try
+            {
+                int id = Convert.ToInt32(tbSearchPerson.Text);
+                dt = this.rentalBal.GetAccountByID(id);
+            }
+            catch
+            {
+                string name = tbSearchPerson.Text;
+                dt = this.rentalBal.GetAccountByName(name);
+            }
+            gvData.DataSource = dt;
+            gvData.DataBind();
         }
 
         protected void gvData_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -80,11 +92,11 @@ namespace ICT4Events
                 int aanwezig2 = Convert.ToInt32(aanwezig);
                 if(aanwezig2 == 1 )
                 {
-                    int test = this.accountBal.UpdatePresence(id2, 0);
+                    int test = this.rentalBal.UpdatePresence(id2, 0);
                 }
                 else if (aanwezig2 == 0)
                 {
-                    this.accountBal.UpdatePresence(id2, 1);
+                    this.rentalBal.UpdatePresence(id2, 1);
                 }
                 Response.Redirect("ToegangsControle.aspx");
             }
@@ -97,7 +109,7 @@ namespace ICT4Events
 
         protected void btnShowAttendants_Click(object sender, EventArgs e)
         {
-            DataTable dt = this.accountBal.GetPersonByAanwezig(1);
+            DataTable dt = this.rentalBal.GetPersonByAanwezig(1);
             gvData.DataSource = dt;
             gvData.DataBind();
         }
