@@ -11,11 +11,16 @@ namespace BAL
     using System.Threading.Tasks;
     using System.DirectoryServices;
     using System.DirectoryServices.ActiveDirectory;
+    
+    /// <summary>
+    /// Class to handle active directory.
+    /// </summary>
     class ActiveDirectoryBAL
-    {
+    {  
         /// <summary>
-        /// Class to handle active directory.
+        /// The path to use when working with active directory for our domain.
         /// </summary>
+        const string url = "LDAP://CN=Users,DC=ICT4EVENTS,DC=PARENT";
 
         /// <summary>
         /// Integer value to work with.
@@ -29,10 +34,6 @@ namespace BAL
         /// </summary>
         string[] returnValues;
 
-        /// <summary>
-        /// The path to use when working with active directory for our domain.
-        /// </summary>
-        const string url = "LDAP://CN=Users,DC=ICT4EVENTS,DC=PARENT";
 
         /// <summary>
         /// Initializes an instance of the ActiveDirectoryBAL class.

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using BAL;
-
-namespace ICT4Events.Reservering
+﻿namespace ICT4Events.Reservering
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+    using BAL;
     public partial class PlaatsReservering : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -18,12 +17,12 @@ namespace ICT4Events.Reservering
 
         protected void calBeginData_SelectionChanged(object sender, EventArgs e)
         {
-            cusValBeginDate.Validate();
+            this.cusValBeginDate.Validate();
         }
 
         protected void cusValBeginDate_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            if (calBeginData.SelectedDate <= DateTime.Now)
+            if (this.calBeginData.SelectedDate <= DateTime.Now)
             {
                 args.IsValid = false;
             }
@@ -31,12 +30,12 @@ namespace ICT4Events.Reservering
 
         protected void calEndDate_SelectionChanged(object sender, EventArgs e)
         {
-            cusValEndDate.Validate();
+            this.cusValEndDate.Validate();
         }
 
         protected void cusValEndDate_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            if (calEndDate.SelectedDate <= calBeginData.SelectedDate)
+            if (this.calEndDate.SelectedDate <= this.calBeginData.SelectedDate)
             {
                 args.IsValid = false;
             }
@@ -50,24 +49,23 @@ namespace ICT4Events.Reservering
             ReservationBAL rBal = new ReservationBAL();
             PlaceBAL pBal = new PlaceBAL();
 
-            string insertion = tbMiddleName.Text;
+            string insertion = this.tbMiddleName.Text;
             if (string.IsNullOrEmpty(insertion))
             {
-                insertion = "";
+                insertion = string.Empty;
             }
 
-            int personID = rBal.CreatePerson(tbFirstName.Text, insertion, tbLastName.Text,
-                tbStreet.Text, tbHouseNr.Text, tbCity.Text, tbBankAccount.Text);
+            int personID = rBal.CreatePerson(this.tbFirstName.Text, insertion, this.tbLastName.Text, this.tbStreet.Text, this.tbHouseNr.Text, this.tbCity.Text, this.tbBankAccount.Text);
             if (personID > 0)
             {
                 Debug.WriteLine("Persoon aangemaakt!");
             }
-            int reservationID = rBal.CreateReservation(personID, calBeginData.SelectedDate.Date, calEndDate.SelectedDate.Date);
+            int reservationID = rBal.CreateReservation(personID, this.calBeginData.SelectedDate.Date, this.calEndDate.SelectedDate.Date);
             if (reservationID > 0)
             {
                 Debug.WriteLine("Reservering aangemaakt!");
             }
-            int placeReservation = pBal.CreatePlaceReservation(Convert.ToInt32(ddPlace.SelectedItem.Value), reservationID);
+            int placeReservation = pBal.CreatePlaceReservation(Convert.ToInt32(this.ddPlace.SelectedItem.Value), reservationID);
             if (placeReservation > 0)
             {
                 Debug.WriteLine("Plek_Reservering aangemaakt!");

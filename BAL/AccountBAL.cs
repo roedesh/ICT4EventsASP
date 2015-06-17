@@ -83,7 +83,7 @@
             return new AccountDAL().CheckUsername(username);
 
         }
-        public int UpdatePresence(int personID,int aanwezig)
+        public int UpdatePresence(int personID, int aanwezig)
         {
             return new AccountDAL().UpdatePresence(personID, aanwezig);
 

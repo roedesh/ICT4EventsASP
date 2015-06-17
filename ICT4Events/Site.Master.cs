@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
-namespace ICT4Events
+﻿namespace ICT4Events
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
     public partial class Site : System.Web.UI.MasterPage
     {
         public bool IsLoggedIn
@@ -22,22 +21,22 @@ namespace ICT4Events
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["USER_ID"] != null)
+            if (this.Session["USER_ID"] != null)
             {
-                lbWelkom.Text = "(Welkom " + Session["USER_ID"] + ")";
-                IsLoggedIn = true;
+                this.lbWelkom.Text = "(Welkom " + this.Session["USER_ID"] + ")";
+                this.IsLoggedIn = true;
 
                 if (Session["USER_ROLE"].ToString() == "admin")
                 {
-                    IsLoggedInAsAdmin = true;
+                    this.IsLoggedInAsAdmin = true;
                 }
             }
             else
             {
-                
-                lbWelkom.Text = string.Empty;
-                IsLoggedIn = false;
-                IsLoggedInAsAdmin = false;
+
+                this.lbWelkom.Text = string.Empty;
+                this.IsLoggedIn = false;
+                this.IsLoggedInAsAdmin = false;
             }
         }
     }
