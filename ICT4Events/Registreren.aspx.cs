@@ -1,16 +1,16 @@
-﻿using System;
-using System.Configuration;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Oracle.DataAccess.Client;
-using System.Data;
-using BAL;
-
-namespace ICT4Events
+﻿namespace ICT4Events
 {
+    using System;
+    using System.Collections.Generic;  
+    using System.Configuration;  
+    using System.Data;
+    using System.Linq;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+    using BAL;
+    using Oracle.DataAccess.Client;
+
     public partial class Registreren : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -28,7 +28,7 @@ namespace ICT4Events
                         Response.Write("<script language=javascript>alert('Registratie succesvol!');</script>");
                     }
                 }
-                catch(Exception)
+                catch (Exception)
                 {
                     Response.Write("<script language=javascript>alert('Er is iets mis gegaan bij de activatie van uw account.');</script>");
                 }
@@ -42,8 +42,8 @@ namespace ICT4Events
                 try
                 {
                     AccountBAL accountbal = new AccountBAL();
-                    accountbal.CreateAccount(tbUsername.Text, tbPassword.Text, tbEmail.Text);
-                    DataTable t = accountbal.GetAccount(tbUsername.Text);
+                    accountbal.CreateAccount(this.tbUsername.Text, this.tbPassword.Text, this.tbEmail.Text);
+                    DataTable t = accountbal.GetAccount(this.tbUsername.Text);
                     string accountID = t.Rows[0]["ID"].ToString();
                     MailBAL mailbal = new MailBAL();
                     mailbal.SendMail(accountID);
@@ -62,7 +62,7 @@ namespace ICT4Events
                 try
                 {
                     AccountBAL accountbal = new AccountBAL();
-                    accountbal.CheckUsername(tbUsername.Text);
+                    accountbal.CheckUsername(this.tbUsername.Text);
                 }
                 catch (Exception)
                 {
@@ -73,10 +73,10 @@ namespace ICT4Events
 
         protected void btReset_Click(object sender, EventArgs e)
         {
-            tbUsername.Text = String.Empty;
-            tbPassword.Text = String.Empty;
-            tbConfirmPassword.Text = String.Empty;
-            tbEmail.Text = String.Empty;
+            this.tbUsername.Text = string.Empty;
+            this.tbPassword.Text = string.Empty;
+            this.tbConfirmPassword.Text = string.Empty;
+            this.tbEmail.Text = string.Empty;
         }
     }
 }

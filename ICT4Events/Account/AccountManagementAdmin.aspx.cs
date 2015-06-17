@@ -1,15 +1,14 @@
-﻿
-namespace ICT4Events.Account
+﻿namespace ICT4Events.Account
 {
-
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Web;
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using BAL;
-    using System.Data;
+
     public partial class AccountManagementAdmin : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
@@ -22,8 +21,6 @@ namespace ICT4Events.Account
             //{
             //    Response.Redirect("../Default.aspx");
             //}
-
-
         }
 
         protected void btSearchAccount_Click(object sender, EventArgs e)
@@ -53,11 +50,11 @@ namespace ICT4Events.Account
             {
                 Response.Write("<script>alert('Er is iets fout gegaan probeer het opnieuw');</script>");
             }
+
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-
                 if (IsValid)
                 {
                     string confirmValue = Request.Form["confirm_value"];
@@ -98,13 +95,17 @@ namespace ICT4Events.Account
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {/*
+            
             try
             {
-                if (IsValid)
+                if (this.IsValid)
                 {
-                    //SIGNATURE????? WAT IS DAT
-                    new AccountBAL().CreateAccount(Convert.ToInt32(tbRank.Text), tbUserName.Text, tbPassword.Text,
-                        Convert.ToInt32(tbAge.Text), tbInterests.Text, "WAT IS DIT??");
+                    DataTable table = new AccountBAL().GetAccount(this.tbUserName.Text);
+                    new AccountBAL().UpdateAccount(
+                        Convert.ToInt32(this.tbAccountID.Text),
+                        this.tbRank.Text,
+                        this.tbUserName.Text,
+                        this.tbPassword.Text);
                 }
             }
             catch (InvalidOperationException)

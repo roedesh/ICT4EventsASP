@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Oracle.DataAccess.Client;
-
-namespace DAL
+﻿namespace DAL
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Oracle.DataAccess.Client;
+
     public class PlaceDAL
     {
         public PlaceDAL()
         {
-
         }
 
         public int Insert(int placeID, int reservationID)
@@ -35,7 +34,7 @@ namespace DAL
                     }
                     catch (OracleException ex)
                     {
-                        Debug.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
@@ -62,7 +61,7 @@ namespace DAL
                     }
                     catch (OracleException ex)
                     {
-                        Debug.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }
@@ -89,7 +88,7 @@ namespace DAL
                     }
                     catch (OracleException ex)
                     {
-                        Debug.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         return 0;
                     }
                 }

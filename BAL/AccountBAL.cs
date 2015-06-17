@@ -22,7 +22,6 @@
         public int UpdateAccount(int accountID, string username, string password, string role)
         {
             return new AccountDAL().Update(accountID, username, password, role);
-
         }
 
         public int UpdateAccount(int accountID, string username, string password, string role,
@@ -38,16 +37,13 @@
         public int DeleteAccount(string username)
         {
             return new AccountDAL().Delete(username);
-
         }
-
-
 
         public DataTable GetAccount(string username)
         {
             return new AccountDAL().Load(username);
-
         }
+
         public DataTable GetAccountByBarcode(string barcode)
         {
             return new AccountDAL().LoadPerson(barcode);
@@ -79,24 +75,21 @@
         public DataTable GetAllAccounts()
         {
             return new AccountDAL().LoadAll();
-
         }
 
         public int Login(string username, string password)
         {
             return new AccountDAL().Login(username, password);
-
         }
 
         public int CheckUsername(string username)
         {
             return new AccountDAL().CheckUsername(username);
-
         }
-        public int UpdatePresence(int personID,int aanwezig)
+
+        public int UpdatePresence(int personID, int aanwezig)
         {
             return new AccountDAL().UpdatePresence(personID, aanwezig);
-
         }
     }
 

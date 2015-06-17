@@ -1,8 +1,5 @@
-﻿
-
-namespace ICT4Events.Account
+﻿namespace ICT4Events.Account
 {
-
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -16,7 +13,7 @@ namespace ICT4Events.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["USER_ID"] == null)
+            if (this.Session["USER_ID"] == null)
             {
                 Response.Redirect("../Registreren.aspx");
             }
@@ -31,6 +28,7 @@ namespace ICT4Events.Account
                 this.tbStreetNum.Text = table.Rows[0]["HUISNR"].ToString();
                 this.tbZipCode.Text = table.Rows[0]["WOONPLAATS"].ToString();
                 this.tbBankrek.Text = table.Rows[0]["BANKNR"].ToString();
+
             }
         }
 
