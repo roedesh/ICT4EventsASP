@@ -12,6 +12,8 @@
 
     public partial class ToegangsControle : System.Web.UI.Page
     {
+        DataTable dt;
+        BAL.RentalBAL rentalBal = new BAL.RentalBAL();
         private BAL.AccountBAL accountBal = new BAL.AccountBAL();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -19,7 +21,9 @@
             this.tbBarcode.Focus();
             if (!this.IsPostBack)
             {
-                DataTable dt = this.accountBal.GetPersonByAanwezig(1);
+                this.dt = this.rentalBal.GetPersonByAanwezig(1);
+                gvData.DataSource = dt;
+                gvData.DataBind();
                 this.gvData.DataSource = dt;
                 this.gvData.DataBind();
             }
@@ -27,13 +31,27 @@
 
         protected void btnSearchPerson0_Click(object sender, EventArgs e)
         {
-            DataTable dt = this.accountBal.GetAccountByBarcode(this.tbBarcode.Text);
-            this.gvData.DataSource = dt;
-            this.gvData.DataBind();
+            this.dt = this.rentalBal.GetAccountByBarcode(tbBarcode.Text);
+            gvData.DataSource = dt;
+            gvData.DataBind();
         }
 
         protected void btnSearchPerson_Click(object sender, EventArgs e)
-        {            
+        {
+            try
+            {
+                int id = Convert.ToInt32(tbSearchPerson.Text);
+                this.dt = this.rentalBal.GetAccountByID(id);
+            }
+            catch
+            {
+                string name = tbSearchPerson.Text;
+                this.dt = this.rentalBal.GetAccountByName(name);
+            }
+            gvData.DataSource = dt;
+            gvData.DataBind();
+            this.gvData.DataSource = dt;
+            this.gvData.DataBind();
         }
 
         protected void gvData_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -80,13 +98,12 @@
                 int aanwezig2 = Convert.ToInt32(aanwezig);
                 if (aanwezig2 == 1)
                 {
-                    int test = this.accountBal.UpdatePresence(id2, 0);
+                    int test = this.rentalBal.UpdatePresence(id2, 0);
                 }
                 else if (aanwezig2 == 0)
                 {
-                    this.accountBal.UpdatePresence(id2, 1);
-                } 
-
+                    this.rentalBal.UpdatePresence(id2, 1);
+                }
                 Response.Redirect("ToegangsControle.aspx");
             }
             catch
@@ -96,7 +113,7 @@
 
         protected void btnShowAttendants_Click(object sender, EventArgs e)
         {
-            DataTable dt = this.accountBal.GetPersonByAanwezig(1);
+            DataTable dt = this.rentalBal.GetPersonByAanwezig(1);
             this.gvData.DataSource = dt;
             this.gvData.DataBind();
         }
