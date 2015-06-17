@@ -1,8 +1,5 @@
-﻿
-
-namespace ICT4Events.Account
+﻿namespace ICT4Events.Account
 {
-
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,21 +11,20 @@ namespace ICT4Events.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["USER_ID"] == null)
+            if (this.Session["USER_ID"] == null)
             {
                 Response.Redirect("../Registreren.aspx");
             }
             else
             {
-                tbEmailAdress.Text = "email@ict4events.nl";
-                tbUserName.Text = Session["USER_ID"].ToString();
-                tbFirstName.Text = "voornaam";
-                tbLastName.Text = "achternaam";
-                tbAddress.Text = "Rachelsmolen 1";
-                tbCity.Text = "Eindhoven";
-                tbZipCode.Text = "1234AA";
-                tbPhoneNumber.Text = "06 12 34 56 78";
-                
+                this.tbEmailAdress.Text = "email@ict4events.nl";
+                this.tbUserName.Text = Session["USER_ID"].ToString();
+                this.tbFirstName.Text = "voornaam";
+                this.tbLastName.Text = "achternaam";
+                this.tbAddress.Text = "Rachelsmolen 1";
+                this.tbCity.Text = "Eindhoven";
+                this.tbZipCode.Text = "1234AA";
+                this.tbPhoneNumber.Text = "06 12 34 56 78";                
             }
         }
 

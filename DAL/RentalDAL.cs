@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data;
-using System.Configuration;
-using Oracle.DataAccess.Client;
-using System.Diagnostics;
-
-namespace DAL
+﻿﻿namespace DAL
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Oracle.DataAccess.Client; 
+
     public class RentalDAL
     {
         public DataTable LoadPerson(string barcode)

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DAL;
-using System.Data;
-
-namespace BAL
+﻿﻿namespace BAL
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using DAL;
+
     public class RentalBAL
     {
         public DataTable GetAccountByBarcode(string barcode)

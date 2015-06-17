@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using BAL;
-
-namespace ICT4Events.Reservering
+﻿namespace ICT4Events.Reservering
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.UI;
+    using System.Web.UI.WebControls;
+    using BAL;
+
     public partial class ManageReservations : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -20,9 +19,8 @@ namespace ICT4Events.Reservering
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 LinkButton l = (LinkButton)e.Row.FindControl("btDelete");
-                l.Attributes.Add("onclick", "javascript:return " +
-                "confirm('Weet je zeker dat je dit record wil verwijderen? " +
-                DataBinder.Eval(e.Row.DataItem, "ID") + "')");
+                l.Attributes.Add(
+                    "onclick", "javascript:return " + "confirm('Weet je zeker dat je dit record wil verwijderen? " + DataBinder.Eval(e.Row.DataItem, "ID") + "')");
             }
         }
 
@@ -37,7 +35,5 @@ namespace ICT4Events.Reservering
                 Response.Redirect(Request.RawUrl);
             }
         }
-
-
     }
 }

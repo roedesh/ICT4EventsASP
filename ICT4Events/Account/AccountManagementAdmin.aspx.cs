@@ -1,29 +1,27 @@
-﻿
-namespace ICT4Events.Account
+﻿namespace ICT4Events.Account
 {
-
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Web;
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using BAL;
-    using System.Data;
+
     public partial class AccountManagementAdmin : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["USER_ID"] == null)
+            if (this.Session["USER_ID"] == null)
             {
                 Response.Redirect("../Registreren.aspx");
             }
+
             if (Session["USER_ID"].ToString() != "admin")
             {
                 Response.Redirect("../Default.aspx");
             }
-
-
         }
 
         protected void btSearchAccount_Click(object sender, EventArgs e)
@@ -45,25 +43,23 @@ namespace ICT4Events.Account
             {
                 Response.Write("<script>alert('Geen gebruiker gevonden');</script>");
             }
-            
-
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
             try
             {
-                if (IsValid)
+                if (this.IsValid)
                 {
-                    DataTable table = new AccountBAL().GetAccount(tbUserName.Text);
+                    DataTable table = new AccountBAL().GetAccount(this.tbUserName.Text);
                     new AccountBAL().UpdateAccount(
-                        Convert.ToInt32(tbAccountID.Text),
-                        tbRank.Text,
-                        tbUserName.Text,
-                        tbPassword.Text);
+                        Convert.ToInt32(this.tbAccountID.Text),
+                        this.tbRank.Text,
+                        this.tbUserName.Text,
+                        this.tbPassword.Text);
                 }
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 Response.Write("<script>alert('Opslaan is mislukt');</script>");
             }
@@ -72,14 +68,14 @@ namespace ICT4Events.Account
         protected void btnCreate_Click(object sender, EventArgs e)
         {
             Response.Write("<script>alert('Account aangemaakt');</script>");
-            tbActivated.Text = string.Empty;
-            tbEmailAdress.Text = string.Empty;
-            tbUserName.Text = string.Empty;
-            tbFirstName.Text = string.Empty;
-            tbLastName.Text = string.Empty;
-            tbAddress.Text = string.Empty;
-            tbCity.Text = string.Empty;
-            tbPhoneNumber.Text = string.Empty;
+            this.tbActivated.Text = string.Empty;
+            this.tbEmailAdress.Text = string.Empty;
+            this.tbUserName.Text = string.Empty;
+            this.tbFirstName.Text = string.Empty;
+            this.tbLastName.Text = string.Empty;
+            this.tbAddress.Text = string.Empty;
+            this.tbCity.Text = string.Empty;
+            this.tbPhoneNumber.Text = string.Empty;
 
             /*try
             {
@@ -99,14 +95,14 @@ namespace ICT4Events.Account
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             Response.Write("<script>alert('Account verwijderd');</script>");
-            tbActivated.Text = string.Empty;
-            tbEmailAdress.Text = string.Empty;
-            tbUserName.Text = string.Empty;
-            tbFirstName.Text = string.Empty;
-            tbLastName.Text = string.Empty;
-            tbAddress.Text = string.Empty;
-            tbCity.Text = string.Empty;
-            tbPhoneNumber.Text = string.Empty;
+            this.tbActivated.Text = string.Empty;
+            this.tbEmailAdress.Text = string.Empty;
+            this.tbUserName.Text = string.Empty;
+            this.tbFirstName.Text = string.Empty;
+            this.tbLastName.Text = string.Empty;
+            this.tbAddress.Text = string.Empty;
+            this.tbCity.Text = string.Empty;
+            this.tbPhoneNumber.Text = string.Empty;
 
             /*try
             {

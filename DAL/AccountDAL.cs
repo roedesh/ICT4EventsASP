@@ -62,7 +62,7 @@ namespace DAL
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("username", username));
-                    cmd.Parameters.Add(new OracleParameter("password", password));;
+                    cmd.Parameters.Add(new OracleParameter("password", password));
                     cmd.Parameters.Add(new OracleParameter("accountID", accountID));
                     cmd.Parameters.Add(new OracleParameter("role", role));
                     try
@@ -174,7 +174,6 @@ namespace DAL
                 }
             }
         }
-
         public int Login(string username, string password)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
