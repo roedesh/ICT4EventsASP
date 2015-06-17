@@ -78,6 +78,43 @@ namespace DAL
             }
         }
 
+        public int Update(int accountID, string username, string password, string role, string email, int activated, string firstname,
+            string lastname, string street, int streetNum, string zip, string bankNum)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "UPDATE Account SET Gebruikersnaam = :username, Email = :email, Password = :password, ROL = :role WHERE ID = :accountID";
+                string insertQuery2 = "UPDATE Persoon SET Voornaam = :firstname, Achternaam = :lastname, Straat = :street, huisnr = :streetnum, woonplaats = :zip, banknr = :banknum WHERE ID = :accountID";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("username", username));
+                    cmd.Parameters.Add(new OracleParameter("email", username));
+                    cmd.Parameters.Add(new OracleParameter("password", password)); 
+                    cmd.Parameters.Add(new OracleParameter("role", role));
+                    cmd.Parameters.Add(new OracleParameter("accountID", accountID));
+                    OracleCommand cmd2 = new OracleCommand(insertQuery2, conn);
+                    cmd2.Parameters.Add(new OracleParameter("fistname", firstname));
+                    cmd2.Parameters.Add(new OracleParameter("lastname", lastname));
+                    cmd2.Parameters.Add(new OracleParameter("street", street));
+                    cmd2.Parameters.Add(new OracleParameter("streetnum", streetNum));
+                    cmd2.Parameters.Add(new OracleParameter("zip", zip));
+                    cmd2.Parameters.Add(new OracleParameter("banknum", bankNum));
+                    cmd2.Parameters.Add(new OracleParameter("accountID", accountID));
+                    try
+                    {
+                        cmd2.ExecuteNonQuery();
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
+
         public int Delete(string username)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))

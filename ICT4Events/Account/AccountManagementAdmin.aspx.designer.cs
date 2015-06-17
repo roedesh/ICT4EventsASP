@@ -40,13 +40,13 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.TextBox tbAccountID;
         
         /// <summary>
-        /// tbActivated control.
+        /// ddlActivated control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbActivated;
+        protected global::System.Web.UI.WebControls.DropDownList ddlActivated;
         
         /// <summary>
         /// tbEmailAdress control.
@@ -103,13 +103,31 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.TextBox tbLastName;
         
         /// <summary>
-        /// tbAddress control.
+        /// tbStreet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbAddress;
+        protected global::System.Web.UI.WebControls.TextBox tbStreet;
+        
+        /// <summary>
+        /// tbStreetNum control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbStreetNum;
+        
+        /// <summary>
+        /// tbZipCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbZipCode;
         
         /// <summary>
         /// tbCity control.
@@ -119,15 +137,6 @@ namespace ICT4Events.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbCity;
-        
-        /// <summary>
-        /// tbPhoneNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbPhoneNumber;
         
         /// <summary>
         /// tbBankrek control.

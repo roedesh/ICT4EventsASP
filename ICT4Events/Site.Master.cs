@@ -27,7 +27,7 @@ namespace ICT4Events
                 lbWelkom.Text = "(Welkom " + Session["USER_ID"] + ")";
                 IsLoggedIn = true;
 
-                if (Session["USER_ROLE"].ToString() == "admin")
+                if (Session["USER_ROLE"].ToString() == "ADMIN")
                 {
                     IsLoggedInAsAdmin = true;
                 }

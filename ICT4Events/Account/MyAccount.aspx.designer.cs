@@ -49,22 +49,22 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.TextBox tbLastName;
         
         /// <summary>
-        /// tbAddress control.
+        /// tbStreet control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbAddress;
+        protected global::System.Web.UI.WebControls.TextBox tbStreet;
         
         /// <summary>
-        /// tbCity control.
+        /// tbStreetNum control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbCity;
+        protected global::System.Web.UI.WebControls.TextBox tbStreetNum;
         
         /// <summary>
         /// tbZipCode control.
@@ -76,13 +76,22 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.TextBox tbZipCode;
         
         /// <summary>
-        /// tbPhoneNumber control.
+        /// tbCity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbPhoneNumber;
+        protected global::System.Web.UI.WebControls.TextBox tbCity;
+        
+        /// <summary>
+        /// tbBankrek control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbBankrek;
         
         /// <summary>
         /// btnSave control.
