@@ -13,47 +13,54 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (this.Session["USER_ID"] == null)
-            {
-                Response.Redirect("../Registreren.aspx");
-            }
-
-            if (Session["USER_ID"].ToString() != "admin")
-            {
-                Response.Redirect("../Default.aspx");
-            }
+            //if (Session["USER_ROLE"].ToString() != "ADMIN")
+            //{
+            //    Response.Redirect("../Default.aspx");
+            //}
+            DataTable table = new EventBAL().GetAllEvents();
+            ddlAllEvents.DataSource = table;
+            ddlAllEvents.DataTextField = "NAAM";
+            ddlAllEvents.DataValueField = "NAAM";
+            ddlAllEvents.DataBind();
         }
 
         protected void btnCreate_Click(object sender, EventArgs e)
         {
-            Response.Write("<script>alert('Gegevens opgeslagen');</script>");
-            this.tbAddress.Text = string.Empty;
-            this.tbCity.Text = string.Empty;
-            this.tbEventname.Text = string.Empty;
-            this.tbZipCode.Text = string.Empty;
+            Response.Redirect("../Event/CreateNewEvent.aspx");
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {            
-            Response.Write("<script>alert('Gegevens opgeslagen');</script>");
-            this.tbAddress.Text = string.Empty;
-            this.tbCity.Text = string.Empty;
-            this.tbEventname.Text = string.Empty;
-            this.tbZipCode.Text = string.Empty;
+            
         }
 
         protected void btnSearchEvent_Click(object sender, EventArgs e)
         {
-            if (this.tbSearchEvent.Text == "ICT4Events")
+            try
             {
-                this.tbAddress.Text = "Rachelsmolen 1";
-                this.tbCity.Text = "Eindhoven";
-                this.tbEventname.Text = "ICT4Events";
-                this.tbZipCode.Text = "1234AA";
+                DataTable table = new EventBAL().GetEvent(this.ddlAllEvents.SelectedItem.Text);
+                this.tbEventID.Text = table.Rows[0]["ID"].ToString();
+                this.tbEventname.Text = table.Rows[0]["NAAM"].ToString();
+                this.tbStartDate.Text = table.Rows[0]["DATUMSTART"].ToString();
+                this.tbEndDate.Text = table.Rows[0]["DATUMEINDE"].ToString();
+                this.tbMaxVis.Text = table.Rows[0]["MAXBEZOEKERS"].ToString();
+                this.tbLocationName.Text = table.Rows[0]["LOCNAAM"].ToString();
+                this.tbStreet.Text = table.Rows[0]["STRAAT"].ToString();
+                this.tbStreetNr.Text = table.Rows[0]["STRAATNR"].ToString();
+                this.tbZipCode.Text = table.Rows[0]["POSTCODE"].ToString();
+                this.tbCity.Text = table.Rows[0]["PLAATS"].ToString();
             }
-            else
+            catch (IndexOutOfRangeException)
             {
                 Response.Write("<script>alert('Geen event gevonden');</script>");
+            }
+            catch (ArgumentException)
+            {
+                Response.Write("<script>alert('Niet alle gegevens konden worden geladen');</script>");
+            }
+            catch (Exception)
+            {
+                Response.Write("<script>alert('Er is iets fout gegaan probeer het opnieuw');</script>");
             }
         }        
     }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -9,5 +10,20 @@
 
     public class EventBAL
     {
+
+        public DataTable GetEvent(string eventName)
+        {
+            return new EventDAL().Load(eventName);
+        }
+
+        public DataTable GetAllEvents()
+        {
+            return new EventDAL().Load();
+        }
+
+        public int CreateEvent(int locationID, string name, DateTime start, DateTime end, int maxVis)
+        {
+            return new EventDAL().Insert(locationID, name, start, end, maxVis);
+        }
     }
 }

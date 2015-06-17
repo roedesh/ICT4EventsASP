@@ -34,8 +34,27 @@
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Response.Write("<script>alert('Gegevens zijn opgeslagen');</script>");
-            Response.Redirect("../Account/MyAccount.aspx");
+            try
+            {
+                DataTable table = new AccountBAL().GetAccount(Session["USER_ID"].ToString());
+                new AccountBAL().UpdateAccount(
+                                Convert.ToInt32(table.Rows[0]["ID"].ToString()),
+                                table.Rows[0]["ROL"].ToString(),
+                                table.Rows[0]["GEBRUIKERSNAAM"].ToString(),
+                                table.Rows[0]["PASSWORD"].ToString(),
+                                this.tbEmailAdress.Text,
+                                Convert.ToInt32(table.Rows[0]["GEACTIVEERD"].ToString()),
+                                this.tbFirstName.Text,
+                                this.tbLastName.Text,
+                                this.tbStreet.Text,
+                                Convert.ToInt32(this.tbStreetNum.Text),
+                                tbZipCode.Text,
+                                tbBankrek.Text);
+            }
+            catch(Exception)
+            {
+                Response.Write("<script>alert('Er is iets fout gegaan tijdens het opslaan, probeer het opnieuw');</script>");
+            }
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)

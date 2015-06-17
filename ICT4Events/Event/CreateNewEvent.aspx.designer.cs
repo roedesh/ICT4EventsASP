@@ -7,46 +7,37 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ICT4Events.Event {
+namespace ICT4Events {
     
     
-    public partial class EventManagementAdmin {
+    public partial class CreateNewEvent {
         
         /// <summary>
-        /// ddlAllEvents control.
+        /// ddlAllLocations control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlAllEvents;
+        protected global::System.Web.UI.WebControls.DropDownList ddlAllLocations;
         
         /// <summary>
-        /// btnSearchEvent control.
+        /// btnLoadLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearchEvent;
+        protected global::System.Web.UI.WebControls.Button btnLoadLocation;
         
         /// <summary>
-        /// btnSave control.
+        /// btnCreateLocation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
-        
-        /// <summary>
-        /// btnDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
+        protected global::System.Web.UI.WebControls.Button btnCreateLocation;
         
         /// <summary>
         /// btnCreate control.
@@ -58,13 +49,13 @@ namespace ICT4Events.Event {
         protected global::System.Web.UI.WebControls.Button btnCreate;
         
         /// <summary>
-        /// tbEventID control.
+        /// btnCancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbEventID;
+        protected global::System.Web.UI.WebControls.Button btnCancel;
         
         /// <summary>
         /// tbEventname control.
