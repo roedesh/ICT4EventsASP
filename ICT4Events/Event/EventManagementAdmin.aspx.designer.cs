@@ -13,13 +13,13 @@ namespace ICT4Events.Event {
     public partial class EventManagementAdmin {
         
         /// <summary>
-        /// tbSearchEvent control.
+        /// ddlAllEvents control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbSearchEvent;
+        protected global::System.Web.UI.WebControls.DropDownList ddlAllEvents;
         
         /// <summary>
         /// btnSearchEvent control.
@@ -31,6 +31,15 @@ namespace ICT4Events.Event {
         protected global::System.Web.UI.WebControls.Button btnSearchEvent;
         
         /// <summary>
+        /// tbEventID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbEventID;
+        
+        /// <summary>
         /// tbEventname control.
         /// </summary>
         /// <remarks>
@@ -40,22 +49,58 @@ namespace ICT4Events.Event {
         protected global::System.Web.UI.WebControls.TextBox tbEventname;
         
         /// <summary>
-        /// tbAddress control.
+        /// tbStartDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbAddress;
+        protected global::System.Web.UI.WebControls.TextBox tbStartDate;
         
         /// <summary>
-        /// tbCity control.
+        /// tbEndDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbCity;
+        protected global::System.Web.UI.WebControls.TextBox tbEndDate;
+        
+        /// <summary>
+        /// tbMaxVis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbMaxVis;
+        
+        /// <summary>
+        /// tbLocationName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbLocationName;
+        
+        /// <summary>
+        /// tbStreet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbStreet;
+        
+        /// <summary>
+        /// tbStreetNr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbStreetNr;
         
         /// <summary>
         /// tbZipCode control.
@@ -65,6 +110,15 @@ namespace ICT4Events.Event {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbZipCode;
+        
+        /// <summary>
+        /// tbCity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbCity;
         
         /// <summary>
         /// btnSave control.
