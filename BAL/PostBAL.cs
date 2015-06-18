@@ -23,5 +23,20 @@
         }
 
         #endregion
+
+        public DataTable GetAllPosts(string id)
+        {
+            return new PostDAL().LoadCategoryFiles(id);
+        }
+        
+        public DataTable GetPost(string id)
+        {
+            return new PostDAL().LoadFile(id);
+        }
+
+        public DataTable GetMessages(string id)
+        {
+            return new PostDAL().LoadPostMessages(id);
+        }
     }
 }
