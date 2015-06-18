@@ -293,6 +293,7 @@ namespace DAL
         private int InsertPost(string userName, string type)
         {
             int result = 0;
+            int id = 0;
             string insertQuery = string.Empty;
             try
             {
@@ -301,15 +302,35 @@ namespace DAL
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
-                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) VALUES (BIJDRAGE_FCSEQ.nextval, :accountID, TO_DATE(:uploadDate, 'dd/mm/yyyy'), :kind)";
+
+                    string query = @"SELECT BIJDRAGE_FCSEQ.NEXTVAL FROM DUAL";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                id = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+
+                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) VALUES (:id, :accountID, TO_DATE(:uploadDate, 'dd/mm/yyyy'), :kind)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
                         cmd.Parameters.Add(new OracleParameter("accountID", accountID));
                         cmd.Parameters.Add(new OracleParameter("uploadDate", DateTime.Now.ToString("dd-MM-yyyy")));
-                        cmd.Parameters.Add(new OracleParameter("kind", "BESTAND"));
+                        cmd.Parameters.Add(new OracleParameter("kind", type));
 
                         result = cmd.ExecuteNonQuery();
+                        if (result != 0)
+                        {
+                            result = id;
+                        }
+
                     }
                 }
             }
@@ -362,27 +383,34 @@ namespace DAL
             string insertQuery = string.Empty;
             try
             {
-                this.InsertPost(userName, "CATEGORIE");
+                int id = this.InsertPost(userName, "CATEGORIE");
 
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
 
+                    if (parentName == string.Empty)
+                    {
+                        insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, NAAM) VALUES (:id, :categoryName)";
+                    }
+                    else
+                    {
+                        insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, CATEGORIE_ID, NAAM) VALUES (:id, :parentID, :categoryName)";
+                    }
+
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
                         if (parentName == string.Empty)
                         {
-                            insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, NAAM) VALUES (BIJDRAGE_FCSEQ.currval, :name)";
-
-                            cmd.Parameters.Add(new OracleParameter("name", name));
+                            cmd.Parameters.Add(new OracleParameter("id", id));
+                            cmd.Parameters.Add(new OracleParameter("categoryName", name));
                         }
                         else
                         {
                             string parentID = this.GetCategoryID(parentName).ToString();
 
-                            insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, CATEGORIE_ID, NAAM) VALUES (BIJDRAGE_FCSEQ.currval, :parentID, :name)";
-
-                            cmd.Parameters.Add(new OracleParameter("name", name));
+                            cmd.Parameters.Add(new OracleParameter("id", id));
+                            cmd.Parameters.Add(new OracleParameter("categoryName", name));
                             cmd.Parameters.Add(new OracleParameter("parentID", parentID));
                         }
 
