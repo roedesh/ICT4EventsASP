@@ -23,6 +23,9 @@
         <asp:TextBox ID="tbSearchUserName" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <br />
         <asp:Button ID="btSearchAccount" runat="server" Text="Zoeken" OnClick="btSearchAccount_Click" />
+        <br />
+        <asp:DropDownList ID="ddlAllAcounts" runat="server"></asp:DropDownList>
+        <asp:Button ID="btnLoadUser" runat="server" Text="Persoon laden" OnClick="btnLoadUser_Click" />
         <hr />
         <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" OnClientClick="Confirm()"/>
         <asp:Button ID="btnCreate" runat="server" Text="Maak account aan" OnClick="btnCreate_Click" />

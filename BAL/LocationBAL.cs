@@ -24,6 +24,14 @@
             return new LocationDAL().Load(name);
         }
 
+        public int SetLocation(string naam, string straat, string straatNr, string postcode, string plaats)
+        {
+            return new LocationDAL().Insert(naam, straat, straatNr, postcode, plaats);
+        }
 
+        public int DeleteLocation(string naam)
+        {
+            return new LocationDAL().Delete(naam);
+        }
     }
 }

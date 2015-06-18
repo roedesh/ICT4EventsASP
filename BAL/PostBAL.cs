@@ -22,6 +22,16 @@
             return new PostDAL().LoadChildCategories(id);
         }
 
+        public DataTable GetAllCategories()
+        {
+            return new PostDAL().LoadAllCategories();
+        }
+
+        public int CreateCategory(string username, string categoryid, string name)
+        {
+            return new PostDAL().InsertCategory(username, categoryid, name);
+        }
+
         #endregion
 
         public DataTable GetAllPosts(string id)

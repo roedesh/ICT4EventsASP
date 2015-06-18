@@ -21,7 +21,7 @@
             return new EventDAL().Load();
         }
 
-        public int CreateEvent(int locationID, string name, DateTime start, DateTime end, int maxVis)
+        public int CreateEvent(int locationID, string name, string start, string end, int maxVis)
         {
             return new EventDAL().Insert(locationID, name, start, end, maxVis);
         }
