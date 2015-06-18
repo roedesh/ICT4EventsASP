@@ -40,15 +40,15 @@
             return new AccountDAL().Load(username);
         }
 
-        public int GetAccountLogin(string username, string password)
-        {
-            return new AccountDAL().Login(username, password);
-        }
-
         public DataTable GetAccount(string username, string password)
         {
             return new AccountDAL().Load(username, password);
 
+        }
+
+        public int GetAccountLogin(string username, string password)
+        {
+            return new AccountDAL().Login(username, password);
         }
 
         public DataTable GetAllAccounts()
@@ -64,6 +64,11 @@
         public int CheckUsername(string username)
         {
             return new AccountDAL().CheckUsername(username);
+        }
+
+        public int CheckEmail(string email)
+        {
+            return new AccountDAL().CheckEmail(email);
         }
     }
 

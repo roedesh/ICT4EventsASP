@@ -245,6 +245,28 @@ namespace DAL
             }
         }
 
+        public int CheckEmail(string email)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT Email FROM Account WHERE UPPER(Email) = UPPER(:email))";
+                using (OracleCommand cmd = new OracleCommand(checkUser, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("email", email));
+                    try
+                    {
+                        return Convert.ToInt32(cmd.ExecuteScalar().ToString());
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(this.ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Method for returning Oracle exceptions as string
         /// </summary>
