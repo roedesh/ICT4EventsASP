@@ -31,6 +31,24 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.Button btSearchAccount;
         
         /// <summary>
+        /// ddlAllAcounts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlAllAcounts;
+        
+        /// <summary>
+        /// btnLoadUser control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLoadUser;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>
@@ -40,15 +58,6 @@ namespace ICT4Events.Account {
         protected global::System.Web.UI.WebControls.Button btnSave;
         
         /// <summary>
-        /// btnCreate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreate;
-        
-        /// <summary>
         /// btnDelete control.
         /// </summary>
         /// <remarks>
@@ -56,6 +65,15 @@ namespace ICT4Events.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnDelete;
+        
+        /// <summary>
+        /// btnCreate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCreate;
         
         /// <summary>
         /// tbAccountID control.

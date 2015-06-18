@@ -90,27 +90,28 @@ namespace BAL
                 sb.Append("If your email system does not allow linking, please copy and paste the following into your browser:<br />");
                 sb.Append(link);
                 sb.Append("<br /><br />");
-            }
                 msg.Subject = "Activation E-mail";
-                    string appPath = HttpContext.Current.Request.ApplicationPath;
-                    string physicalPath = HttpContext.Current.Request.MapPath(appPath);
-                    this.counter = 0;
-                    foreach (int id in maildal.IDs)
-                    {   
-                        string barcode = maildal.SelectBarcode(id);
-                        maildal.GenerateBarcode(barcode);
-                        using (fs = File.Open(physicalPath + "bitmap.jpeg", FileMode.Open))
-                        {
-                            if (!activation)
+            } 
+                    if (!activation)
+                    {
+                        string appPath = HttpContext.Current.Request.ApplicationPath;
+                        string physicalPath = HttpContext.Current.Request.MapPath(appPath);
+                        this.counter = 0;
+                        foreach (int id in maildal.IDs)
+                        {   
+                            string barcode = maildal.SelectBarcode(id);
+                            maildal.GenerateBarcode(barcode);
+                            using (fs = File.Open(physicalPath + "bitmap.jpeg", FileMode.Open))
                             {
+                            
                                 msg = new MailMessage();
                                 msg.Attachments.Add(new Attachment(fs, new ContentType(MediaTypeNames.Image.Jpeg)));
                                 sb.Clear();
                                 sb.Append("<br /><br /> Thank you for placing your reservation. " +
-                                   "<br /><br />Please make sure to bring the attached <b>barcode</b> with you," +
-                                   "<br />you will have to show this at the entrance of the event." +
-                                   "<br />A digital version is also allowed, i.e. showing us this e-mail." +
-                                   "<br />See you there!");
+                                    "<br /><br />Please make sure to bring the attached <b>barcode</b> with you," +
+                                    "<br />you will have to show this at the entrance of the event." +
+                                    "<br />A digital version is also allowed, i.e. showing us this e-mail." +
+                                    "<br />See you there!");
                                 msg.Subject = "Reservation E-mail";
                                 msg.From = new MailAddress("fontyspts23@gmail.com");
                                 msg.Body = sb.ToString();
@@ -129,7 +130,7 @@ namespace BAL
                                 this.counter++;
                             }
                         }
-                    }
+                    }        
             
                     if (activation)
                     {

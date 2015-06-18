@@ -11,7 +11,7 @@
             <asp:DropDownList ID="ddlAllLocations" runat="server"></asp:DropDownList>
             <br />
             <asp:Button ID="btnLoadLocation" runat="server" Text="Laad locatie" OnClick="btnLoadLocation_Click"/>
-        <asp:Button ID="btnCreateLocation" runat="server" Text="Maak een nieuwe locatie aan" OnClick="btnCreateLocation_Click"/>
+        <asp:Button ID="btnCreateLocation" runat="server" Text="Locatie beheer" OnClick="btnCreateLocation_Click"/>
         <br />
         <br />
         <asp:Button ID="btnCreate" runat="server" Text="Maak event aan" OnClick="btnCreate_Click"/>

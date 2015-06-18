@@ -62,20 +62,18 @@
                 }
             }
         }
-        public int Insert(int locationID, string name, DateTime start, DateTime end, int maxVis)
+        public int Insert(int locationID, string name, string start, string end, int maxVis)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"INSERT INTO EVENT (id, locatie_ID, naam, datumstart, datumeinde, maxbezoekers) 
-                VALUES (EVENT_FCSEQ.nextval, :location_ID, :name, :start, :end, :maxVis)";
-                string hash = Guid.NewGuid().ToString();
+                string insertQuery = @"INSERT INTO EVENT VALUES (EVENT_FCSEQ.NEXTVAL, :location_ID, :naam, TO_DATE(:startDag, 'DD-MM-YYYY HH24:MI:SS'), TO_DATE(:endDag, 'DD-MM-YYYY HH24:MI:SS'), :maxVis)";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("location_ID", locationID));
-                    cmd.Parameters.Add(new OracleParameter("name", name));
-                    cmd.Parameters.Add(new OracleParameter("start", start));
-                    cmd.Parameters.Add(new OracleParameter("end", end));
+                    cmd.Parameters.Add(new OracleParameter("naam", name));
+                    cmd.Parameters.Add(new OracleParameter("startDag", start));
+                    cmd.Parameters.Add(new OracleParameter("endDag", end));
                     cmd.Parameters.Add(new OracleParameter("maxVis", maxVis));
                     try
                     {
@@ -89,15 +87,40 @@
                 }
             }
         }
-        public int Delete(int eventID)
+        public int Update(string name, string start, string end, int maxVis, int eventid)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = "DELETE FROM Event WHERE ID = :eventID";
+                string insertQuery = @"UPDATE EVENT SET naam = :naam, datumstart = TO_DATE(:startDag, 'DD-MM-YYYY HH24:MI:SS'), datumeinde = TO_DATE(:endDag, 'DD-MM-YYYY HH24:MI:SS'), maxbezoekers = :maxVis WHERE id = :eventid";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
-                    cmd.Parameters.Add(new OracleParameter("eventID", eventID));
+                    cmd.Parameters.Add(new OracleParameter("naam", name));
+                    cmd.Parameters.Add(new OracleParameter("startDag", start));
+                    cmd.Parameters.Add(new OracleParameter("endDag", end));
+                    cmd.Parameters.Add(new OracleParameter("maxVis", maxVis));
+                    cmd.Parameters.Add(new OracleParameter("eventid", eventid));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(this.ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+        public int Delete(string naam)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "DELETE FROM Event WHERE Naam = :naam";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("naam", naam));
                     try
                     {
                         return cmd.ExecuteNonQuery();

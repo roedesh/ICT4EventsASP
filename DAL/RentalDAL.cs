@@ -130,5 +130,109 @@
                 }
             }
         }
+
+        public DataTable LoadAllAvaillableItems(int availlable)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = @"SELECT pe.id,p.merk, p.serie, p.typenummer, p.prijs, pc.naam  
+                FROM productexemplaar pe, product p, productcat pc
+                WHERE pe.product_id = p.id 
+                AND p.productcat_id = pc.id
+                AND pe.ISVERHUURD = :availlable
+                ORDER BY pe.id";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    cmd.Parameters.Add(new OracleParameter("availlable", availlable));
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
+        public int CreateRental(long personId, int exemplaarId, string datumIn, string datumOut)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "INSERT INTO VERHUUR VALUES(VERHUUR_FCSEQ.nextval,:exemplaarId,:personId,TO_DATE(:datumIn,'DD-MM-YYYY HH24:MI:SS'),TO_DATE(:datumOut,'DD-MM-YYYY HH24:MI:SS'),0,0)";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("aanwezig", personId));
+                    cmd.Parameters.Add(new OracleParameter("personID", exemplaarId));
+                    cmd.Parameters.Add(new OracleParameter("datumIn", datumIn));
+                    cmd.Parameters.Add(new OracleParameter("datumOut", datumOut));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
+       
+        public int UpdateExemplaar(int exemplaarID, int isVerhuurd)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "UPDATE PRODUCTEXEMPLAAR SET ISVERHUURD = :isVerhuurd WHERE ID = :exemplaarID";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("aanwezig", isVerhuurd));
+                    cmd.Parameters.Add(new OracleParameter("personID", exemplaarID));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
+        public DataTable LoadAllItems()
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = @"SELECT PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs, 
+                    count(productexemplaar.product_id) as aantal_exemplaren
+                 FROM PRODUCT LEFT JOIN productexemplaar ON (PRODUCT.ID = productexemplaar.product_id)
+                    GROUP BY PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
+
     }
 }

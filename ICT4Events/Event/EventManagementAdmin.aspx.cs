@@ -17,11 +17,14 @@
             //{
             //    Response.Redirect("../Default.aspx");
             //}
-            DataTable table = new EventBAL().GetAllEvents();
-            ddlAllEvents.DataSource = table;
-            ddlAllEvents.DataTextField = "NAAM";
-            ddlAllEvents.DataValueField = "NAAM";
-            ddlAllEvents.DataBind();
+            if (!IsPostBack)
+            {
+                DataTable table = new EventBAL().GetAllEvents();
+                ddlAllEvents.DataSource = table;
+                ddlAllEvents.DataTextField = "NAAM";
+                ddlAllEvents.DataValueField = "NAAM";
+                ddlAllEvents.DataBind();
+            }
         }
 
         protected void btnCreate_Click(object sender, EventArgs e)
@@ -30,8 +33,33 @@
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
-        {            
-            
+        {
+            try
+            {
+                string confirmValue = Request.Form["confirm_value"];
+                if (confirmValue == "Ja")
+                {
+                    if (new EventBAL().SetEvent(this.tbEventname.Text, this.tbStartDate.Text,
+                this.tbEndDate.Text, Convert.ToInt32(this.tbMaxVis.Text),
+                Convert.ToInt32(this.tbEventID.Text)) == 1)
+                    {
+                        Response.Write("<script>alert('Event is bijgewerkt');</script>");
+                        Response.Redirect("../Event/EventManagementAdmin.aspx");
+                    }
+                    else
+                    {
+                        Response.Write("<script>alert('Event naam is niet bekend');</script>");
+                    }
+                }
+            }
+            catch(FormatException)
+            {
+                Response.Write("<script>alert('Opslaan mislukt. Vul de gegevens juist in');</script>");
+            }
+            catch(Exception)
+            {
+                Response.Write("<script>alert('Event kon niet worden bijgewerkt, probeer het opnieuw.');</script>");
+            }
         }
 
         protected void btnSearchEvent_Click(object sender, EventArgs e)
@@ -46,7 +74,7 @@
                 this.tbMaxVis.Text = table.Rows[0]["MAXBEZOEKERS"].ToString();
                 this.tbLocationName.Text = table.Rows[0]["LOCNAAM"].ToString();
                 this.tbStreet.Text = table.Rows[0]["STRAAT"].ToString();
-                this.tbStreetNr.Text = table.Rows[0]["STRAATNR"].ToString();
+                this.tbStreetNr.Text = table.Rows[0]["NR"].ToString();
                 this.tbZipCode.Text = table.Rows[0]["POSTCODE"].ToString();
                 this.tbCity.Text = table.Rows[0]["PLAATS"].ToString();
             }
@@ -62,6 +90,12 @@
             {
                 Response.Write("<script>alert('Er is iets fout gegaan probeer het opnieuw');</script>");
             }
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            new EventBAL().DeleteEvent(this.tbEventname.Text);
+            Response.Redirect("../Event/EventManagementAdmin.aspx");
         }        
     }
 }

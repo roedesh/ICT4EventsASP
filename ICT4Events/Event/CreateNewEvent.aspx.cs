@@ -13,18 +13,22 @@ namespace ICT4Events
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataTable table = new LocationBAL().GetAllLocations();
-            this.ddlAllLocations.DataSource = table;
-            this.ddlAllLocations.DataTextField = "NAAM";
-            this.ddlAllLocations.DataValueField = "NAAM";
-            this.ddlAllLocations.DataBind();
-            this.tbStartDate.Text = DateTime.Now.ToString();
-            this.tbEndDate.Text = DateTime.Now.ToString();
+            if (!IsPostBack)
+            {
+                DataTable table = new LocationBAL().GetAllLocations();
+                this.ddlAllLocations.DataSource = table;
+                this.ddlAllLocations.DataTextField = "NAAM";
+                this.ddlAllLocations.DataValueField = "NAAM";
+                this.ddlAllLocations.DataBind();
+                string dateFormat = "d-MM-yyyy HH:mm:ss";
+                this.tbStartDate.Text = DateTime.Now.ToString(dateFormat);
+                this.tbEndDate.Text = DateTime.Now.ToString(dateFormat);
+            }
         }
 
         protected void btnCreateLocation_Click(object sender, EventArgs e)
         {
-            Response.Redirect("../Event/CreateNewLocation");
+            Response.Redirect("../Event/CreateNewLocation.aspx");
         }
 
         protected void btnCreate_Click(object sender, EventArgs e)
@@ -32,10 +36,18 @@ namespace ICT4Events
             try
             {
                 DataTable table = new LocationBAL().GetLocation(ddlAllLocations.SelectedValue.ToString());
-                new EventBAL().CreateEvent(Convert.ToInt32(table.Rows[0]["ID"].ToString()),
-                    this.tbEventname.Text, Convert.ToDateTime(tbStartDate.Text),
-                    Convert.ToDateTime(this.tbEndDate.Text), Convert.ToInt32(this.tbMaxVis.Text));
-                Response.Write("<script>alert('Event is aangemaakt');</script>");
+                if (new EventBAL().CreateEvent(Convert.ToInt32(table.Rows[0]["ID"].ToString()),
+                    this.tbEventname.Text, tbStartDate.Text,
+                    this.tbEndDate.Text, Convert.ToInt32(this.tbMaxVis.Text)) == 1)
+                {
+                    Response.Write("<script>alert('Event is aangemaakt');</script>");
+                    Response.Redirect("../Event/EventManagementAdmin.aspx");
+                }
+                else
+                {
+                    Response.Write("<script>alert('Event bestaat al');</script>");
+                }
+                
             }
             catch(FormatException)
             {
