@@ -1399,7 +1399,7 @@ BEGIN
 
   SELECT COUNT(*) INTO isReservation FROM dual WHERE EXISTS(SELECT ID FROM Reservering WHERE ID = reserveringID);
   IF isReservation = 0 THEN
-    RAISE_APPLICATION_ERROR(-20001,'My exception was raised');
+    RAISE_APPLICATION_ERROR(-20001,'Reservering bestaat niet!');
   END IF;
   
   DELETE FROM Verhuur WHERE RES_PB_ID IN (SELECT ID FROM Reservering_Polsbandje WHERE Reservering_ID = reserveringID);
