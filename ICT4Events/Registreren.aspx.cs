@@ -47,7 +47,7 @@
                     DataTable t = accountbal.GetAccount(this.tbUsername.Text);
                     string accountID = t.Rows[0]["ID"].ToString();
                     MailBAL mailbal = new MailBAL(true);
-                    mailbal.SendMail(accountID);
+                    mailbal.SendMail(accountID, null, 0);
                     Response.Write("<script language=javascript>alert('An e-mail has been send to you.');</script>");
                 }
                 catch (Exception x)

@@ -217,7 +217,7 @@ namespace DAL
             bitmap.Save(physicalPath + "bitmap.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
         }
 
-        public void CheckAccountsAndCouple(string[] accountNames, int reservationID)
+        public MailDAL CheckAccountsAndCouple(string[] accountNames, int reservationID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
@@ -317,6 +317,8 @@ namespace DAL
                     }
                 }
             }
+
+            return this;
         }
 
         public string SelectBarcode(int id)
@@ -324,7 +326,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string selectQuery2 = "SELECT BARCODE FROM POLSBANDJE, RESERVERING_POLSBANDJE WHERE ACCOUNT_ID = :V1";
+                string selectQuery2 = "SELECT BARCODE FROM POLSBANDJE, RESERVERING_POLSBANDJE WHERE POLSBANDJE.ID = RESERVERING_POLSBANDJE.POLSBANDJE_ID AND ACCOUNT_ID = :V1";
                 using (OracleCommand cmd = new OracleCommand(selectQuery2, conn))
                 {
                     cmd.Parameters.Add("V1", id);

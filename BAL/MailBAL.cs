@@ -19,6 +19,7 @@ namespace BAL
 
     public class MailBAL
     {
+        private MailDAL maildal;
         /// <summary>
         /// Array value to work with.
         /// </summary>
@@ -39,6 +40,9 @@ namespace BAL
         /// </summary>
         private FileStream fs;
 
+        private string mailto;
+        private string hash;
+
         /// <summary>
         /// Initializes an instance of the MailBAL class.
         /// </summary>
@@ -55,20 +59,29 @@ namespace BAL
         /// <param name="mailto">mailto value</param>
         /// <param name="hash">hash value</param>
         /// <returns>an array with the userID, mailto, hash and an (1/0) error index</returns>
-        public string[] SendMail(string userID)
+        public string[] SendMail(string userID, string[] usernames, int reservationID)
         {
-            MailDAL maildal = new MailDAL();
-            string[] personData = maildal.SelectHash(userID);
+            if (usernames != null && reservationID != 0)
+            {
+                maildal = CheckAccountsAndCouple(usernames, reservationID);
+            }
+            else
+            {
+                maildal = new MailDAL();
+            }
+            StringBuilder sb = new StringBuilder();
+                MailMessage msg = new MailMessage();
+            if (activation)
+            {
+                string[] personData = maildal.SelectHash(userID);
             if (personData[0] == null && personData[1] == null)
             {
                 return null;
             }
 
-            string hash = personData[0];
-            string mailto = personData[1];
-            StringBuilder sb = new StringBuilder();
-            if (activation)
-            {
+            hash = personData[0];
+            mailto = personData[1];
+            
                 sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
                 string link = string.Format(
                     "http://localhost:2359/Registreren.aspx?RegistrationCode={1}&AccountID={0}", userID.ToString(), hash.ToString());
@@ -78,14 +91,10 @@ namespace BAL
                 sb.Append(link);
                 sb.Append("<br /><br />");
             }
-
-            try
-            {
-                MailMessage msg = new MailMessage();
                 msg.Subject = "Activation E-mail";
                     string appPath = HttpContext.Current.Request.ApplicationPath;
                     string physicalPath = HttpContext.Current.Request.MapPath(appPath);
-                    counter = 0;
+                    this.counter = 0;
                     foreach (int id in maildal.IDs)
                     {   
                         string barcode = maildal.SelectBarcode(id);
@@ -94,6 +103,7 @@ namespace BAL
                         {
                             if (!activation)
                             {
+                                msg = new MailMessage();
                                 msg.Attachments.Add(new Attachment(fs, new ContentType(MediaTypeNames.Image.Jpeg)));
                                 sb.Clear();
                                 sb.Append("<br /><br /> Thank you for placing your reservation. " +
@@ -104,8 +114,7 @@ namespace BAL
                                 msg.Subject = "Reservation E-mail";
                                 msg.From = new MailAddress("fontyspts23@gmail.com");
                                 msg.Body = sb.ToString();
-                                msg.To.Add(new MailAddress(maildal.ACcounts[counter]));
-                                counter++;
+                                msg.To.Add(new MailAddress(maildal.ACcounts[this.counter]));
                                 msg.IsBodyHtml = true;
                                 SmtpClient smtp = new SmtpClient();
                                 smtp.Host = "smtp.gmail.com";
@@ -117,9 +126,11 @@ namespace BAL
                                 smtp.Credentials = loginCredentials;
                                 smtp.Send(msg);
                                 fs.Close();
+                                this.counter++;
                             }
                         }
                     }
+            
                     if (activation)
                     {
                         msg.From = new MailAddress("fontyspts23@gmail.com");
@@ -142,16 +153,9 @@ namespace BAL
                         string physicalP = HttpContext.Current.Request.MapPath(appP);
                         File.Delete(physicalP + "bitmap.jpeg");
                     }
-            }
-            catch (SmtpException x)
-            {
-                x.ToString();
-                this.counter++;
-            }
-            finally
-            {
-                this.returnValues = new string[] { userID, mailto, hash, this.counter.ToString() };
-            }
+            
+
+            this.returnValues = new string[] { userID, mailto, hash, this.counter.ToString() };
 
             return this.returnValues;
         }
@@ -174,9 +178,9 @@ namespace BAL
         //    MailDAL maildal = new MailDAL();
         //}
 
-        public void CheckAccountsAndCouple(string[] usernames, int reservationID)
+        public MailDAL CheckAccountsAndCouple(string[] usernames, int reservationID)
         {
-            new MailDAL().CheckAccountsAndCouple(usernames, reservationID);
+            return new MailDAL().CheckAccountsAndCouple(usernames, reservationID);
         }
     }
 }

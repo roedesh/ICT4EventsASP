@@ -120,8 +120,7 @@ namespace ICT4Events.Reservering
                 Debug.WriteLine("Plek_Reservering aangemaakt!");
             }
 
-            mBal.CheckAccountsAndCouple(usernames, reservationID);
-            mBal.SendMail(null);
+            mBal.SendMail(null, usernames, reservationID);
         }
     }
 }
