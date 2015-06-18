@@ -59,16 +59,13 @@
 
         protected void CheckUsername(object source, ServerValidateEventArgs args)
         {
+            int exists;
             if (Page.IsValid)
             {
-                try
-                {
-                    AccountBAL accountbal = new AccountBAL();
-                    accountbal.CheckUsername(this.tbUsername.Text);
-                }
-                catch (Exception)
-                {
-                    Response.Write("<script language=javascript>alert('Username in use!');</script>");
+                AccountBAL accountbal = new AccountBAL();
+                exists = accountbal.CheckUsername(this.tbUsername.Text);
+                if (exists > 0) {
+                    args.IsValid = false;
                 }
             }            
         }

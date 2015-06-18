@@ -75,5 +75,10 @@
                 Debug.WriteLine("Plek_Reservering aangemaakt!");
             }
         }
+
+        protected void tbAmountPersons_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
