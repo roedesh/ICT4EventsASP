@@ -13,12 +13,16 @@ namespace ICT4Events.Post
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            DataTable categories = new PostBAL().GetAllCategories();
-            ddlCategory.DataSource = categories;
-            ddlCategory.DataTextField = "NAAM";
-            ddlCategory.DataValueField = "NAAM";
-            ddlCategory.DataBind();
-            ddlCategory.Items.Insert(0, "");
+            if (!IsPostBack)
+            {
+                DataTable categories = new PostBAL().GetAllCategories();
+                ddlCategory.DataSource = categories;
+                ddlCategory.DataTextField = "NAAM";
+                ddlCategory.DataValueField = "NAAM";
+                ddlCategory.DataBind();
+                ddlCategory.Items.Insert(0, "");
+            }
+            
         }
 
         protected void btnCategory_Click(object sender, EventArgs e)
