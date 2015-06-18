@@ -84,12 +84,10 @@
         protected void CheckEmail(object source, ServerValidateEventArgs args)
         {
             int exists;
-            Debug.WriteLine(tbEmail.Text);
             if (Page.IsValid)
             {
                 AccountBAL accountbal = new AccountBAL();
                 exists = accountbal.CheckEmail(this.tbEmail.Text);
-                Debug.WriteLine(exists);
                 if (exists > 0)
                 {
                     args.IsValid = false;

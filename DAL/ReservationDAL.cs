@@ -36,7 +36,7 @@ namespace DAL
         /// <param name="house_nr">House number</param>
         /// <param name="city">Name of city</param>
         /// <param name="iban">IBAN number</param>
-        /// <returns>ID of the new person</returns>
+        /// <returns>ID of the new inserted person</returns>
         public int Insert(string firstName, string insertion, string lastName, string street, string house_nr, string city, string iban)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -76,7 +76,7 @@ namespace DAL
         /// <param name="personID">ID of person who created the reservation</param>
         /// <param name="beginDate">The start date of the reservation</param>
         /// <param name="endDate">The end date of the reservation</param>
-        /// <returns>ID of the new reservation</returns>
+        /// <returns>ID of the new inserted reservation</returns>
         public int Insert(int personID, DateTime beginDate, DateTime endDate) 
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -107,7 +107,7 @@ namespace DAL
         }
 
         /// <summary>
-        /// Method for deleting a reservation
+        /// Calls a stored procedure that deletes a reservation and it's children
         /// </summary>
         /// <param name="reservationID">ID of the reservation to be deleted</param>
         /// <returns>0 or 1</returns>
@@ -125,33 +125,6 @@ namespace DAL
                     inval.Value = reservationID;
                     cmd.Parameters.Add(inval);
 
-                    try
-                    {
-                        return cmd.ExecuteNonQuery();
-                    }
-                    catch (OracleException ex)
-                    {
-                        Debug.WriteLine(this.ErrorString(ex));
-                        return 0;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Method for deleting a person
-        /// </summary>
-        /// <param name="reservationID">ID of the reservation</param>
-        /// <returns>0 or 1</returns>
-        public int DeletePerson(int reservationID)
-        {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-            {
-                conn.Open();
-                string insertQuery = "DELETE FROM Persoon WHERE ID = :reservationID";
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.Add(new OracleParameter("reservationID", reservationID));
                     try
                     {
                         return cmd.ExecuteNonQuery();

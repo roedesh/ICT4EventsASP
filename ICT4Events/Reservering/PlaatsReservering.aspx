@@ -22,7 +22,8 @@
     <tr>
         <td class="auto-style2">
             <h3>Informatie over boeker</h3>
-        <td>
+        </td>
+            <td>
             &nbsp;</td>
         <td>&nbsp;</td>
     </tr>
