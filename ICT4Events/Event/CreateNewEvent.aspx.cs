@@ -54,7 +54,7 @@ namespace ICT4Events
                 DataTable table = new LocationBAL().GetLocation(ddlAllLocations.SelectedValue.ToString());
                 this.tbLocationName.Text = table.Rows[0]["NAAM"].ToString();
                 this.tbStreet.Text = table.Rows[0]["STRAAT"].ToString();
-                this.tbStreetNr.Text = table.Rows[0]["STRAATNR"].ToString();
+                this.tbStreetNr.Text = table.Rows[0]["NR"].ToString();
                 this.tbZipCode.Text = table.Rows[0]["POSTCODE"].ToString();
                 this.tbCity.Text = table.Rows[0]["PLAATS"].ToString();
             }

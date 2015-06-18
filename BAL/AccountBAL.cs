@@ -25,13 +25,9 @@
         }
 
         public int UpdateAccount(int accountID, string username, string password, string role,
-            string email, int activated, string firstname,
-            string lastname, string street, int streetNum, string zip, string bankNum)
+            string email, int activated)
         {
-            return new AccountDAL().Update(accountID, username, password, 
-            role, email, activated, firstname,
-            lastname, street, streetNum, zip, bankNum);
-
+            return new AccountDAL().Update(accountID, username, password, role, email, activated);
         }
 
         public int DeleteAccount(string username)

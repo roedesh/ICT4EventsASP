@@ -22,12 +22,7 @@
                 DataTable table = new AccountBAL().GetAccount(Session["USER_ID"].ToString());
                 this.tbEmailAdress.Text = table.Rows[0]["EMAIL"].ToString();
                 this.tbUserName.Text = table.Rows[0]["GEBRUIKERSNAAM"].ToString();
-                this.tbFirstName.Text = table.Rows[0]["VOORNAAM"].ToString();
-                this.tbLastName.Text = table.Rows[0]["ACHTERNAAM"].ToString();
-                this.tbStreet.Text = table.Rows[0]["STRAAT"].ToString();
-                this.tbStreetNum.Text = table.Rows[0]["HUISNR"].ToString();
-                this.tbZipCode.Text = table.Rows[0]["WOONPLAATS"].ToString();
-                this.tbBankrek.Text = table.Rows[0]["BANKNR"].ToString();
+                this.tbPassword.Text = table.Rows[0]["PASSWORD"].ToString();
 
             }
         }
@@ -39,17 +34,9 @@
                 DataTable table = new AccountBAL().GetAccount(Session["USER_ID"].ToString());
                 new AccountBAL().UpdateAccount(
                                 Convert.ToInt32(table.Rows[0]["ID"].ToString()),
-                                table.Rows[0]["ROL"].ToString(),
                                 table.Rows[0]["GEBRUIKERSNAAM"].ToString(),
                                 table.Rows[0]["PASSWORD"].ToString(),
-                                this.tbEmailAdress.Text,
-                                Convert.ToInt32(table.Rows[0]["GEACTIVEERD"].ToString()),
-                                this.tbFirstName.Text,
-                                this.tbLastName.Text,
-                                this.tbStreet.Text,
-                                Convert.ToInt32(this.tbStreetNum.Text),
-                                tbZipCode.Text,
-                                tbBankrek.Text);
+                                table.Rows[0]["ROL"].ToString());
             }
             catch(Exception)
             {

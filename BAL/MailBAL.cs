@@ -79,8 +79,7 @@ namespace BAL
             try
             {
                 MailMessage msg = new MailMessage();
-                msg.Subject = "Activation E-mail";
-                
+                msg.Subject = "Activation E-mail";                
                     maildal.GenerateBarcode();
                     string appPath = HttpContext.Current.Request.ApplicationPath;
                     string physicalPath = HttpContext.Current.Request.MapPath(appPath);

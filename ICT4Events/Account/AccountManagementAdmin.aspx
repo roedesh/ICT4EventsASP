@@ -24,6 +24,10 @@
         <br />
         <asp:Button ID="btSearchAccount" runat="server" Text="Zoeken" OnClick="btSearchAccount_Click" />
         <hr />
+        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" OnClientClick="Confirm()"/>
+        <asp:Button ID="btnCreate" runat="server" Text="Maak account aan" OnClick="btnCreate_Click" />
+        <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="btnDelete_Click" OnClientClick="Confirm()" />
+        <br />
         <br />
         <h2>AccountID:</h2>
         <asp:TextBox ID="tbAccountID" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
@@ -47,32 +51,8 @@
         <h2>Wachtwoord:</h2>
         <br />
         <asp:TextBox ID="tbPassword" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <br />
-        <h2>Voornaam:</h2>
-        <br />
-        <asp:TextBox ID="tbFirstName" runat="server" Height="25px" Width="250px"></asp:TextBox>
-
-        <h2>Achternaam:</h2>
-        <br />
-        <asp:TextBox ID="tbLastName" runat="server" Height="25px" Width="250px"></asp:TextBox>
-
-        <h2>Adres:</h2>
-        <br />
-        <asp:TextBox ID="tbStreet" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:TextBox ID="tbStreetNum" runat="server" Height="25px" Width="50px"></asp:TextBox>
-        <br />
-        <asp:TextBox ID="tbZipCode" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <br />
-        <asp:TextBox ID="tbCity" runat="server" Height="25px" Width="250px"></asp:TextBox>
-
-        <h2>Bankrekening:</h2>
-        <br />
-        <asp:TextBox ID="tbBankrek" runat="server" Height="25px" Width="250px"></asp:TextBox>
-
+        
         <br />
         <br />
-        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" OnClientClick="Confirm()"/>
-        <asp:Button ID="btnCreate" runat="server" Text="Maak account aan" OnClick="btnCreate_Click" />
-        <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="btnDelete_Click" OnClientClick="Confirm()" />
-    </div>
+        </div>
 </asp:Content>

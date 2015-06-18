@@ -30,13 +30,7 @@
                 this.tbEmailAdress.Text = table.Rows[0]["EMAIL"].ToString();
                 this.tbUserName.Text = table.Rows[0]["GEBRUIKERSNAAM"].ToString();
                 this.tbPassword.Text = table.Rows[0]["PASSWORD"].ToString();
-                this.tbFirstName.Text = table.Rows[0]["VOORNAAM"].ToString();
-                this.tbLastName.Text = table.Rows[0]["ACHTERNAAM"].ToString();
                 this.tbRank.Text = table.Rows[0]["ROL"].ToString();
-                this.tbStreet.Text = table.Rows[0]["STRAAT"].ToString();
-                this.tbStreetNum.Text = table.Rows[0]["HUISNR"].ToString();
-                this.tbZipCode.Text = table.Rows[0]["WOONPLAATS"].ToString();
-                this.tbBankrek.Text = table.Rows[0]["BANKNR"].ToString();
             }
             catch(IndexOutOfRangeException)
             {
@@ -61,17 +55,11 @@
                             DataTable table = new AccountBAL().GetAccount(tbUserName.Text);
                             new AccountBAL().UpdateAccount(
                                 Convert.ToInt32(tbAccountID.Text),
-                                this.tbRank.Text,
                                 this.tbUserName.Text,
                                 this.tbPassword.Text,
+                                this.tbRank.Text,
                                 this.tbEmailAdress.Text,
-                                Convert.ToInt32(this.ddlActivated.SelectedItem.Value),
-                                this.tbFirstName.Text,
-                                this.tbLastName.Text,
-                                this.tbStreet.Text,
-                                Convert.ToInt32(this.tbStreetNum.Text),
-                                tbZipCode.Text,
-                                tbBankrek.Text);
+                                Convert.ToInt32(this.ddlActivated.SelectedItem.Value));
                             Response.Redirect("../Account/AccountManagementAdmin.aspx");
                         }
                         catch (FormatException)
