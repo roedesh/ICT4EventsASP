@@ -26,7 +26,7 @@
                 string username = ((TextBox)this.Login1.FindControl("username")).Text;
                 string password = ((TextBox)this.Login1.FindControl("password")).Text;
                 int login = new AccountBAL().GetAccountLogin(username, password);
-                if (login <= 0)
+                if (login == 0)
                 {
                     DataTable table = new AccountBAL().GetAccount(username, password);
                     this.Session["USER_ID"] = table.Rows[0]["GEBRUIKERSNAAM"];
