@@ -48,6 +48,12 @@
                 return; 
             }
 
+            string[] usernames = tbOtherPersons.Text.Split(',').Select(sValue => sValue.Trim()).ToArray();
+            foreach (string u in usernames)
+            {
+                Debug.WriteLine(u);
+            }
+
             ReservationBAL rBal = new ReservationBAL();
             PlaceBAL pBal = new PlaceBAL();
 
