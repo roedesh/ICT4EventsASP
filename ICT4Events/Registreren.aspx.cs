@@ -4,6 +4,7 @@
     using System.Collections.Generic;  
     using System.Configuration;  
     using System.Data;
+    using System.Diagnostics;
     using System.Linq;
     using System.Web;
     using System.Web.UI;
@@ -57,6 +58,11 @@
             }
         }
 
+        /// <summary>
+        /// Custom validator for checking username
+        /// </summary>
+        /// <param name="source">Object to validate</param>
+        /// <param name="args">Page arguments</param>
         protected void CheckUsername(object source, ServerValidateEventArgs args)
         {
             int exists;
@@ -68,6 +74,27 @@
                     args.IsValid = false;
                 }
             }            
+        }
+
+        /// <summary>
+        /// Custom validator for checking email
+        /// </summary>
+        /// <param name="source">Object to validate</param>
+        /// <param name="args">Page arguments</param>
+        protected void CheckEmail(object source, ServerValidateEventArgs args)
+        {
+            int exists;
+            Debug.WriteLine(tbEmail.Text);
+            if (Page.IsValid)
+            {
+                AccountBAL accountbal = new AccountBAL();
+                exists = accountbal.CheckEmail(this.tbEmail.Text);
+                Debug.WriteLine(exists);
+                if (exists > 0)
+                {
+                    args.IsValid = false;
+                }
+            }
         }
 
         protected void btReset_Click(object sender, EventArgs e)

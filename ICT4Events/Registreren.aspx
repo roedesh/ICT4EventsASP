@@ -10,7 +10,7 @@
                 </td>
                 <td>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="tbUsername" CssClass="form-error" ErrorMessage="Gebruikersnaam is verplicht!" Display="Dynamic"></asp:RequiredFieldValidator>
-                    <asp:CustomValidator ID="CustomValidator1" runat="server" OnServerValidate="CheckUsername" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Username already exists"></asp:CustomValidator>
+                    <asp:CustomValidator ID="CustomValidator1" runat="server" OnServerValidate="CheckUsername" ControlToValidate="tbUsername" Display="Dynamic" ErrorMessage="Gebruikersnaam is bezet!"></asp:CustomValidator>
                 </td>
             </tr>
             <tr>
@@ -22,6 +22,7 @@
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="tbEmail" CssClass="form-error" ErrorMessage="E-Mail is verplicht" Display="Dynamic"></asp:RequiredFieldValidator>
                     <br />
                     <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" CssClass="form-error" ErrorMessage="Vul een geldig e-mailadres in!" ControlToValidate="tbEmail" Display="Dynamic" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                    <asp:CustomValidator ID="CustomValidator2" runat="server" OnServerValidate="CheckEmail" ControlToValidate="tbEmail" Display="Dynamic" ErrorMessage="Email is bezet!"></asp:CustomValidator>
                 </td>
             </tr>
             <tr>
