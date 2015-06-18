@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateNewEvent.aspx.cs" Inherits="ICT4Events.CreateNewEvent" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -37,5 +38,5 @@
         <asp:TextBox ID="tbZipCode" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <br />
         <asp:TextBox ID="tbCity" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
-
+        </div>
 </asp:Content>
