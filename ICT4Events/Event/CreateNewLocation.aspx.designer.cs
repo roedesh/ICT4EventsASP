@@ -40,15 +40,6 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Button btnCreate;
         
         /// <summary>
-        /// btnDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
-        
-        /// <summary>
         /// btnCancel control.
         /// </summary>
         /// <remarks>
@@ -65,15 +56,6 @@ namespace ICT4Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbLocationName;
-        
-        /// <summary>
-        /// reqLocationNameLoad control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqLocationNameLoad;
         
         /// <summary>
         /// reqLocationNameCreate control.

@@ -23,13 +23,11 @@
         <br />
         <asp:Button ID="btnLoad" runat="server" Text="Laad Locatie" OnClick="btnLoad_Click" />
         <asp:Button ID="btnCreate" runat="server" ValidationGroup="create"  Text="Maak locatie aan" OnClick="btnCreate_Click" OnClientClick="Confirm()"/>
-        <asp:Button ID="btnDelete" runat="server" ValidationGroup="delete" Text="Delete" OnClick="btnDelete_Click" OnClientClick="Confirm()"/>
         <asp:Button ID="btnCancel" runat="server" Text="Ga terug" OnClick="btnCancel_Click"/>
         <hr />
         <br />
         <h2>Naam:</h2>
         <asp:TextBox ID="tbLocationName" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:RequiredFieldValidator Display="Dynamic" ValidationGroup="delete" ID="reqLocationNameLoad" ControlToValidate="tbLocationName" runat="server" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
         <asp:RequiredFieldValidator Display="Dynamic" ValidationGroup="create" ID="reqLocationNameCreate" ControlToValidate="tbLocationName" runat="server" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
         <br />
         <h2>Straat / Straatnummer:</h2>

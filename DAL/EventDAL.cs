@@ -87,15 +87,40 @@
                 }
             }
         }
-        public int Delete(int eventID)
+        public int Update(string name, string start, string end, int maxVis, int eventid)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = "DELETE FROM Event WHERE ID = :eventID";
+                string insertQuery = @"UPDATE EVENT SET naam = :naam, datumstart = TO_DATE(:startDag, 'DD-MM-YYYY HH24:MI:SS'), datumeinde = TO_DATE(:endDag, 'DD-MM-YYYY HH24:MI:SS'), maxbezoekers = :maxVis WHERE id = :eventid";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
-                    cmd.Parameters.Add(new OracleParameter("eventID", eventID));
+                    cmd.Parameters.Add(new OracleParameter("naam", name));
+                    cmd.Parameters.Add(new OracleParameter("startDag", start));
+                    cmd.Parameters.Add(new OracleParameter("endDag", end));
+                    cmd.Parameters.Add(new OracleParameter("maxVis", maxVis));
+                    cmd.Parameters.Add(new OracleParameter("eventid", eventid));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(this.ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+        public int Delete(string naam)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "DELETE FROM Event WHERE Naam = :naam";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("naam", naam));
                     try
                     {
                         return cmd.ExecuteNonQuery();

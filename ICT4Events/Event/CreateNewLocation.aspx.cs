@@ -52,37 +52,6 @@ namespace ICT4Events
                 Response.Write("<script>alert('Er is iets fout gegaan, probeer het opnieuw');</script>");
             }
         }
-        
-
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (IsValid)
-                {
-                    string confirmValue = Request.Form["confirm_value"];
-                    if (confirmValue == "Ja")
-                    {
-                        if (new LocationBAL().DeleteLocation(this.tbLocationName.Text) == 1)
-                        {
-                            Response.Write("<script>alert('Locatie is verwijderd');</script>");
-                            Response.Redirect("../Event/CreateNewLocation.aspx");
-                        }
-                        else
-                        {
-                            Response.Write("<script>alert('Geef een geldige locatie op');</script>");
-                        }
-                    }
-                    else
-                    {
-                    }
-                }
-            }
-            catch(Exception)
-            {
-                Response.Write("<script>alert('Er is iets fout gegaan, probeer het opnieuw');</script>");
-            }
-        }
 
         protected void btnLoad_Click(object sender, EventArgs e)
         {

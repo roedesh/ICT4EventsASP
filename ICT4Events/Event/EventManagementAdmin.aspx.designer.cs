@@ -76,6 +76,24 @@ namespace ICT4Events.Event {
         protected global::System.Web.UI.WebControls.TextBox tbEventname;
         
         /// <summary>
+        /// reqEventNameSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventNameSave;
+        
+        /// <summary>
+        /// reqEventNameDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventNameDelete;
+        
+        /// <summary>
         /// tbStartDate control.
         /// </summary>
         /// <remarks>
@@ -83,6 +101,15 @@ namespace ICT4Events.Event {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbStartDate;
+        
+        /// <summary>
+        /// reqEventStartDateSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventStartDateSave;
         
         /// <summary>
         /// tbEndDate control.
@@ -94,6 +121,15 @@ namespace ICT4Events.Event {
         protected global::System.Web.UI.WebControls.TextBox tbEndDate;
         
         /// <summary>
+        /// reqEventEndDateSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventEndDateSave;
+        
+        /// <summary>
         /// tbMaxVis control.
         /// </summary>
         /// <remarks>
@@ -101,6 +137,15 @@ namespace ICT4Events.Event {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbMaxVis;
+        
+        /// <summary>
+        /// reqEventMaxVisSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventMaxVisSave;
         
         /// <summary>
         /// tbLocationName control.

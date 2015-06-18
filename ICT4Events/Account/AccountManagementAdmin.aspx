@@ -28,8 +28,8 @@
         <asp:Button ID="btnLoadUser" runat="server" Text="Persoon laden" OnClick="btnLoadUser_Click" />
         <hr />
         <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" OnClientClick="Confirm()"/>
-        <asp:Button ID="btnCreate" runat="server" Text="Maak account aan" OnClick="btnCreate_Click" />
         <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="btnDelete_Click" OnClientClick="Confirm()" />
+        <asp:Button ID="btnCreate" runat="server" Text="Nieuw account aanmaken" OnClick="btnCreate_Click" />
         <br />
         <br />
         <h2>AccountID:</h2>
