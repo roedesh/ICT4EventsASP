@@ -21,6 +21,9 @@
                 this.dt = this.rentalBAL.GetAllAvaillableItems(0);
                 this.gvRental.DataSource = dt;
                 this.gvRental.DataBind();
+                this.dt = this.rentalBAL.GetAllItems();
+                this.gvArtikel.DataSource = dt;
+                this.gvArtikel.DataBind();
             }
         }
 
@@ -69,6 +72,25 @@
             }
 
             this.gvRental.SelectedRow.BackColor = Color.Pink;
+        }
+
+        protected void gvArtikel_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(this.gvArtikel, "Select$" + e.Row.RowIndex);
+                e.Row.Attributes["style"] = "cursor:pointer";
+            }
+        }
+
+        protected void gvArtikel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow row in this.gvArtikel.Rows)
+            {
+                row.BackColor = Color.White;
+            }
+
+            this.gvArtikel.SelectedRow.BackColor = Color.Pink;
         }
     }
 }

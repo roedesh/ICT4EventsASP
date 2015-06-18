@@ -65,5 +65,9 @@
             return succes;
 
         }
+        public DataTable GetAllItems()
+        {
+            return new RentalDAL().LoadAllItems();
+        }
     }
 }
