@@ -53,6 +53,7 @@ namespace DAL
         /// Integer to return in a method.
         /// </summary>
         private int resultValue;
+        private int reservationID = 0;
 
         /// <summary>
         /// Initializes a new instance of the MailDAL class.
@@ -61,6 +62,11 @@ namespace DAL
         {
         }
 
+        public int ReservationID
+        {
+            get { return this.reservationID; }
+            set { ReservationID = value; }
+        }
         public List<string> ACcounts
         {
             get { return this.Accounts; }
@@ -219,6 +225,7 @@ namespace DAL
 
         public MailDAL CheckAccountsAndCouple(string[] accountNames, int reservationID)
         {
+            this.reservationID = reservationID;
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
@@ -326,10 +333,11 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string selectQuery2 = "SELECT BARCODE FROM POLSBANDJE, RESERVERING_POLSBANDJE WHERE POLSBANDJE.ID = RESERVERING_POLSBANDJE.POLSBANDJE_ID AND ACCOUNT_ID = :V1";
+                string selectQuery2 = "SELECT BARCODE FROM POLSBANDJE, RESERVERING_POLSBANDJE, RESERVERING WHERE POLSBANDJE.ID = RESERVERING_POLSBANDJE.POLSBANDJE_ID AND RESERVERING.ID = RESERVERING_POLSBANDJE.RESERVERING_ID AND ACCOUNT_ID = :V1 AND RESERVERING_ID = :V2";
                 using (OracleCommand cmd = new OracleCommand(selectQuery2, conn))
                 {
                     cmd.Parameters.Add("V1", id);
+                    cmd.Parameters.Add("V2", this.ReservationID);
                     try
                     {
                         var reader = cmd.ExecuteReader();
