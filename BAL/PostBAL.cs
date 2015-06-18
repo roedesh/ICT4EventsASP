@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
     using DAL;
 
     public class PostBAL
@@ -44,6 +45,10 @@
             return new PostDAL().LoadFile(id);
         }
 
+        public int CreatePost(string username, string categoryID, string location, string size)
+        {
+            return new PostDAL().InsertFile(username, categoryID, location, size);
+        }
         public DataTable GetMessages(string id)
         {
             return new PostDAL().LoadPostMessages(id);

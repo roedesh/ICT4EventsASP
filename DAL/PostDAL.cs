@@ -357,14 +357,14 @@ namespace DAL
                     conn.Open();
 
                     insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
-                    VALUES (:id, :categoryID, :location, :size)";
+                    VALUES (:id, :categoryID, :location, :filesize)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
                         cmd.Parameters.Add(new OracleParameter("id", id));
                         cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
                         cmd.Parameters.Add(new OracleParameter("location", location));
-                        cmd.Parameters.Add(new OracleParameter("size", size));
+                        cmd.Parameters.Add(new OracleParameter("filesize", size));
 
                         result = cmd.ExecuteNonQuery();
                     }
