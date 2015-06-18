@@ -85,7 +85,8 @@ namespace ICT4Events.Reservering
                 return; 
             }
 
-            string[] usernames = this.tbOtherPersons.Text.Split(',').Select(sValue => sValue.Trim()).ToArray();
+            string[] usernames = (this.tbOtherPersons.Text + "," + Session["USERID"].ToString()).Split(',').Select(sValue => sValue.Trim()).ToArray();
+            
             foreach (string u in usernames)
             {
                 Debug.WriteLine(u);
@@ -93,6 +94,7 @@ namespace ICT4Events.Reservering
 
             ReservationBAL rBal = new ReservationBAL();
             PlaceBAL pBal = new PlaceBAL();
+            MailBAL mBal = new MailBAL(false);
 
             string insertion = this.tbMiddleName.Text;
             if (string.IsNullOrEmpty(insertion))
@@ -117,6 +119,9 @@ namespace ICT4Events.Reservering
             {
                 Debug.WriteLine("Plek_Reservering aangemaakt!");
             }
+
+            mBal.CheckAccountsAndCouple(usernames, reservationID);
+            mBal.SendMail(null);
         }
     }
 }

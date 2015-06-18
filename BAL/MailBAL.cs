@@ -171,5 +171,10 @@ namespace BAL
         //{
         //    MailDAL maildal = new MailDAL();
         //}
+
+        public void CheckAccountsAndCouple(string[] usernames, int reservationID)
+        {
+            new MailDAL().CheckAccountsAndCouple(usernames, reservationID);
+        }
     }
 }
