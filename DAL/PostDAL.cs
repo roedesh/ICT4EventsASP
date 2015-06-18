@@ -95,6 +95,7 @@ namespace DAL
             }
         }
 
+
         public List<int> GetLikeFlagCount(string postID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -151,6 +152,30 @@ namespace DAL
             {
                 conn.Open();
                 string loadQuery = "SELECT * FROM CATEGORIE WHERE CATEGORIE_ID IS NULL";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
+
+        public DataTable LoadAllCategories()
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = "SELECT * FROM CATEGORIE";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -232,6 +257,39 @@ namespace DAL
             }
         }
 
+        public int GetCategoryID(string categoryName)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                int result = 0;
+
+                conn.Open();
+                string query = "SELECT BIJDRAGE_ID FROM CATEGORIE WHERE NAAM = :name";
+
+                try
+                {
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("name", categoryName));
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message.ToString());
+                    result = 0;
+                }
+                return result;
+            }
+        }
+
         private int InsertPost(string userName, string type)
         {
             int result = 0;
@@ -299,37 +357,37 @@ namespace DAL
             return result;
         }
 
-        public int InsertCategory(string userName, string categoryID, string location, string size)
+        public int InsertCategory(string userName, string categoryID, string name)
         {
             int result = 0;
             string insertQuery = string.Empty;
             try
             {
+                this.InsertPost(userName, "BESTAND");
+
                 string accountID = this.GetAccountID(userName).ToString();
 
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
-                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) 
-                    VALUES (BIJDRAGE_FCSEQ.nextval, :accountID, TO_DATE(:date, 'dd/mm/yyyy'), :type)";
+
+
+
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
-                        cmd.Parameters.Add(new OracleParameter("accountID", accountID));
-                        cmd.Parameters.Add(new OracleParameter("date", DateTime.Now.ToString("dd-MM-yyyy")));
-                        cmd.Parameters.Add(new OracleParameter("type", "BESTAND"));
-
-                        result = cmd.ExecuteNonQuery();
-                    }
-
-                    insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
-                    VALUES (BIJDRAGE_FCSEQ.currval, :categoryID, :location, :size)";
-
-                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                    {
+                        if (categoryID == string.Empty)
+                        {
+                            insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, NAAM) 
+                        VALUES (BIJDRAGE_FCSEQ.currval, :name)";
+                        }
+                        else
+                        {
+                            insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
+                        VALUES (BIJDRAGE_FCSEQ.currval, :categoryID, :location, :size)";
+                        }
                         cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
-                        cmd.Parameters.Add(new OracleParameter("location", location));
-                        cmd.Parameters.Add(new OracleParameter("size", size));
+
 
                         result = cmd.ExecuteNonQuery();
                     }
@@ -342,7 +400,7 @@ namespace DAL
             }
             return result;
         }
-        
+
 
 
 
@@ -444,32 +502,6 @@ namespace DAL
 
         #region Category Queries
 
-
-        public int InsertCategory(string postID, string categoryID, string name)
-        {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-            {
-                conn.Open();
-                string insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, CATEGORIE_ID, NAAM) 
-                VALUES (:postID, :categoryID, :name)";
-
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.Add(new OracleParameter("postID", postID));
-                    cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
-                    cmd.Parameters.Add(new OracleParameter("name", name));
-                    try
-                    {
-                        return cmd.ExecuteNonQuery();
-                    }
-                    catch (OracleException ex)
-                    {
-                        Debug.WriteLine(ErrorString(ex));
-                        return 0;
-                    }
-                }
-            }
-        }
 
         #endregion
 
