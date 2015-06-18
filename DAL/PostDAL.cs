@@ -14,9 +14,17 @@ namespace DAL
     using System.Threading.Tasks;
     using Oracle.DataAccess.Client;
 
+    /// <summary>
+    /// Class used to retrieve data from to database for usage in the media sharing.
+    /// </summary>
     public class PostDAL
     {
         #region Load Queries
+        /// <summary>
+        /// Method for getting the data of a file.
+        /// </summary>
+        /// <param name="fileID">Identifier of the file</param>
+        /// <returns>Returns a datatable containing the file data.</returns>
         public DataTable LoadFile(string fileID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -43,6 +51,11 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method for getting the data of all the files within a category.
+        /// </summary>
+        /// <param name="categoryID">Identifier of the target category</param>
+        /// <returns>Returns a datatable containing the file data of all the files.</returns>
         public DataTable LoadCategoryFiles(string categoryID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -69,6 +82,11 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method for getting the data of all the messages of a post.
+        /// </summary>
+        /// <param name="postID">Identifier of the target post</param>
+        /// <returns>Returns a datatable containing the message data of all the messages.</returns>
         public DataTable LoadPostMessages(string postID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -95,7 +113,11 @@ namespace DAL
             }
         }
 
-
+        /// <summary>
+        /// Method for getting the amount of likes and flags of a post.
+        /// </summary>
+        /// <param name="postID">Identifier of the target post</param>
+        /// <returns>Returns a list with the amounts of likes and flags.</returns>
         public List<int> GetLikeFlagCount(string postID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -146,6 +168,10 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method for getting all the root categories (categories without a parent).
+        /// </summary>
+        /// <returns>Returns a datatable containing the root category data.</returns>
         public DataTable LoadRootCategories()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -170,6 +196,10 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method for getting all the categories (Both parent and child).
+        /// </summary>
+        /// <returns>Returns a datatable containing the all category data</returns>
         public DataTable LoadAllCategories()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -194,6 +224,11 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method for getting all the child categories of a certain parent.
+        /// </summary>
+        /// <param name="parentID">Identifier of the parent category</param>
+        /// <returns></returns>
         public DataTable LoadChildCategories(string parentID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -219,7 +254,6 @@ namespace DAL
             }
         }
         #endregion
-
 
         #region Insert Queries
 
@@ -286,6 +320,7 @@ namespace DAL
                     Console.WriteLine("Error: " + ex.Message.ToString());
                     result = 0;
                 }
+
                 return result;
             }
         }
@@ -330,7 +365,6 @@ namespace DAL
                         {
                             result = id;
                         }
-
                     }
                 }
             }
@@ -339,6 +373,7 @@ namespace DAL
                 Debug.WriteLine(ErrorString(ex));
                 result = 0;
             }
+
             return result;
         }
 
@@ -348,7 +383,7 @@ namespace DAL
             string insertQuery = string.Empty;
             try
             {
-                this.InsertPost(userName, "BESTAND");
+                int id = this.InsertPost(userName, "CATEGORIE");
 
                 string accountID = this.GetAccountID(userName).ToString();
 
@@ -357,10 +392,11 @@ namespace DAL
                     conn.Open();
 
                     insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
-                    VALUES (BIJDRAGE_FCSEQ.currval, :categoryID, :location, :size)";
+                    VALUES (:id, :categoryID, :location, :size)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
                         cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
                         cmd.Parameters.Add(new OracleParameter("location", location));
                         cmd.Parameters.Add(new OracleParameter("size", size));
@@ -374,6 +410,7 @@ namespace DAL
                 Debug.WriteLine(ErrorString(ex));
                 result = 0;
             }
+
             return result;
         }
 
@@ -423,6 +460,7 @@ namespace DAL
                 Debug.WriteLine(ErrorString(ex));
                 result = 0;
             }
+
             return result;
         }
 
@@ -432,17 +470,18 @@ namespace DAL
             string insertQuery = string.Empty;
             try
             {
-                this.InsertPost(userName, "BERICHT");
+                int id = this.InsertPost(userName, "BERICHT");
 
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
 
                     insertQuery = @"INSERT INTO BERICHT (BIJDRAGE_ID, TITEL, INHOUD) 
-                    VALUES (BIJDRAGE_FCSEQ.currval, :title, :content)";
+                    VALUES (:id, :title, :content)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
                         cmd.Parameters.Add(new OracleParameter("title", title));
                         cmd.Parameters.Add(new OracleParameter("content", content));
 
@@ -450,10 +489,11 @@ namespace DAL
                     }
 
                     insertQuery = @"INSERT INTO BIJDRAGE_BERICHT (BIJDRAGE_ID, BERICHT_ID) 
-                    VALUES (BIJDRAGE_FCSEQ.currval, :targetID)";
+                    VALUES (:id, :targetID)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
                         cmd.Parameters.Add(new OracleParameter("targetID", targetID));
                         result = cmd.ExecuteNonQuery();
                     }
@@ -464,36 +504,56 @@ namespace DAL
                 Debug.WriteLine(ErrorString(ex));
                 result = 0;
             }
+
             return result;
         }
 
-        public int InsertLikeFlag(string accountID, string postID, int like, int flag)
+        public int InsertLikeFlag(string userName, string postID, int like, int flag)
         {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            int result = 0;
+            int id = 0;
+
+            try
             {
-                conn.Open();
+                string accountID = this.GetAccountID(userName).ToString();
 
-                string insertQuery = @"INSERT INTO ACCOUNT_BIJDRAGE (ID, ACCOUNT_ID, LIKE, ONGEWENST) 
-                VALUES (ACCOUNT_BIJDRAGE_FCSEQ.nextval, :account_ID, :post_ID, :like, :flag)";
-
-
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
-                    cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
-                    cmd.Parameters.Add(new OracleParameter("post_ID", postID));
-                    cmd.Parameters.Add(new OracleParameter("like", like));
-                    cmd.Parameters.Add(new OracleParameter("flag", flag));
-                    try
+                    conn.Open();
+
+                    string query = @"SELECT BIJDRAGE_FCSEQ.NEXTVAL FROM DUAL";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
                     {
-                        return cmd.ExecuteNonQuery();
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                id = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
                     }
-                    catch (OracleException ex)
+
+                    string insertQuery = @"INSERT INTO ACCOUNT_BIJDRAGE (ID, ACCOUNT_ID, LIKE, ONGEWENST) VALUES (:id, :account_ID, :post_ID, :like, :flag)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
-                        Debug.WriteLine(ErrorString(ex));
-                        return 0;
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
+                        cmd.Parameters.Add(new OracleParameter("post_ID", postID));
+                        cmd.Parameters.Add(new OracleParameter("like", like));
+                        cmd.Parameters.Add(new OracleParameter("flag", flag));
+
+                        return cmd.ExecuteNonQuery();
                     }
                 }
             }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(ErrorString(ex));
+                result = 0;
+            }
+            return result;
         }
         #endregion
 
@@ -542,17 +602,8 @@ namespace DAL
                 }
             }
 
-
             return result;
         }
-
-
-
-
-
-
-
-
         #endregion
 
         /// <summary>
