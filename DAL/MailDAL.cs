@@ -9,6 +9,7 @@ namespace DAL
     using System.ComponentModel;
     using System.Configuration;
     using System.Data;
+    using System.Diagnostics;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -223,9 +224,10 @@ namespace DAL
                 conn.Open();
                 this.counter = 0;
                 this.Accounts = new List<string>();
+                this.IDS = new List<int>();
                 foreach (string b in accountNames)
                 {
-                    string selectQuery = "SELECT COUNT(GEACTIVEERD) FROM ACCOUNT WHERE USERNAME = :V1 AND GEACTIVEERD = 1";
+                    string selectQuery = "SELECT COUNT(GEACTIVEERD) FROM ACCOUNT WHERE GEBRUIKERSNAAM = :V1 AND GEACTIVEERD = 1";
                     using (OracleCommand cmd = new OracleCommand(selectQuery, conn))
                     {
                         cmd.Parameters.Add("V1", b);
@@ -237,8 +239,9 @@ namespace DAL
                                 this.counter++;
                             }
                         }
-                        catch (OracleException)
+                        catch (OracleException ex)
                         {
+                            Debug.WriteLine(ErrorString(ex));
                             this.counter = 0;
                         }
                     }
@@ -247,7 +250,7 @@ namespace DAL
                 {
                     foreach (string b in accountNames)
                     {
-                        string selectQuery1 = "SELECT ID,EMAIL FROM ACCOUNT WHERE USERNAME = :V1";
+                        string selectQuery1 = "SELECT ID,EMAIL FROM ACCOUNT WHERE GEBRUIKERSNAAM = :V1";
                         using (OracleCommand cmd = new OracleCommand(selectQuery1, conn))
                         {
                             cmd.Parameters.Add("V1", b);
@@ -260,8 +263,9 @@ namespace DAL
                                     this.Accounts.Add(reader[1].ToString());
                                 }
                             }
-                            catch (OracleException)
+                            catch (OracleException ex)
                             {
+                                Debug.WriteLine(ErrorString(ex));
                                 this.counter = 0;
                             }
                         }
@@ -275,6 +279,7 @@ namespace DAL
                     using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                     {
                         string barcode = GetAvailableBarcode();
+                        conn.Open();
                         string selectQuery2 = "SELECT ID FROM POLSBANDJE WHERE BARCODE = :V1";
                         using (OracleCommand cmd = new OracleCommand(selectQuery2, conn))
                         {
@@ -287,8 +292,9 @@ namespace DAL
                                     this.counter = Convert.ToInt32(reader[0]);
                                 }
                             }
-                            catch (OracleException)
+                            catch (OracleException ex)
                             {
+                                Debug.WriteLine(ErrorString(ex));
                                 this.counter = 0;
                             }
                         }
@@ -302,8 +308,9 @@ namespace DAL
                             {
                                 cmd.ExecuteNonQuery();
                             }
-                            catch (OracleException)
+                            catch (OracleException ex)
                             {
+                                Debug.WriteLine(ErrorString(ex));
                                 this.counter = 0;
                             }
                         }
@@ -316,6 +323,7 @@ namespace DAL
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
+                conn.Open();
                 string selectQuery2 = "SELECT BARCODE FROM POLSBANDJE, RESERVERING_POLSBANDJE WHERE ACCOUNT_ID = :V1";
                 using (OracleCommand cmd = new OracleCommand(selectQuery2, conn))
                 {
@@ -328,8 +336,9 @@ namespace DAL
                             this.hash = reader[0].ToString();
                         }
                     }
-                    catch (OracleException)
+                    catch (OracleException ex)
                     {
+                        Debug.WriteLine(ErrorString(ex));
                         this.counter = 0;
                     }
                 }
@@ -366,5 +375,15 @@ namespace DAL
         //        }
         //    }
         //}
+
+        /// <summary>
+        /// Method for returning Oracle exceptions as string
+        /// </summary>
+        /// <param name="ex">Oracle exception</param>
+        /// <returns>Oracle exception as string</returns>
+        public string ErrorString(OracleException ex)
+        {
+            return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;
+        }
     }
 }

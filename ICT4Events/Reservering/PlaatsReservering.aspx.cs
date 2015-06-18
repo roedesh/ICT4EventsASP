@@ -85,7 +85,7 @@ namespace ICT4Events.Reservering
                 return; 
             }
 
-            string[] usernames = (this.tbOtherPersons.Text + "," + Session["USERID"].ToString()).Split(',').Select(sValue => sValue.Trim()).ToArray();
+            string[] usernames = (this.tbOtherPersons.Text + "," + Session["USER_ID"].ToString()).Split(',').Select(sValue => sValue.Trim()).ToArray();
             
             foreach (string u in usernames)
             {
