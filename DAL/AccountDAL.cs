@@ -78,6 +78,29 @@ namespace DAL
             }
         }
 
+        public int Update(int accountID, string password)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = @"UPDATE Account SET Wachtwoord = :password WHERE AccountID = :accountID";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("password", password));
+                    cmd.Parameters.Add(new OracleParameter("accountID", accountID));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
+
         public int Update(int accountID, string username, string password, string role, string email, int activated)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))

@@ -10,7 +10,6 @@
         <asp:TextBox ID="tbUserName" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <asp:RequiredFieldValidator runat="server" ControlToValidate="tbUserName"
             ErrorMessage="Dit veld is verplicht." />
-        <a href="ChangePassword.aspx">Klik hier om uw wachtwoord veranderen</a>
         <br />
         <h2>Oud Wachtwoord:</h2>
         <br />
@@ -31,7 +30,7 @@
         <asp:CompareValidator ID="CompareValidator1" ControlToCompare="tbNewPassword" runat="server" ErrorMessage="Wachtwoord komt niet overeen"></asp:CompareValidator>
         <br />
         <br />
-        <asp:Button ID="btnSave" runat="server" Text="Wachtwoord opslaan" />  
+        <asp:Button ID="btnSave" runat="server" Text="Wachtwoord opslaan" OnClick="btnSave_Click" />  
     
     </div>
 </asp:Content>

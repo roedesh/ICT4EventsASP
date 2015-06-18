@@ -30,6 +30,11 @@
             return new AccountDAL().Update(accountID, username, password, role, email, activated);
         }
 
+        public int UpdateAccount(int accountID, string password)
+        {
+            return new AccountDAL().Update(accountID, password);
+        }
+
         public int DeleteAccount(string username)
         {
             return new AccountDAL().Delete(username);
