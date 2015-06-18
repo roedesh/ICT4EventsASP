@@ -24,6 +24,16 @@ namespace DAL
     public class MailDAL
     {
         /// <summary>
+        /// List to work with strings.
+        /// </summary>
+        private List<string> Accounts;
+
+        /// <summary>
+        /// List to work with strings.
+        /// </summary>
+        private List<int> IDS;
+
+        /// <summary>
         /// Integer value to work with.
         /// </summary>
         private int counter;
@@ -48,6 +58,18 @@ namespace DAL
         /// </summary>
         public MailDAL()
         {
+        }
+
+        public List<string> ACcounts
+        {
+            get { return this.Accounts; }
+            set { ACcounts = value; }
+        }
+
+        public List<int> IDs
+        {
+            get { return this.IDS; }
+            set { IDs = value; }
         }
 
         /// <summary>
@@ -175,9 +197,9 @@ namespace DAL
             return hash;
         }
 
-        public void GenerateBarcode()
+        public void GenerateBarcode(string barcodes)
         {
-            string barcode = GetAvailableBarcode();
+            string barcode = barcodes;
             barcode = barcode.Replace(" ", "");
             Bitmap bitmap = new Bitmap(barcode.Length * 40, 150);
             using (Graphics graphics = Graphics.FromImage(bitmap))
@@ -194,9 +216,126 @@ namespace DAL
             bitmap.Save(physicalPath + "bitmap.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
         }
 
-        public void CheckAccountsAndCouple()
+        public void CheckAccountsAndCouple(string[] accountNames, int reservationID)
         {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                this.counter = 0;
+                this.Accounts = new List<string>();
+                foreach (string b in accountNames)
+                {
+                    string selectQuery = "SELECT COUNT(GEACTIVEERD) FROM ACCOUNT WHERE USERNAME = :V1 AND GEACTIVEERD = 1";
+                    using (OracleCommand cmd = new OracleCommand(selectQuery, conn))
+                    {
+                        cmd.Parameters.Add("V1", b);
+                        try
+                        {
+                            var reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                this.counter++;
+                            }
+                        }
+                        catch (OracleException)
+                        {
+                            this.counter = 0;
+                        }
+                    }
+                }
+                if (counter == accountNames.Count())
+                {
+                    foreach (string b in accountNames)
+                    {
+                        string selectQuery1 = "SELECT ID,EMAIL FROM ACCOUNT WHERE USERNAME = :V1";
+                        using (OracleCommand cmd = new OracleCommand(selectQuery1, conn))
+                        {
+                            cmd.Parameters.Add("V1", b);
+                            try
+                            {
+                                var reader = cmd.ExecuteReader();
+                                if (reader.Read())
+                                {
+                                    this.IDS.Add(Convert.ToInt32(reader[0]));
+                                    this.Accounts.Add(reader[1].ToString());
+                                }
+                            }
+                            catch (OracleException)
+                            {
+                                this.counter = 0;
+                            }
+                        }
+                    }
+                }
+            }
+            if (counter != 0)
+            {
+                foreach (int ids in this.IDS)
+                {
+                    using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                    {
+                        string barcode = GetAvailableBarcode();
+                        string selectQuery2 = "SELECT ID FROM POLSBANDJE WHERE BARCODE = :V1";
+                        using (OracleCommand cmd = new OracleCommand(selectQuery2, conn))
+                        {
+                            cmd.Parameters.Add("V1", barcode);
+                            try
+                            {
+                                var reader = cmd.ExecuteReader();
+                                if (reader.Read())
+                                {
+                                    this.counter = Convert.ToInt32(reader[0]);
+                                }
+                            }
+                            catch (OracleException)
+                            {
+                                this.counter = 0;
+                            }
+                        }
+                        string insertQuery = "INSERT INTO RESERVERING_POLSBANDJE VALUES (RESERVERING_POLSBANDJE_FCSEQ.NEXTVAL,:V1,:V2,:V3,0)";
+                        using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                        {
+                            cmd.Parameters.Add("V1", reservationID);
+                            cmd.Parameters.Add("V2", counter);
+                            cmd.Parameters.Add("V3", ids);
+                            try
+                            {
+                                cmd.ExecuteNonQuery();
+                            }
+                            catch (OracleException)
+                            {
+                                this.counter = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
+        public string SelectBarcode(int id)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                string selectQuery2 = "SELECT BARCODE FROM POLSBANDJE, RESERVERING_POLSBANDJE WHERE ACCOUNT_ID = :V1";
+                using (OracleCommand cmd = new OracleCommand(selectQuery2, conn))
+                {
+                    cmd.Parameters.Add("V1", id);
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            this.hash = reader[0].ToString();
+                        }
+                    }
+                    catch (OracleException)
+                    {
+                        this.counter = 0;
+                    }
+                }
+            }
+
+            return this.hash;
         }
 
         //public void SetBarcodes()

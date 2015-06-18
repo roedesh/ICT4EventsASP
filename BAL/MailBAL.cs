@@ -67,50 +67,73 @@ namespace BAL
             string hash = personData[0];
             string mailto = personData[1];
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
-            string link = string.Format(
-                "http://localhost:2359/Registreren.aspx?RegistrationCode={1}&AccountID={0}", userID.ToString(), hash.ToString());
-            sb.AppendFormat(@"<a href=""{0}"">PTS23.com Complete Registration</a>", link);
-            sb.Append("<br /><br />When you have followed the link, you will be able to log in and use your account.<br />");
-            sb.Append("If your email system does not allow linking, please copy and paste the following into your browser:<br />");
-            sb.Append(link);
-            sb.Append("<br /><br />");
+            if (activation)
+            {
+                sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
+                string link = string.Format(
+                    "http://localhost:2359/Registreren.aspx?RegistrationCode={1}&AccountID={0}", userID.ToString(), hash.ToString());
+                sb.AppendFormat(@"<a href=""{0}"">PTS23.com Complete Registration</a>", link);
+                sb.Append("<br /><br />When you have followed the link, you will be able to log in and use your account.<br />");
+                sb.Append("If your email system does not allow linking, please copy and paste the following into your browser:<br />");
+                sb.Append(link);
+                sb.Append("<br /><br />");
+            }
 
             try
             {
                 MailMessage msg = new MailMessage();
-                msg.Subject = "Activation E-mail";                
-                    maildal.GenerateBarcode();
+                msg.Subject = "Activation E-mail";
                     string appPath = HttpContext.Current.Request.ApplicationPath;
                     string physicalPath = HttpContext.Current.Request.MapPath(appPath);
-                    using (fs = File.Open(physicalPath + "bitmap.jpeg", FileMode.Open))
+                    foreach (int id in maildal.IDs)
                     {
-                        if (!activation)
+                        string barcode = maildal.SelectBarcode(id);
+                        maildal.GenerateBarcode(barcode);
+                        using (fs = File.Open(physicalPath + "bitmap.jpeg", FileMode.Open))
                         {
-                        msg.Attachments.Add(new Attachment(fs, new ContentType(MediaTypeNames.Image.Jpeg)));
-                        sb.Clear();
-                        sb.Append("<br /><br /> Thank you for placing your reservation. " +
-                           "<br /><br />Please make sure to bring the attached <b>barcode</b> with you," +
-                           "<br />you will have to show this at the entrance of the event." +
-                           "<br />A digital version is also allowed, i.e. showing us this e-mail." +
-                           "<br />See you there!");
-                        msg.Subject = "Reservation E-mail";
+                            if (!activation)
+                            {
+                                msg.Attachments.Add(new Attachment(fs, new ContentType(MediaTypeNames.Image.Jpeg)));
+                                sb.Clear();
+                                sb.Append("<br /><br /> Thank you for placing your reservation. " +
+                                   "<br /><br />Please make sure to bring the attached <b>barcode</b> with you," +
+                                   "<br />you will have to show this at the entrance of the event." +
+                                   "<br />A digital version is also allowed, i.e. showing us this e-mail." +
+                                   "<br />See you there!");
+                                msg.Subject = "Reservation E-mail";
+                                msg.From = new MailAddress("fontyspts23@gmail.com");
+                                msg.Body = sb.ToString();
+                                msg.To.Add(new MailAddress(mailto));
+                                msg.IsBodyHtml = true;
+                                SmtpClient smtp = new SmtpClient();
+                                smtp.Host = "smtp.gmail.com";
+                                smtp.Port = 587;
+                                smtp.UseDefaultCredentials = false;
+                                smtp.EnableSsl = true;
+                                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                                NetworkCredential loginCredentials = new NetworkCredential("fontyspts23@gmail.com", "PTS23PTS23");
+                                smtp.Credentials = loginCredentials;
+                                smtp.Send(msg);
+                                fs.Close();
+                            }
                         }
-                    msg.From = new MailAddress("fontyspts23@gmail.com");
-                    msg.Body = sb.ToString();
-                    msg.To.Add(new MailAddress(mailto));
-                    msg.IsBodyHtml = true;
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Host = "smtp.gmail.com";
-                    smtp.Port = 587;
-                    smtp.UseDefaultCredentials = false;
-                    smtp.EnableSsl = true;
-                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    NetworkCredential loginCredentials = new NetworkCredential("fontyspts23@gmail.com", "PTS23PTS23");
-                    smtp.Credentials = loginCredentials;
-                    smtp.Send(msg);
-                    fs.Close();
-                }
+                    }
+                    if (activation)
+                    {
+                        msg.From = new MailAddress("fontyspts23@gmail.com");
+                        msg.Body = sb.ToString();
+                        msg.To.Add(new MailAddress(mailto));
+                        msg.IsBodyHtml = true;
+                        SmtpClient smtp1 = new SmtpClient();
+                        smtp1.Host = "smtp.gmail.com";
+                        smtp1.Port = 587;
+                        smtp1.UseDefaultCredentials = false;
+                        smtp1.EnableSsl = true;
+                        smtp1.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        NetworkCredential loginCredentials1 = new NetworkCredential("fontyspts23@gmail.com", "PTS23PTS23");
+                        smtp1.Credentials = loginCredentials1;
+                        smtp1.Send(msg);
+                    }
                     if (!activation)
                     {
                         string appP = HttpContext.Current.Request.ApplicationPath;
