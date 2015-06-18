@@ -421,7 +421,6 @@ namespace DAL
                             cmd.Parameters.Add(new OracleParameter("id", id));
                             cmd.Parameters.Add(new OracleParameter("parentID", parentID));
                             cmd.Parameters.Add(new OracleParameter("categoryName", name));
-
                         }
 
                         result = cmd.ExecuteNonQuery();
@@ -552,33 +551,114 @@ namespace DAL
         /// Method for deleting a file from the database.
         /// </summary>
         /// <param name="postID">Identifier of the post</param>
-        /// <returns>Is "1" if it is a like, otherwise "0"</returns>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
         public int DeleteFile(string postID)
         {
             int result = 0;
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+
+            try
             {
-                conn.Open();
-                string insertQuery = "DELETE FROM BESTAND WHERE ID = :postID";
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
-                    cmd.Parameters.Add(new OracleParameter("postID", postID));
-                    try
+                    conn.Open();
+                    string deleteQuery = "DELETE FROM BESTAND WHERE BIJDRAGE_ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(deleteQuery, conn))
                     {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+
                         result = cmd.ExecuteNonQuery();
                     }
-                    catch (OracleException ex)
+                }
+
+                result = this.DeletePost(postID);
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Method for deleting all the likes and flags of a post
+        /// </summary>
+        /// <param name="postID">Identifier of the post</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int DeletePostLikeFlags(string postID)
+        {
+            int result = 0;
+
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string deleteQuery = "DELETE FROM ACCOUNT_BIJDRAGE WHERE BIJDRAGE_ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(deleteQuery, conn))
                     {
-                        Debug.WriteLine(this.ErrorString(ex));
-                        result = 0;
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+
+                        result = cmd.ExecuteNonQuery();
                     }
                 }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Method for deleting a category and all childs
+        /// </summary>
+        /// <param name="postID">Identifier of the post</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int DeleteCategory(string postID)
+        {
+            int result = 0;
+
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    // Delete child categories:
+                    string deleteQuery = "DELETE FROM CATEGORIE WHERE BIJDRAGE_ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(deleteQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+
+                    deleteQuery = "DELETE FROM CATEGORIE WHERE BIJDRAGE_ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(deleteQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result = this.DeletePost(postID);
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
             }
 
             return result;
         }
         #endregion
 
+        #region Private Methods
         /// <summary>
         /// Method for returning Oracle exceptions as string
         /// </summary>
@@ -654,24 +734,32 @@ namespace DAL
         /// <returns>Is "1" if it is a like, otherwise "0".</returns>
         private int DeletePost(string postID)
         {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            if (this.DeletePostLikeFlags(postID) == 0)
             {
-                conn.Open();
-                string insertQuery = "DELETE FROM BIJDRAGE WHERE ID = :postID";
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                return 0;
+            }
+            else
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
-                    cmd.Parameters.Add(new OracleParameter("postID", postID));
-                    try
+                    conn.Open();
+                    string insertQuery = "DELETE FROM BIJDRAGE WHERE ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
-                        return cmd.ExecuteNonQuery();
-                    }
-                    catch (OracleException ex)
-                    {
-                        Debug.WriteLine(this.ErrorString(ex));
-                        return 0;
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+                        try
+                        {
+                            return cmd.ExecuteNonQuery();
+                        }
+                        catch (OracleException ex)
+                        {
+                            Debug.WriteLine(this.ErrorString(ex));
+                            return 0;
+                        }
                     }
                 }
             }
         }
+        #endregion
     }
 }
