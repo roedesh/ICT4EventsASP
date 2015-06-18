@@ -257,6 +257,39 @@ namespace DAL
             }
         }
 
+        public int GetCategoryID(string categoryName)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                int result = 0;
+
+                conn.Open();
+                string query = "SELECT BIJDRAGE_ID FROM CATEGORIE WHERE NAAM = :name";
+
+                try
+                {
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("name", categoryName));
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message.ToString());
+                    result = 0;
+                }
+                return result;
+            }
+        }
+
         private int InsertPost(string userName, string type)
         {
             int result = 0;
@@ -469,32 +502,6 @@ namespace DAL
 
         #region Category Queries
 
-
-        public int InsertCategory(string postID, string categoryID, string name)
-        {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-            {
-                conn.Open();
-                string insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, CATEGORIE_ID, NAAM) 
-                VALUES (:postID, :categoryID, :name)";
-
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.Add(new OracleParameter("postID", postID));
-                    cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
-                    cmd.Parameters.Add(new OracleParameter("name", name));
-                    try
-                    {
-                        return cmd.ExecuteNonQuery();
-                    }
-                    catch (OracleException ex)
-                    {
-                        Debug.WriteLine(ErrorString(ex));
-                        return 0;
-                    }
-                }
-            }
-        }
 
         #endregion
 
