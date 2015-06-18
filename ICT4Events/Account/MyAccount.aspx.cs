@@ -22,7 +22,7 @@
                 DataTable table = new AccountBAL().GetAccount(Session["USER_ID"].ToString());
                 this.tbEmailAdress.Text = table.Rows[0]["EMAIL"].ToString();
                 this.tbUserName.Text = table.Rows[0]["GEBRUIKERSNAAM"].ToString();
-                
+                this.tbPassword.Text = table.Rows[0]["PASSWORD"].ToString();
 
             }
         }
