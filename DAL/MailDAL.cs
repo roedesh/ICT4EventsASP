@@ -194,6 +194,11 @@ namespace DAL
             bitmap.Save(physicalPath + "bitmap.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
         }
 
+        public void CheckAccountsAndCouple()
+        {
+
+        }
+
         //public void SetBarcodes()
         //{
         //    for (int i = 0; i < 100; i++)
