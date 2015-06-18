@@ -52,14 +52,14 @@ namespace BAL
             return new ReservationDAL().Insert(personID, beginDate, endDate);
         }
 
+        /// <summary>
+        /// Method for deleting a reservation
+        /// </summary>
+        /// <param name="reservationID">ID of the reservation to be deleted</param>
+        /// <returns>0 (failed) or 1 (success)</returns>
         public int DeleteReservation(int reservationID)
         {
             return new ReservationDAL().Delete(reservationID);
-        }
-
-        public int DeletePerson(int reservationID)
-        {
-            return new ReservationDAL().DeletePerson(reservationID);
         }
     }
 }

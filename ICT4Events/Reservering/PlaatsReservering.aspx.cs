@@ -1,4 +1,8 @@
-﻿namespace ICT4Events.Reservering
+﻿// <copyright file="PlaatsReservering.aspx.cs" company="RuudIT">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+// <author>Ruud Schroën</author>
+namespace ICT4Events.Reservering
 {
     using System;
     using System.Collections.Generic;
@@ -9,17 +13,35 @@
     using System.Web.UI.WebControls;
     using BAL;
 
+    /// <summary>
+    /// WebForm for placing a new reservation
+    /// </summary>
     public partial class PlaatsReservering : System.Web.UI.Page
     {
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
         }
 
+        /// <summary>
+        /// Event that gets fired whenever a date is selected in calBeginDate
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void calBeginData_SelectionChanged(object sender, EventArgs e)
         {
             this.cusValBeginDate.Validate();
         }
 
+        /// <summary>
+        /// Validator for calBeginDate that checks if the selected date if later than today
+        /// </summary>
+        /// <param name="source">The source of the Event.</param>
+        /// <param name="args">The <see cref="System.ServerValidateEventArgs"/> instance containing the event data.</param>
         protected void cusValBeginDate_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (this.calBeginData.SelectedDate <= DateTime.Now)
@@ -28,11 +50,21 @@
             }
         }
 
+        /// <summary>
+        /// Event that gets fired whenever a date is selected in calEndData
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void calEndDate_SelectionChanged(object sender, EventArgs e)
         {
             this.cusValEndDate.Validate();
         }
 
+        /// <summary>
+        /// Validator for calBeginDate that checks if the selected date if later than the begin date
+        /// </summary>
+        /// <param name="source">The source of the Event.</param>
+        /// <param name="args">The <see cref="System.ServerValidateEventArgs"/> instance containing the event data.</param>
         protected void cusValEndDate_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (this.calEndDate.SelectedDate <= this.calBeginData.SelectedDate)
@@ -41,6 +73,11 @@
             }
         }
 
+        /// <summary>
+        /// Click event for Button1
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Button1_Click(object sender, EventArgs e)
         {
             if (!Page.IsValid) 
@@ -48,7 +85,7 @@
                 return; 
             }
 
-            string[] usernames = tbOtherPersons.Text.Split(',').Select(sValue => sValue.Trim()).ToArray();
+            string[] usernames = this.tbOtherPersons.Text.Split(',').Select(sValue => sValue.Trim()).ToArray();
             foreach (string u in usernames)
             {
                 Debug.WriteLine(u);
@@ -80,11 +117,6 @@
             {
                 Debug.WriteLine("Plek_Reservering aangemaakt!");
             }
-        }
-
-        protected void tbAmountPersons_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
