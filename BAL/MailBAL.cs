@@ -85,8 +85,9 @@ namespace BAL
                 msg.Subject = "Activation E-mail";
                     string appPath = HttpContext.Current.Request.ApplicationPath;
                     string physicalPath = HttpContext.Current.Request.MapPath(appPath);
+                    counter = 0;
                     foreach (int id in maildal.IDs)
-                    {
+                    {   
                         string barcode = maildal.SelectBarcode(id);
                         maildal.GenerateBarcode(barcode);
                         using (fs = File.Open(physicalPath + "bitmap.jpeg", FileMode.Open))
@@ -103,7 +104,8 @@ namespace BAL
                                 msg.Subject = "Reservation E-mail";
                                 msg.From = new MailAddress("fontyspts23@gmail.com");
                                 msg.Body = sb.ToString();
-                                msg.To.Add(new MailAddress(mailto));
+                                msg.To.Add(new MailAddress(maildal.ACcounts[counter]));
+                                counter++;
                                 msg.IsBodyHtml = true;
                                 SmtpClient smtp = new SmtpClient();
                                 smtp.Host = "smtp.gmail.com";
