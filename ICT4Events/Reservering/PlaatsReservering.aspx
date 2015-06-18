@@ -146,9 +146,9 @@
     <tr>
         <td class="auto-style3">Gebruikersnamen van de mensen die meegaan, gescheiden door een komma:</td>
         <td class="auto-style4">
-            <asp:TextBox ID="tbAmountPersons" runat="server" OnTextChanged="tbAmountPersons_TextChanged" Width="240px"></asp:TextBox>
-            <asp:RegularExpressionValidator ID="RegularExpressionValidator6" runat="server" ControlToValidate="tbAmountPersons" ErrorMessage="Gebruikersnamen moeten worden gescheiden door een komma" ValidationExpression="[a-zA-Z]+(,[a-zA-Z]+)*"></asp:RegularExpressionValidator>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbAmountPersons" ErrorMessage="Aantal mensen is verplicht"></asp:RequiredFieldValidator>
+            <asp:TextBox ID="tbOtherPersons" runat="server" OnTextChanged="tbAmountPersons_TextChanged" Width="240px"></asp:TextBox>
+            <asp:RegularExpressionValidator ID="RegularExpressionValidator6" runat="server" ControlToValidate="tbOtherPersons" ErrorMessage="Gebruikersnamen moeten worden gescheiden door een komma" ValidationExpression="^[a-zA-Z]+(,\s[a-zA-Z]+)*"></asp:RegularExpressionValidator>
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbOtherPersons" ErrorMessage="Aantal mensen is verplicht"></asp:RequiredFieldValidator>
         </td>
         <td class="auto-style4"></td>
     </tr>
