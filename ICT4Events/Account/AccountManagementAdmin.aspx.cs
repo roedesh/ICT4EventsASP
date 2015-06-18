@@ -61,9 +61,9 @@
                             DataTable table = new AccountBAL().GetAccount(tbUserName.Text);
                             new AccountBAL().UpdateAccount(
                                 Convert.ToInt32(tbAccountID.Text),
-                                tbRank.Text,
-                                tbUserName.Text,
-                                tbPassword.Text,
+                                this.tbRank.Text,
+                                this.tbUserName.Text,
+                                this.tbPassword.Text,
                                 this.tbEmailAdress.Text,
                                 Convert.ToInt32(this.ddlActivated.SelectedItem.Value),
                                 this.tbFirstName.Text,
