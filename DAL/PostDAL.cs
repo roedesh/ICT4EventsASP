@@ -301,14 +301,13 @@ namespace DAL
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
-                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) 
-                    VALUES (BIJDRAGE_FCSEQ.nextval, :accountID, TO_DATE(:date, 'dd/mm/yyyy'), :type)";
+                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) VALUES (BIJDRAGE_FCSEQ.nextval, :accountID, TO_DATE(:uploadDate, 'dd/mm/yyyy'), :kind)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
                         cmd.Parameters.Add(new OracleParameter("accountID", accountID));
-                        cmd.Parameters.Add(new OracleParameter("date", DateTime.Now.ToString("dd-MM-yyyy")));
-                        cmd.Parameters.Add(new OracleParameter("type", "BESTAND"));
+                        cmd.Parameters.Add(new OracleParameter("uploadDate", DateTime.Now.ToString("dd-MM-yyyy")));
+                        cmd.Parameters.Add(new OracleParameter("kind", "BESTAND"));
 
                         result = cmd.ExecuteNonQuery();
                     }
@@ -357,37 +356,35 @@ namespace DAL
             return result;
         }
 
-        public int InsertCategory(string userName, string categoryID, string name)
+        public int InsertCategory(string userName, string parentName, string name)
         {
             int result = 0;
             string insertQuery = string.Empty;
             try
             {
-                this.InsertPost(userName, "BESTAND");
-
-                string accountID = this.GetAccountID(userName).ToString();
+                this.InsertPost(userName, "CATEGORIE");
 
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
 
-
-
-
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
-                        if (categoryID == string.Empty)
+                        if (parentName == string.Empty)
                         {
-                            insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, NAAM) 
-                        VALUES (BIJDRAGE_FCSEQ.currval, :name)";
+                            insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, NAAM) VALUES (BIJDRAGE_FCSEQ.currval, :name)";
+
+                            cmd.Parameters.Add(new OracleParameter("name", name));
                         }
                         else
                         {
-                            insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
-                        VALUES (BIJDRAGE_FCSEQ.currval, :categoryID, :location, :size)";
-                        }
-                        cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
+                            string parentID = this.GetCategoryID(parentName).ToString();
 
+                            insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, CATEGORIE_ID, NAAM) VALUES (BIJDRAGE_FCSEQ.currval, :parentID, :name)";
+
+                            cmd.Parameters.Add(new OracleParameter("name", name));
+                            cmd.Parameters.Add(new OracleParameter("parentID", parentID));
+                        }
 
                         result = cmd.ExecuteNonQuery();
                     }
@@ -401,9 +398,46 @@ namespace DAL
             return result;
         }
 
+        public int InsertMessage(string userName, string title, string content, string targetID)
+        {
+            int result = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                this.InsertPost(userName, "BERICHT");
 
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
 
+                    insertQuery = @"INSERT INTO BERICHT (BIJDRAGE_ID, TITEL, INHOUD) 
+                    VALUES (BIJDRAGE_FCSEQ.currval, :title, :content)";
 
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("title", title));
+                        cmd.Parameters.Add(new OracleParameter("content", content));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+
+                    insertQuery = @"INSERT INTO BIJDRAGE_BERICHT (BIJDRAGE_ID, BERICHT_ID) 
+                    VALUES (BIJDRAGE_FCSEQ.currval, :targetID)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("targetID", targetID));
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(ErrorString(ex));
+                result = 0;
+            }
+            return result;
+        }
 
         public int InsertLikeFlag(string accountID, string postID, int like, int flag)
         {
@@ -412,7 +446,7 @@ namespace DAL
                 conn.Open();
 
                 string insertQuery = @"INSERT INTO ACCOUNT_BIJDRAGE (ID, ACCOUNT_ID, LIKE, ONGEWENST) 
-                VALUES (ACCOUNT_BIJDRAGE_FCSEQ, :account_ID, :post_ID, :like, :flag)";
+                VALUES (ACCOUNT_BIJDRAGE_FCSEQ.nextval, :account_ID, :post_ID, :like, :flag)";
 
 
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
@@ -433,34 +467,18 @@ namespace DAL
                 }
             }
         }
-
-
         #endregion
 
-        #region File Queries
-
-
-
-
-
-        #endregion
-
-        #region Message Queries
-
-
-        public int InsertMessage(string postID, string title, string content)
+        #region Delete Queries
+        private int DeletePost(string postID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"INSERT INTO BERICHT (BIJDRAGE_ID, TITEL, INHOUD) 
-                VALUES (:postID, :title, :content)";
-
+                string insertQuery = "DELETE FROM BIJDRAGE WHERE ID = :postID";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("postID", postID));
-                    cmd.Parameters.Add(new OracleParameter("title", title));
-                    cmd.Parameters.Add(new OracleParameter("content", content));
                     try
                     {
                         return cmd.ExecuteNonQuery();
@@ -474,33 +492,37 @@ namespace DAL
             }
         }
 
-        public int InsertPostMessage(string postID, string messageID)
+        public int DeleteFile(string postID)
         {
+            int result = 0;
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"INSERT INTO BIJDRAGE_BERICHT (BIJDRAGE_ID, BERICHT_ID) 
-                VALUES (:postID, :messageID)";
-
+                string insertQuery = "DELETE FROM BESTAND WHERE ID = :postID";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("postID", postID));
-                    cmd.Parameters.Add(new OracleParameter("messageID", messageID));
                     try
                     {
-                        return cmd.ExecuteNonQuery();
+                        result = cmd.ExecuteNonQuery();
                     }
                     catch (OracleException ex)
                     {
                         Debug.WriteLine(ErrorString(ex));
-                        return 0;
+                        result = 0;
                     }
                 }
             }
-        }
-        #endregion
 
-        #region Category Queries
+
+            return result;
+        }
+
+
+
+
+
+
 
 
         #endregion
