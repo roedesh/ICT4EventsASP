@@ -38,5 +38,32 @@
         {
             return new RentalDAL().LoadPersonByID(id);
         }
+        public DataTable GetAllAvaillableItems(int availlable)
+        {
+            return new RentalDAL().LoadAllAvaillableItems(availlable);
+        }
+        public int CreateRental(int id, string barcode, string datumOut)
+        {
+            string dateFormat = "d-MM-yyyy HH:mm:ss";
+            string now = DateTime.Now.ToString(dateFormat);
+            int succes = 0;
+            DataTable dt = new RentalDAL().LoadPerson(barcode);
+            long pbID = 0;
+            try
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    pbID = row.Field<long>(0);
+                }
+                
+            }
+            catch
+            {
+            }
+            succes =  new RentalDAL().CreateRental(pbID,id,now,datumOut);
+            succes = new RentalDAL().UpdateExemplaar(id,1);
+            return succes;
+
+        }
     }
 }
