@@ -17,11 +17,14 @@
             //{
             //    Response.Redirect("../Default.aspx");
             //}
-            DataTable table = new EventBAL().GetAllEvents();
-            ddlAllEvents.DataSource = table;
-            ddlAllEvents.DataTextField = "NAAM";
-            ddlAllEvents.DataValueField = "NAAM";
-            ddlAllEvents.DataBind();
+            if (!IsPostBack)
+            {
+                DataTable table = new EventBAL().GetAllEvents();
+                ddlAllEvents.DataSource = table;
+                ddlAllEvents.DataTextField = "NAAM";
+                ddlAllEvents.DataValueField = "NAAM";
+                ddlAllEvents.DataBind();
+            }
         }
 
         protected void btnCreate_Click(object sender, EventArgs e)
@@ -46,7 +49,7 @@
                 this.tbMaxVis.Text = table.Rows[0]["MAXBEZOEKERS"].ToString();
                 this.tbLocationName.Text = table.Rows[0]["LOCNAAM"].ToString();
                 this.tbStreet.Text = table.Rows[0]["STRAAT"].ToString();
-                this.tbStreetNr.Text = table.Rows[0]["STRAATNR"].ToString();
+                this.tbStreetNr.Text = table.Rows[0]["NR"].ToString();
                 this.tbZipCode.Text = table.Rows[0]["POSTCODE"].ToString();
                 this.tbCity.Text = table.Rows[0]["PLAATS"].ToString();
             }

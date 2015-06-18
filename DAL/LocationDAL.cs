@@ -16,6 +16,31 @@
         {
         }
 
+        public int Insert(string naam, string straat, string straatNr, string postcode, string plaats)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = @"INSERT INTO LOCATIE VALUES (LOCATIE_FCSEQ.NEXTVAL, :naam, :straat, :nummer, :postcode, :plaats)";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("naam", naam));
+                    cmd.Parameters.Add(new OracleParameter("straat", straat));
+                    cmd.Parameters.Add(new OracleParameter("nummer", straatNr));
+                    cmd.Parameters.Add(new OracleParameter("postcode", postcode));
+                    cmd.Parameters.Add(new OracleParameter("plaats", plaats));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(this.ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
         public DataTable Load()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -39,7 +64,27 @@
                 }
             }
         }
-
+        public int Delete(string naam)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "DELETE FROM Locatie WHERE Naam = :naam";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("naam", naam));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
         public DataTable Load(string name)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))

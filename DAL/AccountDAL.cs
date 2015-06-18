@@ -83,13 +83,14 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = "UPDATE Account SET Gebruikersnaam = :username, Email = :email, Password = :password, ROL = :role WHERE ID = :accountID";
+                string insertQuery = "UPDATE Account SET Gebruikersnaam = :username, Email = :email, Password = :password, Rol = :role, geactiveerd = :activated WHERE ID = :accountID";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("username", username));
-                    cmd.Parameters.Add(new OracleParameter("email", username));
+                    cmd.Parameters.Add(new OracleParameter("email", email));
                     cmd.Parameters.Add(new OracleParameter("password", password)); 
                     cmd.Parameters.Add(new OracleParameter("role", role));
+                    cmd.Parameters.Add(new OracleParameter("activated", activated));
                     cmd.Parameters.Add(new OracleParameter("accountID", accountID));
                     try
                     {
@@ -131,7 +132,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT * FROM ACCOUNT, PERSOON WHERE GEBRUIKERSNAAM = :gebruikersnaam";
+                string loadQuery = "SELECT * FROM ACCOUNT WHERE GEBRUIKERSNAAM = :gebruikersnaam";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
