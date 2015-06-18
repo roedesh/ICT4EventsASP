@@ -16,7 +16,7 @@ namespace DAL
 
     public class PostDAL
     {
-        #region File Queries
+        #region Load Queries
         public DataTable LoadFile(string fileID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -69,35 +69,6 @@ namespace DAL
             }
         }
 
-        public int InsertFile(string account_ID, string date, string type, string category_id, string location, string size)
-        {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-            {
-                conn.Open();
-                string insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) 
-                VALUES (BIJDRAGE_FCSEQ, :account_ID, :date, :type)";
-
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.Add(new OracleParameter("account_ID", account_ID));
-                    cmd.Parameters.Add(new OracleParameter("date", date));
-                    cmd.Parameters.Add(new OracleParameter("type", type));
-                    try
-                    {
-                        return cmd.ExecuteNonQuery();
-                    }
-                    catch (OracleException ex)
-                    {
-                        Debug.WriteLine(ex.ToString());
-                        return 0;
-                    }
-                }
-            }
-        }
-
-        #endregion
-
-        #region Message Queries
         public DataTable LoadPostMessages(string postID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -123,9 +94,57 @@ namespace DAL
                 }
             }
         }
-        #endregion
 
-        #region Category Queries
+        public List<int> GetLikeFlagCount(string postID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                List<int> result = new List<int>();
+
+                conn.Open();
+                string loadQuery = "SELECT SUM(LIKES) FROM ACCOUNT_BIJDRAGE WHERE BIJDRAGE_ID = :post_id";
+
+                try
+                {
+                    using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("post_ID", postID));
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result.Add(Convert.ToInt32(reader.GetValue(0)));
+                            }
+                        }
+                    }
+
+                    loadQuery = "SELECT SUM(ONGEWENST) FROM ACCOUNT_BIJDRAGE WHERE BIJDRAGE_ID = :post_id";
+
+                    using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("post_ID", postID));
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result.Add(Convert.ToInt32(reader.GetValue(0)));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message.ToString());
+                    result.Add(0);
+                    result.Add(0);
+                }
+
+                return result;
+            }
+        }
+
         public DataTable LoadRootCategories()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -174,7 +193,294 @@ namespace DAL
                 }
             }
         }
+        #endregion
+
+
+        #region Insert Queries
+
+        public int GetAccountID(string userName)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                int result = 0;
+
+                conn.Open();
+                string query = "SELECT ID FROM ACCOUNT WHERE GEBRUIKERSNAAM = :userName";
+
+                try
+                {
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("userName", userName));
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message.ToString());
+                    result = 0;
+                }
+
+                return result;
+            }
+        }
+
+        private int InsertPost(string userName, string type)
+        {
+            int result = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                string accountID = this.GetAccountID(userName).ToString();
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) 
+                    VALUES (BIJDRAGE_FCSEQ.nextval, :accountID, TO_DATE(:date, 'dd/mm/yyyy'), :type)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("accountID", accountID));
+                        cmd.Parameters.Add(new OracleParameter("date", DateTime.Now.ToString("dd-MM-yyyy")));
+                        cmd.Parameters.Add(new OracleParameter("type", "BESTAND"));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(ErrorString(ex));
+                result = 0;
+            }
+            return result;
+        }
+
+        public int InsertFile(string userName, string categoryID, string location, string size)
+        {
+            int result = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                this.InsertPost(userName, "BESTAND");
+
+                string accountID = this.GetAccountID(userName).ToString();
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
+                    VALUES (BIJDRAGE_FCSEQ.currval, :categoryID, :location, :size)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
+                        cmd.Parameters.Add(new OracleParameter("location", location));
+                        cmd.Parameters.Add(new OracleParameter("size", size));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(ErrorString(ex));
+                result = 0;
+            }
+            return result;
+        }
+
+        public int InsertCategory(string userName, string categoryID, string location, string size)
+        {
+            int result = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                string accountID = this.GetAccountID(userName).ToString();
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) 
+                    VALUES (BIJDRAGE_FCSEQ.nextval, :accountID, TO_DATE(:date, 'dd/mm/yyyy'), :type)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("accountID", accountID));
+                        cmd.Parameters.Add(new OracleParameter("date", DateTime.Now.ToString("dd-MM-yyyy")));
+                        cmd.Parameters.Add(new OracleParameter("type", "BESTAND"));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+
+                    insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
+                    VALUES (BIJDRAGE_FCSEQ.currval, :categoryID, :location, :size)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
+                        cmd.Parameters.Add(new OracleParameter("location", location));
+                        cmd.Parameters.Add(new OracleParameter("size", size));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(ErrorString(ex));
+                result = 0;
+            }
+            return result;
+        }
+        
+
+
+
+
+        public int InsertLikeFlag(string accountID, string postID, int like, int flag)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+
+                string insertQuery = @"INSERT INTO ACCOUNT_BIJDRAGE (ID, ACCOUNT_ID, LIKE, ONGEWENST) 
+                VALUES (ACCOUNT_BIJDRAGE_FCSEQ, :account_ID, :post_ID, :like, :flag)";
+
+
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
+                    cmd.Parameters.Add(new OracleParameter("post_ID", postID));
+                    cmd.Parameters.Add(new OracleParameter("like", like));
+                    cmd.Parameters.Add(new OracleParameter("flag", flag));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
 
         #endregion
+
+        #region File Queries
+
+
+
+
+
+        #endregion
+
+        #region Message Queries
+
+
+        public int InsertMessage(string postID, string title, string content)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = @"INSERT INTO BERICHT (BIJDRAGE_ID, TITEL, INHOUD) 
+                VALUES (:postID, :title, :content)";
+
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("postID", postID));
+                    cmd.Parameters.Add(new OracleParameter("title", title));
+                    cmd.Parameters.Add(new OracleParameter("content", content));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public int InsertPostMessage(string postID, string messageID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = @"INSERT INTO BIJDRAGE_BERICHT (BIJDRAGE_ID, BERICHT_ID) 
+                VALUES (:postID, :messageID)";
+
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("postID", postID));
+                    cmd.Parameters.Add(new OracleParameter("messageID", messageID));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Category Queries
+
+
+        public int InsertCategory(string postID, string categoryID, string name)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, CATEGORIE_ID, NAAM) 
+                VALUES (:postID, :categoryID, :name)";
+
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("postID", postID));
+                    cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
+                    cmd.Parameters.Add(new OracleParameter("name", name));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Method for returning Oracle exceptions as string
+        /// </summary>
+        /// <param name="ex">Oracle exception</param>
+        /// <returns>Oracle exception as string</returns>
+        public string ErrorString(OracleException ex)
+        {
+            return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;
+        }
     }
 }
