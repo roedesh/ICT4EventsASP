@@ -413,5 +413,28 @@
                 return 0;
             }
         }
+        public int UpdateItem(int personID, int aanwezig)
+        {
+            //under construction
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "UPDATE RESERVERING_POLSBANDJE SET AANWEZIG = :aanwezig WHERE ID = :personID";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("aanwezig", aanwezig));
+                    cmd.Parameters.Add(new OracleParameter("personID", personID));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
     }
 }

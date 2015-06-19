@@ -19,6 +19,16 @@
             return new RentalDAL().UpdatePresence(personID, aanwezig);
 
         }
+        public int UpdateExemplaar(int personID, int isVerhuurd)
+        {
+            return new RentalDAL().UpdateExemplaar(personID, isVerhuurd);
+
+        }
+        public int UpdateProduct(int id, string naam, string merk, string serie,decimal prijs, int aantal)
+        {
+            int succes = 0;
+            return succes;
+        }
         public DataTable GetPersonByAanwezig(int aanwezig)
         {
             if (aanwezig == 1 || aanwezig == 0)
