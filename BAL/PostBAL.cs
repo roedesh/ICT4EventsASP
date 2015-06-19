@@ -58,5 +58,46 @@
         {
             return new PostDAL().InsertMessage(username, title, content, targetid);
         }
+
+        public int CreateLikeFlag(string username, string postid, int like, int flag)
+        {
+            return new PostDAL().InsertLikeFlag(username, postid, like, flag);
+        }
+        public int UpdateLike(string username, string postid, int like)
+        {
+            if(new PostDAL().CheckLikeFlag(username, postid) > 0)
+            {
+                return new PostDAL().UpdateLike(username, postid, like);
+            }
+            else
+            {
+                return new PostDAL().InsertLikeFlag(username, postid, like, 0);
+            }
+            
+        }
+
+        public int UpdateFlag(string username, string postid, int flag)
+        {
+            if (new PostDAL().CheckLikeFlag(username, postid) > 0)
+            {
+                return new PostDAL().UpdateFlag(username, postid, flag);
+            }
+            else
+            {
+                return new PostDAL().InsertLikeFlag(username, postid, 0, flag);
+            }
+        }
+
+        public int CheckLike(string username, string postid)
+        {
+            int like = 1;
+            return new PostDAL().CheckLike(username, postid, like);
+        }
+
+        public int CheckFlag(string username, string postid)
+        {
+            int flag = 1;
+            return new PostDAL().CheckFlag(username, postid, flag);
+        }
     }
 }

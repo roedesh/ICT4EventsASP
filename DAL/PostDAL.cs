@@ -469,12 +469,13 @@ namespace DAL
                     }
 
                     insertQuery = @"INSERT INTO BIJDRAGE_BERICHT (BIJDRAGE_ID, BERICHT_ID) 
-                    VALUES (:id, :targetID)";
+                    VALUES (:targetID, :id )";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
-                        cmd.Parameters.Add(new OracleParameter("id", id));
                         cmd.Parameters.Add(new OracleParameter("targetID", targetID));
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        
                         result = cmd.ExecuteNonQuery();
                     }
                 }
@@ -509,7 +510,7 @@ namespace DAL
                 {
                     conn.Open();
 
-                    string query = @"SELECT BIJDRAGE_FCSEQ.NEXTVAL FROM DUAL";
+                    string query = @"SELECT ACCOUNT_BIJDRAGE_FCSEQ.NEXTVAL FROM DUAL";
 
                     using (OracleCommand cmd = new OracleCommand(query, conn))
                     {
@@ -522,15 +523,15 @@ namespace DAL
                         }
                     }
 
-                    string insertQuery = @"INSERT INTO ACCOUNT_BIJDRAGE (ID, ACCOUNT_ID, LIKE, ONGEWENST) VALUES (:id, :account_ID, :post_ID, :like, :flag)";
+                    string insertQuery = @"INSERT INTO ACCOUNT_BIJDRAGE (ID, ACCOUNT_ID, BIJDRAGE_ID, LIKES, ONGEWENST) VALUES (:id, :account_ID, :bijdrage_ID, :likes, :ongewenst)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
                         cmd.Parameters.Add(new OracleParameter("id", id));
                         cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
-                        cmd.Parameters.Add(new OracleParameter("post_ID", postID));
-                        cmd.Parameters.Add(new OracleParameter("like", like));
-                        cmd.Parameters.Add(new OracleParameter("flag", flag));
+                        cmd.Parameters.Add(new OracleParameter("bijdrage_ID", postID));
+                        cmd.Parameters.Add(new OracleParameter("likes", like));
+                        cmd.Parameters.Add(new OracleParameter("ongewenst", flag));
 
                         return cmd.ExecuteNonQuery();
                     }
@@ -546,6 +547,71 @@ namespace DAL
         }
         #endregion
 
+        #region Update Queries
+        public int UpdateLike(string userName, string postID, int like)
+        {
+            int result = 0;
+
+            try
+            {
+                string accountID = this.GetAccountID(userName).ToString();
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string insertQuery = @"UPDATE  ACCOUNT_BIJDRAGE SET LIKES = :likes WHERE account_id = :account_ID AND bijdrage_ID = :bijdrage_ID";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
+                        cmd.Parameters.Add(new OracleParameter("bijdrage_ID", postID));
+                        cmd.Parameters.Add(new OracleParameter("likes", like));
+
+                        return cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                result = 0;
+            }
+
+            return result;
+        }
+
+        public int UpdateFlag(string userName, string postID, int flag)
+        {
+            int result = 0;
+
+            try
+            {
+                string accountID = this.GetAccountID(userName).ToString();
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string insertQuery = @"UPDATE  ACCOUNT_BIJDRAGE SET ONGEWENST = :ongewenst WHERE account_id = :account_ID AND bijdrage_ID =:bijdrage_ID";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
+                        cmd.Parameters.Add(new OracleParameter("bijdrage_ID", postID));
+                        cmd.Parameters.Add(new OracleParameter("ongewenst", flag));
+
+                        return cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                result = 0;
+            }
+
+            return result;
+        }
+        #endregion
         #region Delete Queries
         /// <summary>
         /// Method for deleting a file from the database.
@@ -658,6 +724,103 @@ namespace DAL
         }
         #endregion
 
+        #region Check Methods
+        public int CheckLikeFlag(string userName, string postID)
+        {
+            try
+            {
+                string accountID = this.GetAccountID(userName).ToString();
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT account_ID FROM ACCOUNT_BIJDRAGE WHERE account_id = :account_id AND bijdrage_ID = :bijdrage_ID)";
+                    using (OracleCommand cmd = new OracleCommand(checkUser, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("account_id", accountID));
+                        cmd.Parameters.Add(new OracleParameter("bijdrage_id", postID));
+                        try
+                        {
+                            return Convert.ToInt32(cmd.ExecuteScalar().ToString());
+                        }
+                        catch (OracleException ex)
+                        {
+                            Console.WriteLine(this.ErrorString(ex));
+                            return 0;
+                        }
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
+            }
+        }
+        public int CheckLike(string userName, string postID, int like)
+        {
+            try
+            {
+                string accountID = this.GetAccountID(userName).ToString();
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT account_ID FROM ACCOUNT_BIJDRAGE WHERE account_id = :account_id AND bijdrage_ID = :bijdrage_ID and likes = :likes)";
+                    using (OracleCommand cmd = new OracleCommand(checkUser, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("account_id", accountID));
+                        cmd.Parameters.Add(new OracleParameter("bijdrage_id", postID));
+                        cmd.Parameters.Add(new OracleParameter("likes", like));
+                        try
+                        {
+                            return Convert.ToInt32(cmd.ExecuteScalar().ToString());
+                        }
+                        catch (OracleException ex)
+                        {
+                            Console.WriteLine(this.ErrorString(ex));
+                            return 0;
+                        }
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
+            }
+        }
+        public int CheckFlag(string userName, string postID, int flag)
+        {
+            try
+            {
+                string accountID = this.GetAccountID(userName).ToString();
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string checkUser = "SELECT COUNT(*) FROM dual WHERE EXISTS(SELECT account_ID FROM ACCOUNT_BIJDRAGE WHERE account_id = :account_id AND bijdrage_ID = :bijdrage_ID and ongewenst = :ongewenst)";
+                    using (OracleCommand cmd = new OracleCommand(checkUser, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("account_id", accountID));
+                        cmd.Parameters.Add(new OracleParameter("bijdrage_id", postID));
+                        cmd.Parameters.Add(new OracleParameter("ongewenst", flag));
+                        try
+                        {
+                            return Convert.ToInt32(cmd.ExecuteScalar().ToString());
+                        }
+                        catch (OracleException ex)
+                        {
+                            Console.WriteLine(this.ErrorString(ex));
+                            return 0;
+                        }
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
+            }
+        }
+        #endregion
         #region Private Methods
         /// <summary>
         /// Method for returning Oracle exceptions as string
