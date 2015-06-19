@@ -48,9 +48,6 @@
     <Compile Include="EventBAL.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="ItemBAL.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="LocationBAL.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>

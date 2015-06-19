@@ -359,7 +359,7 @@ namespace DAL
         /// <param name="serie">Product series</param>
         /// <param name="prijs">The price</param>
         /// <param name="typenummer">Type number</param>
-        /// <returns>0 or 1</returns>
+        /// <returns>The ID of the created product or 0 when it failed</returns>
         public int CreateProduct(int catID, string merk, string serie, decimal prijs, int typenummer)
         {
             int result = 0;
@@ -515,5 +515,6 @@ namespace DAL
                 return 0;
             }
         }
+
     }
 }
