@@ -26,6 +26,13 @@ namespace DAL
         { 
         }
 
+        /// <summary>
+        /// A method to insert into an account
+        /// </summary>
+        /// <param name="username">username of the account</param>
+        /// <param name="password">password of the account</param>
+        /// <param name="email">email of the account</param>
+        /// <returns>1 or 0</returns>
         public int Insert(string username, string password, string email)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -53,6 +60,14 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to update an account
+        /// </summary>
+        /// <param name="accountID">ID of the account</param>
+        /// <param name="username">username of the account</param>
+        /// <param name="password">Password of the account</param>
+        /// <param name="role">role of the account</param>
+        /// <returns>1 or 0</returns>
         public int Update(int accountID, string username, string password, string role)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -78,6 +93,12 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to update an account 
+        /// </summary>
+        /// <param name="accountID">ID of the account</param>
+        /// <param name="password">password of the account</param>
+        /// <returns>1 or 0</returns>
         public int Update(int accountID, string password)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -101,6 +122,16 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to update an account
+        /// </summary>
+        /// <param name="accountID">ID of the account</param>
+        /// <param name="username">username of the account</param>
+        /// <param name="password">password of the account</param>
+        /// <param name="role">role of the account</param>
+        /// <param name="email">email of the account</param>
+        /// <param name="activated">Whether the account is activated</param>
+        /// <returns>1 or 0</returns>
         public int Update(int accountID, string username, string password, string role, string email, int activated)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -128,6 +159,11 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to delete an account
+        /// </summary>
+        /// <param name="username">username of the account</param>
+        /// <returns>1 or 0</returns>
         public int Delete(string username)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -150,6 +186,11 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to load an account
+        /// </summary>
+        /// <param name="username">username of the account</param>
+        /// <returns>A account</returns>
         public DataTable Load(string username)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -175,6 +216,12 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to load an account
+        /// </summary>
+        /// <param name="username">username of the account</param>
+        /// <param name="password">password of the account</param>
+        /// <returns>A Account</returns>
         public DataTable Load(string username, string password)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -201,6 +248,10 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to load all accounts
+        /// </summary>
+        /// <returns>All accounts</returns>
         public DataTable LoadAll()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -224,6 +275,13 @@ namespace DAL
                 }
             }
         }
+
+        /// <summary>
+        /// A method to login an account
+        /// </summary>
+        /// <param name="username">username of the account</param>
+        /// <param name="password">password of the account</param>
+        /// <returns>1 or 0</returns>
         public int Login(string username, string password)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -247,6 +305,11 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to check a username of an account
+        /// </summary>
+        /// <param name="username">of the account</param>
+        /// <returns>1 or 0</returns>
         public int CheckUsername(string username)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -269,6 +332,11 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// A method to check the email of an account
+        /// </summary>
+        /// <param name="email">email of the account</param>
+        /// <returns>1 or 0</returns>
         public int CheckEmail(string email)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
