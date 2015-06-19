@@ -1,14 +1,17 @@
-﻿using System;
+﻿// <copyright file="CreateCategory.aspx.cs" company="Ict4Events">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+// <author>Sander Koch</author>
+namespace ICT4Events.Post
+{
+using BAL;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data;
-using BAL;
-
-namespace ICT4Events.Post
-{
     public partial class CreateCategory : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿namespace ICT4Events.Post
 {
+    using BAL;
     using System;
     using System.Collections.Generic;
     using System.Data;
@@ -7,11 +8,10 @@
     using System.Web;
     using System.Web.UI;
     using System.Web.UI.WebControls;
-    using BAL;
-
+    
     public partial class Category : System.Web.UI.Page
     {
-        string c = "";
+        string c = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -22,6 +22,9 @@
                     DataTable SubCategory = new PostBAL().GetCategories(c);
                     this.repSubCat.DataSource = SubCategory;
                     this.repSubCat.DataBind();
+                    DataTable Post = new PostBAL().GetAllPosts(c);
+                    this.repFile.DataSource = Post;
+                    this.repFile.DataBind();
                 }
 
                 if (c == null)

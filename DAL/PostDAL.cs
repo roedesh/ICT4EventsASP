@@ -348,7 +348,7 @@ namespace DAL
             string insertQuery = string.Empty;
             try
             {
-                int id = this.InsertPost(userName, "CATEGORIE");
+                int id = this.InsertPost(userName, "BESTAND");
 
                 string accountID = this.GetAccountID(userName).ToString();
 

@@ -53,5 +53,10 @@
         {
             return new PostDAL().LoadPostMessages(id);
         }
+
+        public int CreateMessage(string username, string title, string content, string targetid)
+        {
+            return new PostDAL().InsertMessage(username, title, content, targetid);
+        }
     }
 }

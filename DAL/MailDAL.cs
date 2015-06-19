@@ -10,12 +10,12 @@ namespace DAL
     using System.Configuration;
     using System.Data;
     using System.Diagnostics;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
     using System.Web;
     using Oracle.DataAccess.Client;
 
@@ -27,12 +27,12 @@ namespace DAL
         /// <summary>
         /// List to work with strings.
         /// </summary>
-        private List<string> Accounts;
+        private List<string> accounts;
 
         /// <summary>
         /// List to work with strings.
         /// </summary>
-        private List<int> IDS;
+        private List<int> ids;
 
         /// <summary>
         /// Integer value to work with.
@@ -53,6 +53,7 @@ namespace DAL
         /// Integer to return in a method.
         /// </summary>
         private int resultValue;
+
         private int reservationID = 0;
 
         /// <summary>
@@ -65,18 +66,19 @@ namespace DAL
         public int ReservationID
         {
             get { return this.reservationID; }
-            set { ReservationID = value; }
+            set { this.ReservationID = value; }
         }
-        public List<string> ACcounts
+
+        public List<string> Accounts
         {
-            get { return this.Accounts; }
-            set { ACcounts = value; }
+            get { return this.accounts; }
+            set { this.Accounts = value; }
         }
 
         public List<int> IDs
         {
-            get { return this.IDS; }
-            set { IDs = value; }
+            get { return this.ids; }
+            set { this.IDs = value; }
         }
 
         /// <summary>
@@ -192,7 +194,7 @@ namespace DAL
                         var reader = cmd.ExecuteReader();
                         if (reader.Read())
                         {
-                            hash = reader[0].ToString();
+                            this.hash = reader[0].ToString();
                         }
                     }
                     catch (OracleException)
@@ -201,13 +203,14 @@ namespace DAL
                     }
                 }
             }
-            return hash;
+
+            return this.hash;
         }
 
         public void GenerateBarcode(string barcodes)
         {
             string barcode = barcodes;
-            barcode = barcode.Replace(" ", "");
+            barcode = barcode.Replace(" ", string.Empty);
             Bitmap bitmap = new Bitmap(barcode.Length * 40, 150);
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
@@ -218,6 +221,7 @@ namespace DAL
                 graphics.FillRectangle(white, 0, 0, bitmap.Width, bitmap.Height);
                 graphics.DrawString("*" + barcode + "*", ofont, black, point);
             }
+
             string appPath = HttpContext.Current.Request.ApplicationPath;
             string physicalPath = HttpContext.Current.Request.MapPath(appPath);
             bitmap.Save(physicalPath + "bitmap.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -230,8 +234,8 @@ namespace DAL
             {
                 conn.Open();
                 this.counter = 0;
-                this.Accounts = new List<string>();
-                this.IDS = new List<int>();
+                this.accounts = new List<string>();
+                this.ids = new List<int>();
                 foreach (string b in accountNames)
                 {
                     string selectQuery = "SELECT COUNT(GEACTIVEERD) FROM ACCOUNT WHERE GEBRUIKERSNAAM = :V1 AND GEACTIVEERD = 1";
@@ -248,12 +252,13 @@ namespace DAL
                         }
                         catch (OracleException ex)
                         {
-                            Debug.WriteLine(ErrorString(ex));
+                            Debug.WriteLine(this.ErrorString(ex));
                             this.counter = 0;
                         }
                     }
                 }
-                if (counter == accountNames.Count())
+
+                if (this.counter == accountNames.Count())
                 {
                     foreach (string b in accountNames)
                     {
@@ -266,26 +271,27 @@ namespace DAL
                                 var reader = cmd.ExecuteReader();
                                 if (reader.Read())
                                 {
-                                    this.IDS.Add(Convert.ToInt32(reader[0]));
-                                    this.Accounts.Add(reader[1].ToString());
+                                    this.ids.Add(Convert.ToInt32(reader[0]));
+                                    this.accounts.Add(reader[1].ToString());
                                 }
                             }
                             catch (OracleException ex)
                             {
-                                Debug.WriteLine(ErrorString(ex));
+                                Debug.WriteLine(this.ErrorString(ex));
                                 this.counter = 0;
                             }
                         }
                     }
                 }
             }
-            if (counter != 0)
+
+            if (this.counter != 0)
             {
-                foreach (int ids in this.IDS)
+                foreach (int ids in this.ids)
                 {
                     using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                     {
-                        string barcode = GetAvailableBarcode();
+                        string barcode = this.GetAvailableBarcode();
                         conn.Open();
                         string selectQuery2 = "SELECT ID FROM POLSBANDJE WHERE BARCODE = :V1";
                         using (OracleCommand cmd = new OracleCommand(selectQuery2, conn))
@@ -301,15 +307,16 @@ namespace DAL
                             }
                             catch (OracleException ex)
                             {
-                                Debug.WriteLine(ErrorString(ex));
+                                Debug.WriteLine(this.ErrorString(ex));
                                 this.counter = 0;
                             }
                         }
+
                         string insertQuery = "INSERT INTO RESERVERING_POLSBANDJE VALUES (RESERVERING_POLSBANDJE_FCSEQ.NEXTVAL,:V1,:V2,:V3,0)";
                         using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                         {
                             cmd.Parameters.Add("V1", reservationID);
-                            cmd.Parameters.Add("V2", counter);
+                            cmd.Parameters.Add("V2", this.counter);
                             cmd.Parameters.Add("V3", ids);
                             try
                             {
@@ -317,7 +324,7 @@ namespace DAL
                             }
                             catch (OracleException ex)
                             {
-                                Debug.WriteLine(ErrorString(ex));
+                                Debug.WriteLine(this.ErrorString(ex));
                                 this.counter = 0;
                             }
                         }
@@ -348,7 +355,7 @@ namespace DAL
                     }
                     catch (OracleException ex)
                     {
-                        Debug.WriteLine(ErrorString(ex));
+                        Debug.WriteLine(this.ErrorString(ex));
                         this.counter = 0;
                     }
                 }
