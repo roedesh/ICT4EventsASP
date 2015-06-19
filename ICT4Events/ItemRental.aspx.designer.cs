@@ -40,40 +40,40 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Label Label5;
         
         /// <summary>
-        /// tbLeenUitItemID control.
+        /// TbLeenUitItemID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbLeenUitItemID;
+        protected global::System.Web.UI.WebControls.TextBox TbLeenUitItemID;
         
         /// <summary>
-        /// tbLeenUitBarcode control.
+        /// TbLeenUitBarcode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbLeenUitBarcode;
+        protected global::System.Web.UI.WebControls.TextBox TbLeenUitBarcode;
         
         /// <summary>
-        /// tbLeenUitDatum control.
+        /// TbLeenUitDatum control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbLeenUitDatum;
+        protected global::System.Web.UI.WebControls.TextBox TbLeenUitDatum;
         
         /// <summary>
-        /// btnVrijeArtikelen control.
+        /// BtnVrijeArtikelen control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVrijeArtikelen;
+        protected global::System.Web.UI.WebControls.Button BtnVrijeArtikelen;
         
         /// <summary>
         /// Button1 control.
@@ -85,13 +85,13 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
-        /// btnLeenUit control.
+        /// BtnLeenUit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnLeenUit;
+        protected global::System.Web.UI.WebControls.Button BtnLeenUit;
         
         /// <summary>
         /// Button2 control.
@@ -112,13 +112,13 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// tbLeenUitZoekPersoon control.
+        /// TbLeenUitZoekPersoon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbLeenUitZoekPersoon;
+        protected global::System.Web.UI.WebControls.TextBox TbLeenUitZoekPersoon;
         
         /// <summary>
         /// Button3 control.
@@ -130,13 +130,13 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Button Button3;
         
         /// <summary>
-        /// gvRental control.
+        /// GvRental control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvRental;
+        protected global::System.Web.UI.WebControls.GridView GvRental;
         
         /// <summary>
         /// Label13 control.
@@ -184,84 +184,84 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Label Label10;
         
         /// <summary>
-        /// btnArtikelVerwijder control.
+        /// BtnArtikelVerwijder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnArtikelVerwijder;
+        protected global::System.Web.UI.WebControls.Button BtnArtikelVerwijder;
         
         /// <summary>
-        /// tbArtikelNaam control.
+        /// TbArtikelNaam control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbArtikelNaam;
+        protected global::System.Web.UI.WebControls.TextBox TbArtikelNaam;
         
         /// <summary>
-        /// tbArtikelMerk control.
+        /// TbArtikelMerk control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbArtikelMerk;
+        protected global::System.Web.UI.WebControls.TextBox TbArtikelMerk;
         
         /// <summary>
-        /// tbArtikelSerie control.
+        /// TbArtikelSerie control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbArtikelSerie;
+        protected global::System.Web.UI.WebControls.TextBox TbArtikelSerie;
         
         /// <summary>
-        /// tbArtikelPrijs control.
+        /// TbArtikelPrijs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbArtikelPrijs;
+        protected global::System.Web.UI.WebControls.TextBox TbArtikelPrijs;
         
         /// <summary>
-        /// tbArtikelAantal control.
+        /// TbArtikelAantal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbArtikelAantal;
+        protected global::System.Web.UI.WebControls.TextBox TbArtikelAantal;
         
         /// <summary>
-        /// btnArtikelVoegToe control.
+        /// BtnArtikelVoegToe control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnArtikelVoegToe;
+        protected global::System.Web.UI.WebControls.Button BtnArtikelVoegToe;
         
         /// <summary>
-        /// btnArtikelPasAan control.
+        /// BtnArtikelPasAan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnArtikelPasAan;
+        protected global::System.Web.UI.WebControls.Button BtnArtikelPasAan;
         
         /// <summary>
-        /// gvArtikel control.
+        /// GvArtikel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvArtikel;
+        protected global::System.Web.UI.WebControls.GridView GvArtikel;
     }
 }

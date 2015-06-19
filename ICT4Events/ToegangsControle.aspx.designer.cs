@@ -22,22 +22,22 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Label lblBarcode;
         
         /// <summary>
-        /// tbBarcode control.
+        /// TbBarcode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbBarcode;
+        protected global::System.Web.UI.WebControls.TextBox TbBarcode;
         
         /// <summary>
-        /// btnSearchPerson0 control.
+        /// BtnSearchPerson0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearchPerson0;
+        protected global::System.Web.UI.WebControls.Button BtnSearchPerson0;
         
         /// <summary>
         /// lblSearchPerson control.
@@ -49,49 +49,49 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Label lblSearchPerson;
         
         /// <summary>
-        /// tbSearchPerson control.
+        /// TbSearchPerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbSearchPerson;
+        protected global::System.Web.UI.WebControls.TextBox TbSearchPerson;
         
         /// <summary>
-        /// btnSearchPerson control.
+        /// BtnSearchPerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSearchPerson;
+        protected global::System.Web.UI.WebControls.Button BtnSearchPerson;
         
         /// <summary>
-        /// btnCheckInOut control.
+        /// BtnCheckInOut control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCheckInOut;
+        protected global::System.Web.UI.WebControls.Button BtnCheckInOut;
         
         /// <summary>
-        /// btnShowAttendants control.
+        /// BtnShowAttendants control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnShowAttendants;
+        protected global::System.Web.UI.WebControls.Button BtnShowAttendants;
         
         /// <summary>
-        /// tbBetaald control.
+        /// TbBetaald control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbBetaald;
+        protected global::System.Web.UI.WebControls.TextBox TbBetaald;
         
         /// <summary>
         /// Label2 control.
@@ -103,12 +103,12 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// gvData control.
+        /// GvData control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvData;
+        protected global::System.Web.UI.WebControls.GridView GvData;
     }
 }
