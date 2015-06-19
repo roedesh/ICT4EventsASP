@@ -19,7 +19,7 @@
     <div>
         <h1>Maak hier een nieuwe locatie of verwijder een bestaande locatie:</h1>
 
-            <asp:DropDownList ID="ddlAllLocations" runat="server"></asp:DropDownList>
+        <asp:DropDownList ID="ddlAllLocations" runat="server"></asp:DropDownList>
         <br />
         <asp:Button ID="btnLoad" runat="server" Text="Laad Locatie" OnClick="btnLoad_Click" />
         <asp:Button ID="btnCreate" runat="server" ValidationGroup="create"  Text="Maak locatie aan" OnClick="btnCreate_Click" OnClientClick="Confirm()"/>
@@ -34,10 +34,17 @@
         <asp:TextBox ID="tbStreet" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <asp:TextBox ID="tbStreetNr" runat="server" Height="25px" Width="50px"></asp:TextBox>
         <asp:RequiredFieldValidator Display="Dynamic" ValidationGroup="create" ID="reqStreetNrCreate" ControlToValidate="tbStreet" runat="server" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
+        <asp:CompareValidator runat="server" Display="Dynamic" Operator="DataTypeCheck" Type="Integer" ControlToValidate="tbStreetNr" ErrorMessage="Dit veld mag alleen uit nummers bestaan" />
         <br />
         <h2>Postcode:</h2>
         <asp:TextBox ID="tbZipCode" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <asp:RequiredFieldValidator Display="Dynamic" ValidationGroup="create" ID="reqZipCodeCreate" ControlToValidate="tbZipCode" runat="server" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
+        <asp:RegularExpressionValidator ID="valZipCode" 
+                                        runat="server" 
+                                        ControlToValidate="tbZipCode"
+                                        ErrorMessage="Postcode is ongeldig. Postcode moet van formaat 1234AA zijn" 
+                                        SetFocusOnError="True" 
+                                        ValidationExpression="/^[1-9][0-9]{3}[\s]?[A-Za-z]{2}$/i">*</asp:RegularExpressionValidator>
         <br />
         <h2>Plaats:</h2>
         <asp:TextBox ID="tbCity" runat="server" Height="25px" Width="250px"></asp:TextBox>

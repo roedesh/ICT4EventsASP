@@ -112,6 +112,15 @@ namespace ICT4Events.Event {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventStartDateSave;
         
         /// <summary>
+        /// valDateRangeStart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator valDateRangeStart;
+        
+        /// <summary>
         /// tbEndDate control.
         /// </summary>
         /// <remarks>
@@ -128,6 +137,24 @@ namespace ICT4Events.Event {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventEndDateSave;
+        
+        /// <summary>
+        /// valDateRangeEnd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator valDateRangeEnd;
+        
+        /// <summary>
+        /// CompareDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CompareDate;
         
         /// <summary>
         /// tbMaxVis control.

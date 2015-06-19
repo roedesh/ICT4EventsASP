@@ -43,7 +43,7 @@ namespace ICT4Events
                     }
                     else
                     {
-                        Response.Write("<script>alert('Locatie kon niet worden verwijderd');</script>");
+                        Response.Write("<script>alert('Invoer onjuist');</script>");
                     }
                 }
             }
