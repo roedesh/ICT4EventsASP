@@ -1,4 +1,8 @@
-﻿namespace ICT4Events
+﻿// <copyright file="Login.aspx.cs" company="JonneIT">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+// <author>Jonne van Dreven</author>
+namespace ICT4Events
 {
     using System;
     using System.Collections.Generic; 
@@ -9,8 +13,16 @@
     using System.Web.UI.WebControls;
     using BAL;
 
+    /// <summary>
+    /// WebForm for logging in a user
+    /// </summary>
     public partial class Login : System.Web.UI.Page
     {
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (this.Session["USER_ID"] != null)
@@ -19,7 +31,12 @@
             }
         }
 
-            protected void OnLoggingIn(object sender, System.Web.UI.WebControls.LoginCancelEventArgs e)
+        /// <summary>
+        /// Event that gets fired when a user is logging in
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void OnLoggingIn(object sender, System.Web.UI.WebControls.LoginCancelEventArgs e)
         {
             if (this.IsValid)
             {

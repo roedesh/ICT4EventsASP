@@ -14,23 +14,23 @@
         <h2>Oud Wachtwoord:</h2>
         <br />
         <asp:TextBox ID="tbOldPassword" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbFirstName"
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbOldPassword"
             ErrorMessage="Dit veld is verplicht." />
         <h2>Nieuw Wachtwoord:</h2>
         <br />
         <asp:TextBox ID="tbNewPassword" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbLastName"
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbNewPassword"
             ErrorMessage="Dit veld is verplicht." />
         <br />
         <h2>Herhaal nieuw Wachtwoord:</h2>
         <br />
         <asp:TextBox ID="tbNewPasswordRe" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbLastName"
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbNewPasswordRe"
             ErrorMessage="Dit veld is verplicht." />
-        <asp:CompareValidator ID="CompareValidator1" ControlToCompare="tbNewPassword" runat="server" ErrorMessage="Wachtwoord komt niet overeen"></asp:CompareValidator>
+        <asp:CompareValidator ID="CompareValidator1" ControlToCompare="tbNewPassword" runat="server" ErrorMessage="Wachtwoord komt niet overeen" ControlToValidate="tbNewPasswordRe"></asp:CompareValidator>
         <br />
         <br />
-        <asp:Button ID="btnSave" runat="server" Text="Wachtwoord opslaan" OnClick="btnSave_Click" />  
+        <asp:Button ID="btnSave" runat="server" Text="Wachtwoord opslaan" OnClick="BtnSave_Click" />  
     
     </div>
 </asp:Content>

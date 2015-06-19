@@ -36,22 +36,26 @@ namespace ICT4Events.Account
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void btnSave_Click(object sender, EventArgs e)
+        protected void BtnSave_Click(object sender, EventArgs e)
         {
             if (!Page.IsValid)
             {
                 return;
             }
 
-            AccountBAL aBal = new AccountBAL();
+            AccountBAL abal = new AccountBAL();
 
-            DataTable account = aBal.GetAccount(this.tbUserName.Text, this.tbOldPassword.Text);
+            DataTable account = abal.GetAccount(this.tbUserName.Text, this.tbOldPassword.Text);
             if (account.Rows.Count == 0)
             {
                 return;
             }
 
-            aBal.UpdateAccount(Convert.ToInt32(account.Rows[0]["ID"]), this.tbNewPassword.Text);
+            int success = abal.UpdateAccount(Convert.ToInt32(account.Rows[0]["ID"]), this.tbNewPassword.Text);
+            if (success > 0)
+            {
+                Response.Redirect("/Default.aspx", false);
+            }
         }
     }
 }

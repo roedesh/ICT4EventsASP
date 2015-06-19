@@ -83,7 +83,7 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = @"UPDATE Account SET Wachtwoord = :password WHERE AccountID = :accountID";
+                string insertQuery = @"UPDATE Account SET Password = :password WHERE ID = :accountID";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("password", password));

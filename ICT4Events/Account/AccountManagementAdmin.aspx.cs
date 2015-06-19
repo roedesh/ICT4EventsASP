@@ -1,4 +1,8 @@
-﻿namespace ICT4Events.Account
+﻿// <copyright file="AccountManagementAdmin.aspx.cs" company="JonneIT">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+// <author>Jonne van Dreven</author>
+namespace ICT4Events.Account
 {
     using System;
     using System.Collections.Generic;
@@ -9,15 +13,24 @@
     using System.Web.UI.WebControls;
     using BAL;
 
+    /// <summary>
+    /// WebForm for managing accounts
+    /// </summary>
     public partial class AccountManagementAdmin : System.Web.UI.Page
     {
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["USER_ROLE"].ToString() != "ADMIN")
-            //{
-            //    Response.Redirect("../Default.aspx");
-            //}
-            if (!IsPostBack)
+            if (Session["USER_ROLE"].ToString() != "ADMIN")
+            {
+                Response.Redirect("/Default.aspx", false);
+            }
+
+            if (!this.IsPostBack)
             {
                 DataTable table = new AccountBAL().GetAllAccounts();
                 this.ddlAllAcounts.DataSource = table;
@@ -28,7 +41,12 @@
             }
         }
 
-        protected void btSearchAccount_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the search button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtSearchAccount_Click(object sender, EventArgs e)
         {
             try
             {
@@ -41,7 +59,7 @@
                 this.tbPassword.Text = table.Rows[0]["PASSWORD"].ToString();
                 this.tbRank.Text = table.Rows[0]["ROL"].ToString();
             }
-            catch(IndexOutOfRangeException)
+            catch (IndexOutOfRangeException)
             {
                 Response.Write("<script>alert('Geen gebruiker gevonden');</script>");
             }
@@ -49,12 +67,16 @@
             {
                 Response.Write("<script>alert('Er is iets fout gegaan probeer het opnieuw');</script>");
             }
-
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the save button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnSave_Click(object sender, EventArgs e)
         {
-                if (IsValid)
+            if (this.IsValid)
                 {
                     string confirmValue = Request.Form["confirm_value"];
                     if (confirmValue == "Ja")
@@ -85,12 +107,22 @@
                 }
         }
 
-        protected void btnCreate_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the create button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnCreate_Click(object sender, EventArgs e)
         {
             Response.Redirect("../Registreren.aspx");
         }
 
-        protected void btnDelete_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the delete button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnDelete_Click(object sender, EventArgs e)
         {
             string confirmValue = Request.Form["confirm_value"];
                 if (confirmValue == "Ja")
@@ -110,7 +142,12 @@
                 }
         }
 
-        protected void btnLoadUser_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the "load user" button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnLoadUser_Click(object sender, EventArgs e)
         {
             DataTable table = new AccountBAL().GetAccount(this.ddlAllAcounts.SelectedItem.Value.ToString());
             this.tbAccountID.Text = table.Rows[0]["ID"].ToString();
