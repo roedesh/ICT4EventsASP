@@ -67,6 +67,15 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.TextBox tbEventname;
         
         /// <summary>
+        /// reqEventNameCreate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventNameCreate;
+        
+        /// <summary>
         /// tbStartDate control.
         /// </summary>
         /// <remarks>
@@ -74,6 +83,24 @@ namespace ICT4Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbStartDate;
+        
+        /// <summary>
+        /// reqEventStartDateCreate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventStartDateCreate;
+        
+        /// <summary>
+        /// valDateRangeStart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator valDateRangeStart;
         
         /// <summary>
         /// tbEndDate control.
@@ -85,6 +112,33 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.TextBox tbEndDate;
         
         /// <summary>
+        /// reqEventEndDateCreate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventEndDateCreate;
+        
+        /// <summary>
+        /// valDateRangeEnd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator valDateRangeEnd;
+        
+        /// <summary>
+        /// CompareDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CompareDate;
+        
+        /// <summary>
         /// tbMaxVis control.
         /// </summary>
         /// <remarks>
@@ -94,6 +148,15 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.TextBox tbMaxVis;
         
         /// <summary>
+        /// reqEventMaxVisCreate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventMaxVisCreate;
+        
+        /// <summary>
         /// tbLocationName control.
         /// </summary>
         /// <remarks>
@@ -101,6 +164,15 @@ namespace ICT4Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox tbLocationName;
+        
+        /// <summary>
+        /// reqEventLocationCreate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator reqEventLocationCreate;
         
         /// <summary>
         /// tbStreet control.

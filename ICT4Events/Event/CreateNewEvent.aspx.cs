@@ -58,7 +58,26 @@ namespace ICT4Events
                 Response.Write("<script>alert('Er is iets fout gegaan, probeer het opnieuw');</script>");
             }
         }
+        protected void valDateRange_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime minDate = DateTime.Parse("28-12-2010 00:00:00");
+            DateTime maxDate = DateTime.Parse("28-12-9999 23:59:59");
+            DateTime dt;
 
+            args.IsValid = (DateTime.TryParse(args.Value, out dt)
+                            && dt <= maxDate
+                            && dt >= minDate);
+        }
+        protected void valDateCompare_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (IsValid)
+            {
+                DateTime startDate = Convert.ToDateTime(this.tbStartDate.Text);
+                DateTime endDate = Convert.ToDateTime(this.tbEndDate.Text);
+
+                args.IsValid = (endDate > startDate);
+            }
+        }
         protected void btnLoadLocation_Click(object sender, EventArgs e)
         {
             try
