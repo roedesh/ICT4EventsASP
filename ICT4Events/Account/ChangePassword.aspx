@@ -5,31 +5,32 @@
 
     <div>
         <h1>Hieronder ziet u uw gebruik- en contactgegevens</h1>
-        <br />
-        <h2>Gebruikersnaam:</h2>
-        <asp:TextBox ID="tbUserName" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbUserName"
-            ErrorMessage="Dit veld is verplicht." />
-        <br />
-        <h2>Oud Wachtwoord:</h2>
-        <br />
-        <asp:TextBox ID="tbOldPassword" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbOldPassword"
-            ErrorMessage="Dit veld is verplicht." />
-        <h2>Nieuw Wachtwoord:</h2>
-        <br />
-        <asp:TextBox ID="tbNewPassword" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbNewPassword"
-            ErrorMessage="Dit veld is verplicht." />
-        <br />
-        <h2>Herhaal nieuw Wachtwoord:</h2>
-        <br />
-        <asp:TextBox ID="tbNewPasswordRe" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="tbNewPasswordRe"
-            ErrorMessage="Dit veld is verplicht." />
-        <asp:CompareValidator ID="CompareValidator1" ControlToCompare="tbNewPassword" runat="server" ErrorMessage="Wachtwoord komt niet overeen" ControlToValidate="tbNewPasswordRe"></asp:CompareValidator>
-        <br />
-        <br />
+        <p>
+            <h3>Gebruikersnaam:</h3>
+            <asp:TextBox ID="tbUserName" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
+            <asp:RequiredFieldValidator runat="server" ControlToValidate="tbUserName"
+                ErrorMessage="Dit veld is verplicht." />
+        </p>
+        <p>
+            <h3>Oud Wachtwoord:</h3>
+            <asp:TextBox ID="tbOldPassword" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
+            <asp:RequiredFieldValidator runat="server" ControlToValidate="tbOldPassword"
+                ErrorMessage="Dit veld is verplicht." />
+        </p>
+        <p>
+            <h3>Nieuw Wachtwoord:</h3>
+            <asp:TextBox ID="tbNewPassword" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
+            <asp:RequiredFieldValidator runat="server" ControlToValidate="tbNewPassword"
+                ErrorMessage="Dit veld is verplicht." />
+        </p>
+        <p>
+            <h3>Herhaal nieuw Wachtwoord:</h3>
+            <asp:TextBox ID="tbNewPasswordRe" TextMode="Password" runat="server" Height="25px" Width="250px"></asp:TextBox>
+            <asp:RequiredFieldValidator runat="server" ControlToValidate="tbNewPasswordRe"
+                ErrorMessage="Dit veld is verplicht." />
+            <asp:CompareValidator ID="CompareValidator1" ControlToCompare="tbNewPassword" runat="server" ErrorMessage="Wachtwoord komt niet overeen" ControlToValidate="tbNewPasswordRe"></asp:CompareValidator>
+        </p>
+
         <asp:Button ID="btnSave" runat="server" Text="Wachtwoord opslaan" OnClick="BtnSave_Click" />  
     
     </div>
