@@ -28,10 +28,10 @@
                 C = Request.QueryString["catid"];
                 if (C != null)
                 {
-                    DataTable SubCategory = new PostBAL().GetCategories(c);
+                    DataTable SubCategory = new PostBAL().GetCategories(C);
                     this.repSubCat.DataSource = SubCategory;
                     this.repSubCat.DataBind();
-                    DataTable Post = new PostBAL().GetAllPosts(c);
+                    DataTable Post = new PostBAL().GetAllPosts(C);
                     this.repFile.DataSource = Post;
                     this.repFile.DataBind();
                     if(Session["User_ID"] != null)
@@ -43,7 +43,7 @@
                     }
                 }
 
-                if (c == null)
+                if (this.C == null)
                 {
                     DataTable Category = new PostBAL().GetCategories();
                     this.repMainCat.DataSource = Category;
@@ -54,7 +54,7 @@
         protected void btnCreatePost_Click(object sender, EventArgs e)
         {
             
-            Response.Redirect("../Post/CreatePost.aspx?catid="+c);
+            Response.Redirect("../Post/CreatePost.aspx?catid="+this.C);
         }
 
         protected void btnDel_Click(object sender, EventArgs e)
