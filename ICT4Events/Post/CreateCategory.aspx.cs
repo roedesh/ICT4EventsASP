@@ -20,7 +20,7 @@ namespace ICT4Events.Post
                 ddlCategory.DataTextField = "NAAM";
                 ddlCategory.DataValueField = "NAAM";
                 ddlCategory.DataBind();
-                ddlCategory.Items.Insert(0, "");
+                ddlCategory.Items.Insert(0, string.Empty);
             }
             
         }
@@ -28,9 +28,9 @@ namespace ICT4Events.Post
         protected void btnCategory_Click(object sender, EventArgs e)
         {
 
-            if(ddlCategory.SelectedValue == "")
+            if(ddlCategory.SelectedValue == string.Empty)
             {
-                if (new PostBAL().CreateCategory((Session["User_ID"].ToString()), "", tbCategory.Text) == 0)
+                if (new PostBAL().CreateCategory((Session["User_ID"].ToString()), string.Empty, tbCategory.Text) == 0)
                 {
                     Response.Write("<script language=javascript>alert('Er ging wat fout met het toevoegen van de categorie');</script>");
                 }
