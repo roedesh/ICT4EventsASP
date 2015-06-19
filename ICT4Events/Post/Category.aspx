@@ -2,10 +2,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:Button ID="btnCreatePost" runat="server" OnClick="btnCreatePost_Click" Text="Post"  />
+    <asp:Button ID="btnCreatePost" runat="server" OnClick="BtnCreatePost_Click" Text="Post"  />
                             <% if (IsLoggedInAsAdmin||(C != ""))
                        {%>
-                            <asp:Button ID="btnDel" Text="Delete" runat="server" OnClick="btnDel_Click" />
+                            <asp:Button ID="btnDel" Text="Delete" runat="server" OnClick="BtnDel_Click" />
                     <% }%>
     <asp:Repeater ID="repMainCat" runat="server">
     <HeaderTemplate>
