@@ -215,7 +215,7 @@ namespace ICT4Events.Post
             }
             else
             {
-                if((like = new PostBAL().UpdateLike(Session["User_ID"].ToString(), p, 0)) > 0)
+                if ((like = new PostBAL().UpdateLike(Session["User_ID"].ToString(), p, 0)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('Bijdrage is gedisliked');</script>");
                     btnLike.Text = "Like";
