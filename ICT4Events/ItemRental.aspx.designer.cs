@@ -76,13 +76,13 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Button btnVrijeArtikelen;
         
         /// <summary>
-        /// btnGeleendeArtikelen control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGeleendeArtikelen;
+        protected global::System.Web.UI.WebControls.Button Button1;
         
         /// <summary>
         /// btnLeenUit control.
@@ -94,13 +94,13 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Button btnLeenUit;
         
         /// <summary>
-        /// btnNeemIn control.
+        /// Button2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnNeemIn;
+        protected global::System.Web.UI.WebControls.Button Button2;
         
         /// <summary>
         /// Label6 control.
