@@ -15,6 +15,11 @@ namespace ICT4Events.Post
 
     public partial class Post : System.Web.UI.Page
     {
+        public bool IsLoggedInAsAdmin
+        {
+            get;
+            set;
+        }
         string p = string.Empty;
         int like = 0;
         int flag = 0;
@@ -67,16 +72,20 @@ namespace ICT4Events.Post
                     btnFlag.Text = "Ongewenst";
                     flag = 0;
                 }
+                if (this.Session["USER_ROLE"].ToString() == "ADMIN")
+                {
+                    this.IsLoggedInAsAdmin = true;
+                }
             }
         }
 
 
         protected void CommandBtn_Click(object sender, CommandEventArgs e)
         {
-            switch(e.CommandName)
+            switch (e.CommandName)
             {
                 case "Like":
-                    if((string)e.CommandArgument == "")
+                    if ((string)e.CommandArgument == "")
                     {
 
                     }
@@ -111,7 +120,7 @@ namespace ICT4Events.Post
                     break;
 
                 case "Flag":
-                    if((string)e.CommandArgument == "")
+                    if ((string)e.CommandArgument == "")
                     {
 
                     }
@@ -143,6 +152,24 @@ namespace ICT4Events.Post
                                 Response.Write("<script language=javascript>alert('Er ging wat fout met het gewenst markeren');</script>");
                             }
                         }
+                    }
+                    break;
+                case "delete":
+                    if ((string)e.CommandArgument == "")
+                    {
+                        Response.Write("<script language=javascript>alert('Post is niet bekend in database');</script>");
+                    }
+                    else
+                    {
+                        if (new PostBAL().DeletePost(e.CommandArgument.ToString()) > 0)
+                        {
+                            Response.Write("<script language=javascript>alert('Post is verwijderd');</script>");
+                        }
+                        else
+                        {
+                            Response.Write("<script language=javascript>alert('Post is niet verwijderd');</script>");
+                        }
+                        
                     }
                     break;
             }
