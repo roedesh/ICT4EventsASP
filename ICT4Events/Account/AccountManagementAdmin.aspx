@@ -34,12 +34,14 @@
             <asp:Button ID="btnCreate" runat="server" Text="Nieuw account aanmaken" OnClick="BtnCreate_Click" />
         </p>
         <hr />
+        <h3>AccountID:</h3>
         <p>
-            <h3>AccountID:</h3>
+            
             <asp:TextBox ID="tbAccountID" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
         </p>
+        <h3>Is geactiveerd:</h3>
         <p>
-            <h3>Is geactiveerd:</h3>
+            
             <asp:DropDownList ID="ddlActivated" runat="server">
                 <asp:ListItem Value = "0" >NIET GEACTIVEERD</asp:ListItem>
                 <asp:ListItem Value = "1" >GEACTIVEERD</asp:ListItem>

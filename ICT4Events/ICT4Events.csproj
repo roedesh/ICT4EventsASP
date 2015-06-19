@@ -69,7 +69,7 @@
     <Content Include="Event\EventManagementAdmin.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Account\Login.aspx" />
-    <Content Include="ItemRental\ItemRental.aspx" />
+    <Content Include="ItemRental.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Post\Category.aspx" />
     <Content Include="Post\CreateCategory.aspx" />
@@ -93,12 +93,14 @@
     <Content Include="Static\CSS\bootstrap.css" />
     <Content Include="Static\CSS\bootstrap.min.css" />
     <Content Include="Static\CSS\custom.css" />
+    <Content Include="Static\IMG\logo.png" />
+    <Content Include="Static\IMG\Music-Festival.jpg" />
     <Content Include="Static\Javascript\bootstrap.js" />
     <Content Include="Static\Javascript\bootstrap.min.js" />
     <Content Include="Static\Javascript\jquery-1.10.2.js" />
     <Content Include="Static\Javascript\jquery-1.10.2.min.js" />
     <Content Include="Static\Javascript\npm.js" />
-    <Content Include="Entrycontrol\EntryControl.aspx" />
+    <Content Include="ToegangsControle.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -161,11 +163,11 @@
     <Compile Include="Account\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ItemRental\ItemRental.aspx.cs">
+    <Compile Include="ItemRental.aspx.cs">
       <DependentUpon>ItemRental.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ItemRental\ItemRental.aspx.designer.cs">
+    <Compile Include="ItemRental.aspx.designer.cs">
       <DependentUpon>ItemRental.aspx</DependentUpon>
     </Compile>
     <Compile Include="Account\Logout.aspx.cs">
@@ -232,12 +234,12 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
-    <Compile Include="Entrycontrol\EntryControl.aspx.cs">
-      <DependentUpon>EntryControl.aspx</DependentUpon>
+    <Compile Include="ToegangsControle.aspx.cs">
+      <DependentUpon>ToegangsControle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Entrycontrol\EntryControl.aspx.designer.cs">
-      <DependentUpon>EntryControl.aspx</DependentUpon>
+    <Compile Include="ToegangsControle.aspx.designer.cs">
+      <DependentUpon>ToegangsControle.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -245,8 +247,11 @@
       <Project>{9b0091bb-0d26-4b61-894c-40a0f4a4bcac}</Project>
       <Name>BAL</Name>
     </ProjectReference>
+	</ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
+    <Folder Include="Static\Fonts\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

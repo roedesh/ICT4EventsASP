@@ -1,4 +1,4 @@
-﻿// <copyright file="ActiveDirectoryHandling.cs" company="ICT4EventsASP">
+﻿// <copyright file="ActiveDirectoryBAL.cs" company="ICT4EventsASP">
 //     Copyright (c) ADonderzoek. All rights reserved.
 // </copyright>
 // <author>Berry Verschueren</author>
@@ -200,7 +200,7 @@ namespace BAL
         /// Method to add a user to a group within active directory.
         /// </summary>
         /// <param name="username">username value</param>
-        /// <param name="groupname">groupname value</param>
+        /// <param name="groupname">group name value</param>
         /// <returns>array with username, group name and (1/0) error index</returns>
         public string[] AddToGroup(string username, string groupname)
         {

@@ -1,4 +1,8 @@
-﻿namespace BAL
+﻿// <copyright file="EventBAL.cs" company="JonneIT">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+// <author>Jonne van Dreven</author>
+namespace BAL
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +15,7 @@
     public class EventBAL
     {
         /// <summary>
-        /// Constructor for EventBAL
+        /// Initializes a new instance of the <see cref="EventBAL"/> class.
         /// </summary>
         public EventBAL()
         {
@@ -20,7 +24,7 @@
         /// <summary>
         /// Gets an event
         /// </summary>
-        /// <param name="eventName"></param>
+        /// <param name="eventName">Name of the event</param>
         /// <returns>datatable with all event information</returns>
         public DataTable GetEvent(string eventName)
         {
@@ -30,7 +34,7 @@
         /// <summary>
         /// Gets all events
         /// </summary>
-        /// <returns>dataatable with all event information from all events</returns>
+        /// <returns>DataTable with all event information from all events</returns>
         public DataTable GetAllEvents()
         {
             return new EventDAL().Load();
@@ -41,8 +45,8 @@
         /// </summary>
         /// <param name="locationID">foreign key of location</param>
         /// <param name="name">name of the event</param>
-        /// <param name="start">startdate</param>
-        /// <param name="end">enddate</param>
+        /// <param name="start">Start date</param>
+        /// <param name="end">End date</param>
         /// <param name="maxVis">Max visitors</param>
         /// <returns>int if create was succesvol</returns>
         public int CreateEvent(int locationID, string name, string start, string end, int maxVis)
@@ -61,14 +65,14 @@
         }
 
         /// <summary>
-        /// updates an event
+        /// Updates an event
         /// </summary>
-        /// <param name="locationID">foreign key of location</param>
-        /// <param name="name">name of the event</param>
-        /// <param name="start">startdate</param>
-        /// <param name="end">enddate</param>
-        /// <param name="maxVis">Max visitors</param>
-        /// <returns>int if create was succesvol</returns>
+        /// <param name="name">Name of the event</param>
+        /// <param name="start">Start date</param>
+        /// <param name="end">End date</param>
+        /// <param name="maxVis"Max amount of visitors></param>
+        /// <param name="eventid">ID of event</param>
+        /// <returns>0 or 1</returns>
         public int SetEvent(string name, string start, string end, int maxVis, int eventid)
         {
             return new EventDAL().Update(name, start, end, maxVis, eventid);

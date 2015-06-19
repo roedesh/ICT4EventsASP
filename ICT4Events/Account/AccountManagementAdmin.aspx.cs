@@ -85,7 +85,7 @@ namespace ICT4Events.Account
                         try
                         {
                             new AccountBAL().UpdateAccount(
-                                Convert.ToInt32(tbAccountID.Text),
+                                Convert.ToInt32(this.tbAccountID.Text),
                                 this.tbUserName.Text,
                                 this.tbPassword.Text,
                                 this.ddlRol.SelectedValue,
@@ -126,21 +126,18 @@ namespace ICT4Events.Account
         protected void BtnDelete_Click(object sender, EventArgs e)
         {
             string confirmValue = Request.Form["confirm_value"];
-                if (confirmValue == "Ja")
+            if (confirmValue == "Ja")
+            {
+                try
                 {
-                    try
-                    {
-                        new AccountBAL().DeleteAccount(tbUserName.Text);
-                        Response.Redirect("../Account/AccountManagementAdmin.aspx");
-                    }
-                    catch (Exception)
-                    {
-                        Response.Write("<script>alert('Geen user gevonden met het opgegeven username');</script>");
-                    }
+                    new AccountBAL().DeleteAccount(this.tbUserName.Text);
+                    Response.Redirect("../Account/AccountManagementAdmin.aspx");
                 }
-                else
+                catch (Exception)
                 {
+                    Response.Write("<script>alert('Geen user gevonden met het opgegeven username');</script>");
                 }
+            }
         }
 
         /// <summary>

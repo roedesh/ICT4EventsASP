@@ -17,8 +17,14 @@ namespace BAL
     using System.Web;
     using DAL;
 
+    /// <summary>
+    /// Class for mail business
+    /// </summary>
     public class MailBAL
     {
+        /// <summary>
+        /// field for mail instance
+        /// </summary>
         private MailDAL maildal;
 
         /// <summary>
@@ -32,21 +38,29 @@ namespace BAL
         private int counter;
 
         /// <summary>
-        /// Boolean value indictating whether it's an activation e-mail or not.
+        /// Boolean value indicating whether it's an activation e-mail or not.
         /// </summary>
         private bool activation;
 
         /// <summary>
-        /// Filestream to use for attachments.
+        /// File stream to use for attachments.
         /// </summary>
         private FileStream fs;
 
+        /// <summary>
+        /// string for mail to value
+        /// </summary>
         private string mailto;
+
+        /// <summary>
+        /// string for hash value
+        /// </summary>
         private string hash;
 
         /// <summary>
-        /// Initializes an instance of the MailBAL class.
+        /// Initializes a new instance of the MailBAL class
         /// </summary>
+        /// <param name="activation">activation mail boolean</param>
         public MailBAL(bool activation)
         {
             this.activation = activation;
@@ -57,9 +71,9 @@ namespace BAL
         /// Method to send an activation email to a specified email address.
         /// </summary>
         /// <param name="userID">userID value</param>
-        /// <param name="mailto">mailto value</param>
-        /// <param name="hash">hash value</param>
-        /// <returns>an array with the userID, mailto, hash and an (1/0) error index</returns>
+        /// <param name="usernames">usernames array</param>
+        /// <param name="reservationID">reservation id value</param>
+        /// <returns>Method to send an activation email to a specified email address.</returns>
         public string[] SendMail(string userID, string[] usernames, int reservationID)
         {
             if (usernames != null && reservationID != 0)
@@ -181,6 +195,12 @@ namespace BAL
         //    MailDAL maildal = new MailDAL();
         //}
 
+        /// <summary>
+        /// method to couple accounts to a reservation.
+        /// </summary>
+        /// <param name="usernames">username value</param>
+        /// <param name="reservationID">reservation id value</param>
+        /// <returns>return mail instance</returns>
         public MailDAL CheckAccountsAndCouple(string[] usernames, int reservationID)
         {
             return new MailDAL().CheckAccountsAndCouple(usernames, reservationID);

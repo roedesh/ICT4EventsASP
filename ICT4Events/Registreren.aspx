@@ -48,8 +48,8 @@
             <tr>
                 <td class="auto-style2">&nbsp;</td>
                 <td class="auto-style3">
-                    <asp:Button ID="btSubmit" runat="server" OnClick="btSubmit_Click" Text="Submit" />
-                    <asp:Button ID="btReset" runat="server" Text="Reset" OnClick="btReset_Click" causesValidation="false"/></td>
+                    <asp:Button ID="btSubmit" runat="server" OnClick="BtSubmit_Click" Text="Submit" />
+                    <asp:Button ID="btReset" runat="server" Text="Reset" OnClick="BtReset_Click" causesValidation="false"/></td>
                 <td>&nbsp;</td>
             </tr>
         </table>
