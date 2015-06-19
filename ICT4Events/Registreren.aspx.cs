@@ -16,6 +16,10 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["USER_ID"].ToString() != null && Session["USER_ROLE"].ToString() != "ADMIN")
+            {
+                Response.Redirect("../Default.aspx", false);
+            }
             if (Request.QueryString.Count != 0)
             {
                 try

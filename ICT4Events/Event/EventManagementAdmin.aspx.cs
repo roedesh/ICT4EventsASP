@@ -13,10 +13,10 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["USER_ROLE"].ToString() != "ADMIN")
-            //{
-            //    Response.Redirect("../Default.aspx");
-            //}
+            if (Session["USER_ROLE"].ToString() != "ADMIN")
+            {
+                Response.Redirect("../Default.aspx");
+            }
             if (!IsPostBack)
             {
                 DataTable table = new EventBAL().GetAllEvents();

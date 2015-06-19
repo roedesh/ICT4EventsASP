@@ -27,7 +27,7 @@ namespace ICT4Events.Account
         {
             if (Session["USER_ROLE"].ToString() != "ADMIN")
             {
-                Response.Redirect("/Default.aspx", false);
+                Response.Redirect("../Default.aspx");
             }
 
             if (!this.IsPostBack)

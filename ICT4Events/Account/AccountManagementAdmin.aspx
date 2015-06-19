@@ -44,6 +44,7 @@
         <h2>E-mailadres:</h2>
         <asp:TextBox ID="tbEmailAdress" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <asp:RegularExpressionValidator Display="Dynamic" ValidationGroup="save" ID="regexEmailValid" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="tbEmailAdress" ErrorMessage="Vul een geldig E-Mailadres in"></asp:RegularExpressionValidator>
+        <asp:RequiredFieldValidator ValidationGroup="save"  Display="Dynamic" ID="reqEmail" runat="server" ControlToValidate="tbEmailAdress" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
         <br />
         <h2>Rol:</h2>
         <br />
@@ -54,11 +55,11 @@
 
         <h2>Gebruikersnaam:</h2>
         <asp:TextBox ID="tbUserName" runat="server" Height="25px" Width="250px"></asp:TextBox>
-
+        <asp:RequiredFieldValidator ValidationGroup="save"  Display="Dynamic" ID="reqUserName" runat="server" ControlToValidate="tbUserName" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
         <h2>Wachtwoord:</h2>
         <br />
         <asp:TextBox ID="tbPassword" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        
+        <asp:RequiredFieldValidator ValidationGroup="save" Display="Dynamic" ID="reqPassWord" runat="server" ControlToValidate="tbPassWord" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
         <br />
         <br />
         </div>
