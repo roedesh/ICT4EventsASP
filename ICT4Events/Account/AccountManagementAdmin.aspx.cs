@@ -25,10 +25,10 @@ namespace ICT4Events.Account
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["USER_ROLE"].ToString() != "ADMIN")
-            //{
-            //    Response.Redirect("/Default.aspx", false);
-            //}
+            if (Session["USER_ROLE"].ToString() != "ADMIN")
+            {
+                Response.Redirect("../Default.aspx");
+            }
 
             if (!this.IsPostBack)
             {
