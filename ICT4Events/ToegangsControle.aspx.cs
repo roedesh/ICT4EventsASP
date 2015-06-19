@@ -1,4 +1,9 @@
-﻿namespace ICT4Events
+﻿// <copyright file="ToegangsControle.aspx.cs" company="ThomInc">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+// <author>Thom van Poppel</author>
+
+namespace ICT4Events
 {
     using System;
     using System.Collections.Generic;    
@@ -10,12 +15,20 @@
     using System.Web.UI.WebControls;
     using BAL;
 
+    /// <summary>
+    /// A class for managing the entry of the event.
+    /// </summary>
     public partial class ToegangsControle : System.Web.UI.Page
     {
         DataTable dt;
         BAL.RentalBAL rentalBal = new BAL.RentalBAL();
         private BAL.AccountBAL accountBal = new BAL.AccountBAL();
 
+        /// <summary>
+        /// When the page is loaded for the first time update the gridview.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             this.tbBarcode.Focus();
@@ -29,6 +42,11 @@
             }
         }
 
+        /// <summary>
+        /// Search a person by barcode.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void btnSearchPerson0_Click(object sender, EventArgs e)
         {
             this.dt = this.rentalBal.GetAccountByBarcode(tbBarcode.Text);
@@ -36,6 +54,11 @@
             gvData.DataBind();
         }
 
+        /// <summary>
+        /// Search a person by id or name;
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void btnSearchPerson_Click(object sender, EventArgs e)
         {
             try
@@ -54,6 +77,12 @@
             this.gvData.DataBind();
         }
 
+
+        /// <summary>
+        /// When a datatable is bound to the gridview, update the gridview.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void gvData_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -63,6 +92,11 @@
             }
         }
 
+        /// <summary>
+        /// When a row is selected: Make it pink and check whether he has paid. Then update the gui.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void gvData_SelectedIndexChanged(object sender, EventArgs e)
         {
             foreach (GridViewRow row in this.gvData.Rows)
@@ -88,6 +122,12 @@
             }
         }
 
+
+        /// <summary>
+        /// Set a person to be present or not present.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void btnCheckInOut_Click(object sender, EventArgs e)
         {
             string id = this.gvData.SelectedRow.Cells[0].Text;
@@ -111,6 +151,11 @@
             }            
         }
 
+        /// <summary>
+        /// Get all the people present and update the gui.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void btnShowAttendants_Click(object sender, EventArgs e)
         {
             DataTable dt = this.rentalBal.GetPersonByAanwezig(1);

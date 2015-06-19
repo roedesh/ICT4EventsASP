@@ -20,7 +20,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Button ID="btnLeenUit" runat="server" OnClick="btnLeenUit_Click" Text="Leen uit" />
 &nbsp;
-        <asp:Button ID="Button2" runat="server" Text="Neem in" />
+        <asp:Button ID="Button2" runat="server" Text="Neem in" OnClick="BtnNeemIn_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <asp:Label ID="Label6" runat="server" Text="Zoek een persoon op naam of ID: "></asp:Label>
         <asp:TextBox ID="tbLeenUitZoekPersoon" runat="server"></asp:TextBox>
@@ -56,7 +56,7 @@
     <p>
         <asp:Button ID="btnArtikelVoegToe" runat="server" Text="Voeg toe" Width="199px" OnClick="btnArtikelVoegToe_Click"  />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Button ID="btnArtikelPasAan" runat="server" Text="Pas aan" Width="199px" />
+        <asp:Button ID="btnArtikelPasAan" runat="server" Text="Pas aan" Width="199px" OnClick="btnArtikelPasAan_Click" />
         &nbsp;*Aantal verminderen bij exemplaren.<asp:GridView ID="gvArtikel" runat="server" OnRowDataBound="gvArtikel_RowDataBound" OnSelectedIndexChanged="gvArtikel_SelectedIndexChanged" AutoGenerateSelectButton="True">
         </asp:GridView>
     </p>

@@ -37,11 +37,29 @@ namespace BAL
         {
             return new RentalDAL().UpdatePresence(personID, aanwezig);
         }
-        public int UpdateExemplaar(int personID, int isVerhuurd)
+
+        /// <summary>
+        /// Update one item to be rented out or vice versa;
+        /// </summary>
+        /// <param name="personID">The id of the item</param>
+        /// <param name="isVerhuurd">Rented out or not , 1 or 0.</param>
+        /// <returns></returns>
+        public int UpdateExemplaar(int itemID, int isVerhuurd)
         {
-            return new RentalDAL().UpdateExemplaar(personID, isVerhuurd);
+            return new RentalDAL().UpdateExemplaar(itemID, isVerhuurd);
 
         }
+
+        /// <summary>
+        /// Updates a product with new variables.
+        /// </summary>
+        /// <param name="id">The id of the product</param>
+        /// <param name="naam">The name of the product</param>
+        /// <param name="merk">The brand of the product</param>
+        /// <param name="serie">The series of the product</param>
+        /// <param name="prijs">The price of the product</param>
+        /// <param name="aantal">The amount of the product</param>
+        /// <returns></returns>
         public int UpdateProduct(int id, string naam, string merk, string serie,decimal prijs, int aantal)
         {
             int succes = 0;
