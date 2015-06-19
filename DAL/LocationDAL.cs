@@ -1,4 +1,7 @@
-﻿namespace DAL
+﻿// <copyright file="LocationDAL.cs" company="ICT4Events">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+namespace DAL
 {
     using System;
     using System.Collections.Generic;
@@ -10,6 +13,9 @@
     using System.Threading.Tasks;
     using Oracle.DataAccess.Client;
 
+    /// <summary>
+    /// All the database methods for locations
+    /// </summary>
     public class LocationDAL
     {
         /// <summary>
@@ -23,10 +29,10 @@
         /// Method for inserting a location
         /// </summary>
         /// <param name="naam">location name</param>
-        /// <param name="straat">street name</param>
-        /// <param name="straatNr">street number</param>
-        /// <param name="postcode">zipcode</param>
-        /// <param name="plaats">city</param>
+        /// <param name="straat">street name of the location</param>
+        /// <param name="straatNr">street number of the location</param>
+        /// <param name="postcode">zipcode of the location</param>
+        /// <param name="plaats">cityof the location</param>
         /// <returns>int if insert was succesfully done</returns>
         public int Insert(string naam, string straat, string straatNr, string postcode, string plaats)
         {
@@ -57,7 +63,7 @@
         /// <summary>
         /// Method for loading all locations
         /// </summary>
-        /// <returns>Datatable with all location names</returns>
+        /// <returns>Data table with all location names</returns>
         public DataTable Load()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -86,7 +92,7 @@
         /// Method for deleting a location
         /// </summary>
         /// <param name="naam">location name</param>
-        /// <returns>int if delete was succesfully done</returns>
+        /// <returns>int if delete was successfully done</returns>
         public int Delete(string naam)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -113,7 +119,7 @@
         /// Method for loading a location and all its data
         /// </summary>
         /// <param name="name">location name</param>
-        /// <returns>Datatable with all data of a location</returns>
+        /// <returns>Data table with all data of a location</returns>
         public DataTable Load(string name)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -148,6 +154,5 @@
         {
             return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;
         }
-
     } 
 }

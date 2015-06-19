@@ -91,7 +91,7 @@ namespace ICT4Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnLoad_Click(object sender, EventArgs e)
         {
-            DataTable table = new LocationBAL().GetLocation(ddlAllLocations.SelectedValue.ToString());
+            DataTable table = new LocationBAL().GetLocation(this.ddlAllLocations.SelectedValue.ToString());
             this.tbLocationName.Text = table.Rows[0]["NAAM"].ToString();
             this.tbStreet.Text = table.Rows[0]["STRAAT"].ToString();
             this.tbStreetNr.Text = table.Rows[0]["NR"].ToString();

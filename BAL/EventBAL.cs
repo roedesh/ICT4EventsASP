@@ -12,6 +12,9 @@ namespace BAL
     using System.Threading.Tasks;
     using DAL;
 
+    /// <summary>
+    /// All the logic that involves an event
+    /// </summary>
     public class EventBAL
     {
         /// <summary>
@@ -25,7 +28,7 @@ namespace BAL
         /// Gets an event
         /// </summary>
         /// <param name="eventName">Name of the event</param>
-        /// <returns>datatable with all event information</returns>
+        /// <returns>data table with all event information</returns>
         public DataTable GetEvent(string eventName)
         {
             return new EventDAL().Load(eventName);
@@ -48,7 +51,7 @@ namespace BAL
         /// <param name="start">Start date</param>
         /// <param name="end">End date</param>
         /// <param name="maxVis">Max visitors</param>
-        /// <returns>int if create was succesvol</returns>
+        /// <returns>integer if create was succesfull</returns>
         public int CreateEvent(int locationID, string name, string start, string end, int maxVis)
         {
             return new EventDAL().Insert(locationID, name, start, end, maxVis);
@@ -58,7 +61,7 @@ namespace BAL
         /// Deletes an event
         /// </summary>
         /// <param name="naam">event name</param>
-        /// <returns>int if delete was succesvol</returns>
+        /// <returns>int if delete was succesfull</returns>
         public int DeleteEvent(string naam)
         {
             return new EventDAL().Delete(naam);
@@ -70,7 +73,7 @@ namespace BAL
         /// <param name="name">Name of the event</param>
         /// <param name="start">Start date</param>
         /// <param name="end">End date</param>
-        /// <param name="maxVis"Max amount of visitors></param>
+        /// <param name="maxVis"Max amount of visitors>Maximun amount of visitors</param>
         /// <param name="eventid">ID of event</param>
         /// <returns>0 or 1</returns>
         public int SetEvent(string name, string start, string end, int maxVis, int eventid)

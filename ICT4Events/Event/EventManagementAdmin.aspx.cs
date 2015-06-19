@@ -33,10 +33,10 @@ namespace ICT4Events.Event
             if (!this.IsPostBack)
             {
                 DataTable table = new EventBAL().GetAllEvents();
-                ddlAllEvents.DataSource = table;
-                ddlAllEvents.DataTextField = "NAAM";
-                ddlAllEvents.DataValueField = "NAAM";
-                ddlAllEvents.DataBind();
+                this.ddlAllEvents.DataSource = table;
+                this.ddlAllEvents.DataTextField = "NAAM";
+                this.ddlAllEvents.DataValueField = "NAAM";
+                this.ddlAllEvents.DataBind();
             }
         }
 
@@ -118,7 +118,6 @@ namespace ICT4Events.Event
             {
                 DateTime startDate = Convert.ToDateTime(this.tbStartDate.Text);
                 DateTime endDate = Convert.ToDateTime(this.tbEndDate.Text);
-
                 args.IsValid = (endDate > startDate);
             }
         }

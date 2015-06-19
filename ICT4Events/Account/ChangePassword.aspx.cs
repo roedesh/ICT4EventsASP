@@ -27,7 +27,7 @@ namespace ICT4Events.Account
         {
             if (this.Session["USER_ID"] != null)
             {
-                tbUserName.Text = this.Session["USER_ID"].ToString();
+                this.tbUserName.Text = this.Session["USER_ID"].ToString();
             }
         }
 

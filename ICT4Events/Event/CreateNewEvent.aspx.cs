@@ -62,11 +62,11 @@ namespace ICT4Events
         {
             try
             {
-                DataTable table = new LocationBAL().GetLocation(ddlAllLocations.SelectedValue.ToString());
+                DataTable table = new LocationBAL().GetLocation(this.ddlAllLocations.SelectedValue.ToString());
                 if (new EventBAL().CreateEvent(
                     Convert.ToInt32(table.Rows[0]["ID"].ToString()),
-                    this.tbEventname.Text, 
-                    tbStartDate.Text,
+                    this.tbEventname.Text,
+                    this.tbStartDate.Text,
                     this.tbEndDate.Text, 
                     Convert.ToInt32(this.tbMaxVis.Text)) == 1)
                 {
@@ -113,7 +113,6 @@ namespace ICT4Events
             {
                 DateTime startDate = Convert.ToDateTime(this.tbStartDate.Text);
                 DateTime endDate = Convert.ToDateTime(this.tbEndDate.Text);
-
                 args.IsValid = (endDate > startDate);
             }
         }
