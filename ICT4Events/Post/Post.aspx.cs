@@ -85,23 +85,23 @@ namespace ICT4Events.Post
             {
                 if ((this.like = new PostBAL().CheckLike(Session["User_ID"].ToString(), this.p)) > 0)
                 {
-                    btnLike.Text = "Unlike";
+                    this.btnLike.Text = "Unlike";
                     this.like = 1;
                 }
                 else
                 {
-                    btnLike.Text = "like";
+                    this.btnLike.Text = "like";
                     this.like = 0;
                 }
 
                 if ((this.flag = new PostBAL().CheckFlag(Session["User_ID"].ToString(), this.p)) > 0)
                 {
-                    btnFlag.Text = "Gewenst";
+                    this.btnFlag.Text = "Gewenst";
                     this.flag = 1;
                 }
                 else
                 {
-                    btnFlag.Text = "Ongewenst";
+                    this.btnFlag.Text = "Ongewenst";
                     this.flag = 0;
                 }
 
@@ -247,7 +247,7 @@ namespace ICT4Events.Post
                 if ((this.like = new PostBAL().UpdateLike(Session["User_ID"].ToString(), this.p, 1)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('Bijdrage is geliked');</script>");
-                    btnLike.Text = "Unlike";
+                    this.btnLike.Text = "Unlike";
                 }
                 else
                 {
@@ -259,7 +259,7 @@ namespace ICT4Events.Post
                 if ((this.like = new PostBAL().UpdateLike(Session["User_ID"].ToString(), this.p, 0)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('Bijdrage is gedisliked');</script>");
-                    btnLike.Text = "Like";
+                    this.btnLike.Text = "Like";
                 }
                 else
                 {
@@ -282,7 +282,7 @@ namespace ICT4Events.Post
                 if ((this.flag = new PostBAL().UpdateFlag(Session["User_ID"].ToString(), this.p, 1)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('De bijdrage is ongewenst gemarkeerd');</script>");
-                    btnFlag.Text = "Unflag";
+                    this.btnFlag.Text = "Unflag";
                 }
                 else
                 {
@@ -294,7 +294,7 @@ namespace ICT4Events.Post
                 if ((this.flag = new PostBAL().UpdateFlag(Session["User_ID"].ToString(), this.p, 0)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('De bijdrage is gewenst gemarkeerd');</script>");
-                    btnFlag.Text = "Flag";
+                    this.btnFlag.Text = "Flag";
                 }
                 else
                 {

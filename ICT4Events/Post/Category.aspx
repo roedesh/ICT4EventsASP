@@ -9,6 +9,7 @@
     </HeaderTemplate>
     <itemtemplate>
         <asp:Hyperlink ID="Categoryurl" runat="Server" Text='<%#Eval("Naam") %>' NavigateUrl='<%#("Category.aspx?catid="+Eval("BIJDRAGE_ID" )) %>'><%#Eval("NAAM") %></asp:Hyperlink>
+        <br />
     </itemtemplate>
     <FooterTemplate>
         </ul>
@@ -28,7 +29,9 @@
             </ul>
         </FooterTemplate>
     </asp:Repeater>
+
     <br />
+    <asp:Button ID="BtnCreateCat" runat="server" Text="Nieuwe categorie" OnClick="BtnCreateCat_Click" />
     <asp:Repeater ID="repFile" runat="server">
         <HeaderTemplate>
             <ul>

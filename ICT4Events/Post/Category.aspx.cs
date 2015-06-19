@@ -97,5 +97,15 @@ namespace ICT4Events.Post
                 Response.Write("<script language=javascript>alert('Post is niet verwijderd');</script>");
             }
         }
+
+        /// <summary>
+        /// On button click redirect user to the page for creating categories
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnCreateCat_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("../Post/CreateCategory.aspx");
+        }
     }
 }

@@ -79,13 +79,13 @@ namespace ICT4Events.Post
         /// <param name="category">Is the category where the file will be placed in.</param>
         private void Upload(string category)
         {
-            if ((inputFile.PostedFile != null) && (inputFile.PostedFile.ContentLength > 0))
+            if ((this.inputFile.PostedFile != null) && (this.inputFile.PostedFile.ContentLength > 0))
             {
-                string fn = System.IO.Path.GetFileName(inputFile.PostedFile.FileName);
+                string fn = System.IO.Path.GetFileName(this.inputFile.PostedFile.FileName);
                 string savelocation = Server.MapPath("~\\Media") + "\\" + category + "\\" + fn;
                 try
                 {
-                    inputFile.PostedFile.SaveAs(savelocation);
+                    this.inputFile.PostedFile.SaveAs(savelocation);
                     string filelength = Convert.ToString(new FileInfo(savelocation).Length);
                     if (new PostBAL().CreateFile(Session["USER_ID"].ToString(), this.c, savelocation, filelength) == 0)
                     {

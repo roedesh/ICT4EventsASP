@@ -13,24 +13,6 @@ namespace ICT4Events.Post {
     public partial class Category {
         
         /// <summary>
-        /// btnCreatePost control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCreatePost;
-        
-        /// <summary>
-        /// btnDel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDel;
-        
-        /// <summary>
         /// repMainCat control.
         /// </summary>
         /// <remarks>
@@ -49,6 +31,15 @@ namespace ICT4Events.Post {
         protected global::System.Web.UI.WebControls.Repeater repSubCat;
         
         /// <summary>
+        /// BtnCreateCat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCreateCat;
+        
+        /// <summary>
         /// repFile control.
         /// </summary>
         /// <remarks>
@@ -56,5 +47,23 @@ namespace ICT4Events.Post {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater repFile;
+        
+        /// <summary>
+        /// btnCreatePost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCreatePost;
+        
+        /// <summary>
+        /// btnDel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDel;
     }
 }
