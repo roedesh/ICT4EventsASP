@@ -22,14 +22,14 @@
         <h1>Zoek account:</h1>
         <asp:TextBox ID="tbSearchUserName" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <br />
-        <asp:Button ID="btSearchAccount" runat="server" Text="Zoeken" OnClick="btSearchAccount_Click" />
+        <asp:Button ID="btSearchAccount" runat="server" Text="Zoeken" OnClick="BtSearchAccount_Click" />
         <br />
         <asp:DropDownList ID="ddlAllAcounts" runat="server"></asp:DropDownList>
-        <asp:Button ID="btnLoadUser" runat="server" Text="Persoon laden" OnClick="btnLoadUser_Click" />
+        <asp:Button ID="btnLoadUser" runat="server" Text="Persoon laden" OnClick="BtnLoadUser_Click" />
         <hr />
-        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" OnClientClick="Confirm()"/>
-        <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="btnDelete_Click" OnClientClick="Confirm()" />
-        <asp:Button ID="btnCreate" runat="server" Text="Nieuw account aanmaken" OnClick="btnCreate_Click" />
+        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="BtnSave_Click" OnClientClick="Confirm()"/>
+        <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="BtnDelete_Click" OnClientClick="Confirm()" />
+        <asp:Button ID="btnCreate" runat="server" Text="Nieuw account aanmaken" OnClick="BtnCreate_Click" />
         <br />
         <br />
         <h2>AccountID:</h2>

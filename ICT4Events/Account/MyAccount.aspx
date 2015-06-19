@@ -20,8 +20,8 @@
     <div>
         <h1>Hieronder ziet u uw gegevens</h1>
         <br />
-        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="btnSave_Click" />
-        <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="btnDelete_Click" OnClientClick="Confirm()" />
+        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="BtnSave_Click" />
+        <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="BtnDelete_Click" OnClientClick="Confirm()" />
         <br />
         <hr />
         <h2>E-mailadres:</h2>
