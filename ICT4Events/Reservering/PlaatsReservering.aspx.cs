@@ -32,7 +32,7 @@ namespace ICT4Events.Reservering
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void calBeginData_SelectionChanged(object sender, EventArgs e)
+        protected void CalBeginData_SelectionChanged(object sender, EventArgs e)
         {
             this.cusValBeginDate.Validate();
         }
@@ -42,7 +42,7 @@ namespace ICT4Events.Reservering
         /// </summary>
         /// <param name="source">The source of the Event.</param>
         /// <param name="args">The <see cref="System.ServerValidateEventArgs"/> instance containing the event data.</param>
-        protected void cusValBeginDate_ServerValidate(object source, ServerValidateEventArgs args)
+        protected void CusValBeginDate_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (this.calBeginData.SelectedDate <= DateTime.Now)
             {
@@ -55,7 +55,7 @@ namespace ICT4Events.Reservering
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void calEndDate_SelectionChanged(object sender, EventArgs e)
+        protected void CalEndDate_SelectionChanged(object sender, EventArgs e)
         {
             this.cusValEndDate.Validate();
         }
@@ -65,7 +65,7 @@ namespace ICT4Events.Reservering
         /// </summary>
         /// <param name="source">The source of the Event.</param>
         /// <param name="args">The <see cref="System.ServerValidateEventArgs"/> instance containing the event data.</param>
-        protected void cusValEndDate_ServerValidate(object source, ServerValidateEventArgs args)
+        protected void CusValEndDate_ServerValidate(object source, ServerValidateEventArgs args)
         {
             if (this.calEndDate.SelectedDate <= this.calBeginData.SelectedDate)
             {
@@ -92,9 +92,8 @@ namespace ICT4Events.Reservering
                 Debug.WriteLine(u);
             }
 
-            ReservationBAL rBal = new ReservationBAL();
-            PlaceBAL pBal = new PlaceBAL();
-            MailBAL mBal = new MailBAL(false);
+            ReservationBAL rbal = new ReservationBAL();
+            MailBAL mbal = new MailBAL(false);
 
             string insertion = this.tbMiddleName.Text;
             if (string.IsNullOrEmpty(insertion))
@@ -102,7 +101,7 @@ namespace ICT4Events.Reservering
                 insertion = string.Empty;
             }
 
-            int reservationID = rBal.CreateReservation(
+            int reservationID = rbal.CreateReservation(
                 tbFirstName.Text,
                 tbMiddleName.Text,
                 tbLastName.Text,
@@ -112,14 +111,14 @@ namespace ICT4Events.Reservering
                 tbBankAccount.Text,
                 calBeginData.SelectedDate.Date,
                 calEndDate.SelectedDate.Date,
-                Convert.ToInt32(ddPlace.SelectedValue)
-            );
+                Convert.ToInt32(ddPlace.SelectedValue));
+
+            mbal.SendMail(null, usernames, reservationID);
             if (reservationID > 0)
             {
                 Debug.WriteLine("Reservering aangemaakt: " + reservationID);
+                Response.Redirect("/Default.aspx", false);
             }
-
-            mBal.SendMail(null, usernames, reservationID);
         }
     }
 }
