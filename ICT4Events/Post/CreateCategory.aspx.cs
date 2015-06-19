@@ -4,7 +4,6 @@
 // <author>Sander Koch</author>
 namespace ICT4Events.Post
 {
-using BAL;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,6 +11,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using BAL;
     
     /// <summary>
     /// WebForm for creating a new category.
@@ -27,7 +27,7 @@ using System.Web.UI.WebControls;
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!this.IsPostBack)
             {
                 DataTable categories = new PostBAL().GetAllCategories();
                 ddlCategory.DataSource = categories;
@@ -36,7 +36,6 @@ using System.Web.UI.WebControls;
                 ddlCategory.DataBind();
                 ddlCategory.Items.Insert(0, string.Empty);
             }
-            
         }
 
         /// <summary>
@@ -47,12 +46,11 @@ using System.Web.UI.WebControls;
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void btnCategory_Click(object sender, EventArgs e)
+        protected void BtnCategory_Click(object sender, EventArgs e)
         {
-
-            if(ddlCategory.SelectedValue == string.Empty)
+            if (ddlCategory.SelectedValue == string.Empty)
             {
-                if (new PostBAL().CreateCategory((Session["User_ID"].ToString()), string.Empty, tbCategory.Text) == 0)
+                if (new PostBAL().CreateCategory(Session["User_ID"].ToString(), string.Empty, tbCategory.Text) == 0)
                 {
                     Response.Write("<script language=javascript>alert('Er ging wat fout met het toevoegen van de categorie');</script>");
                 }
@@ -63,7 +61,7 @@ using System.Web.UI.WebControls;
             }
             else
             {
-                if (new PostBAL().CreateCategory((Session["User_ID"].ToString()), ddlCategory.SelectedValue, tbCategory.Text) == 0)
+                if (new PostBAL().CreateCategory(Session["User_ID"].ToString(), ddlCategory.SelectedValue, tbCategory.Text) == 0)
                 {
                     Response.Write("<script language=javascript>alert('Er ging wat fout met het toevoegen van de categorie');</script>");
                 }
@@ -72,7 +70,6 @@ using System.Web.UI.WebControls;
                     Response.Write("<script language=javascript>alert('Categorie is toegevoegd');</script>");
                 }
             }
-
         }
     }
 }

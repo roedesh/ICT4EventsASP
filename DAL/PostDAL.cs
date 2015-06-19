@@ -549,12 +549,12 @@ namespace DAL
 
         #region Update Queries
         /// <summary>
-        /// 
+        /// Method for updating the like value of Post
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="postID"></param>
-        /// <param name="like"></param>
-        /// <returns></returns>
+        /// <param name="userName">identifier of the username</param>
+        /// <param name="postID">identifier of post</param>
+        /// <param name="like">identifier of like</param>
+        /// <returns>returns 1 on success, 0 on failure</returns>
         public int UpdateLike(string userName, string postID, int like)
         {
             int result = 0;
@@ -588,12 +588,12 @@ namespace DAL
         }
 
         /// <summary>
-        /// 
+        /// Method for updating the flag value of the Post
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="postID"></param>
-        /// <param name="flag"></param>
-        /// <returns></returns>
+        /// <param name="userName">identifier of the username</param>
+        /// <param name="postID">identifier of post</param>
+        /// <param name="flag">identifier of flag</param>
+        /// <returns>1 on success, 0 on failure</returns>
         public int UpdateFlag(string userName, string postID, int flag)
         {
             int result = 0;
@@ -773,6 +773,15 @@ namespace DAL
         #endregion
 
         #region Check Methods
+
+        /// <summary>
+        /// Method for checking to see if a account has already liked or flagged the post in the past.
+        /// </summary>
+        /// <param name="userName">identifier of the Username</param>
+        /// <param name="postID">identifier of the post</param>
+        /// <returns>Returns 1 if the account has already liked or flagged the post in the past
+        /// else returns 0
+        /// </returns>
         public int CheckLikeFlag(string userName, string postID)
         {
             try
@@ -805,6 +814,13 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method to check if the account has liked the post or not
+        /// </summary>
+        /// <param name="userName">identifier of the username</param>
+        /// <param name="postID">identifier of the post</param>
+        /// <param name="like">identifier of the like value</param>
+        /// <returns>1 if it exits, 0 it it doesn't</returns>
         public int CheckLike(string userName, string postID, int like)
         {
             try
@@ -838,6 +854,13 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method to check if the account has flag the post or not
+        /// </summary>
+        /// <param name="userName">identifier of the username</param>
+        /// <param name="postID">identifier of the post</param>
+        /// <param name="flag">identifier of the flag value</param>
+        /// <returns>1 if it exits, 0 it it doesn't</returns>
         public int CheckFlag(string userName, string postID, int flag)
         {
             try

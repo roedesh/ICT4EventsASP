@@ -14,7 +14,7 @@ namespace ICT4Events.Post
     using BAL;
 
     /// <summary>
-    /// WebForm used to display Post & messages.
+    /// WebForm used to display Post and messages.
     /// </summary>
     public partial class Post : System.Web.UI.Page
     {

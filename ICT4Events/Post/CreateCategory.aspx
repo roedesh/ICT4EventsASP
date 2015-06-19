@@ -8,6 +8,6 @@
     <br />
     <h3>Maak caterogie aan</h3> 
     <asp:TextBox ID="tbCategory" runat="server"></asp:TextBox>
-    <asp:Button ID="btnCategory" runat="server" Text="Button" OnClick="btnCategory_Click" />
+    <asp:Button ID="btnCategory" runat="server" Text="Button" OnClick="BtnCategory_Click" />
         
 </asp:Content>
