@@ -515,9 +515,5 @@ namespace DAL
                 return 0;
             }
         }
-<<<<<<< HEAD
-                string insertQuery = "UPDATE RESERVERING_POLSBANDJE SET AANWEZIG = :aanwezig WHERE ID = :personID";
-=======
->>>>>>> origin/master
     }
 }
