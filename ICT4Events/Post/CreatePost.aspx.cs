@@ -71,9 +71,6 @@
                 catch (Exception ex)
                 {
                     Response.Write("<script language=javascript>alert("+ ex.Message+");</script>");
-                    //Note: Exception.Message returns a detailed message that describes the current exception. 
-                    //For security reasons, we do not recommend that you return Exception.Message to end users in 
-                    //production environments. It would be better to return a generic error message. 
                 }
             }
             else
