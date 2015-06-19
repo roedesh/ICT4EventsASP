@@ -29,21 +29,21 @@
                 <% if (!IsLoggedIn)
                    { %>
                 <li>
-                    <asp:HyperLink href="../Account/login.aspx" runat="server">Inloggen</asp:HyperLink></li>
+                    <asp:HyperLink href="/Account/login.aspx" runat="server">Inloggen</asp:HyperLink></li>
                 <li>
                     <asp:HyperLink href="/Registreren.aspx" runat="server">Registreren</asp:HyperLink></li>
                 <% }
                    else
                    { %>
                 <li>
-                    <asp:HyperLink href="../Post/Category.aspx" runat="server">Media Sharing</asp:HyperLink></li>
+                    <asp:HyperLink href="/Post/Category.aspx" runat="server">Media Sharing</asp:HyperLink></li>
                 <li>
-                    <asp:HyperLink href="../Reservering/PlaatsReservering.aspx" runat="server">Reserveren</asp:HyperLink></li>
+                    <asp:HyperLink href="/Reservering/PlaatsReservering.aspx" runat="server">Reserveren</asp:HyperLink></li>
 
                 <li>
-                    <asp:HyperLink href="../Account/MyAccount.aspx" runat="server">Mijn Account</asp:HyperLink></li>
+                    <asp:HyperLink href="/Account/MyAccount.aspx" runat="server">Mijn Account</asp:HyperLink></li>
                 <li>
-                    <asp:HyperLink href="../Account/logout.aspx" runat="server">
+                    <asp:HyperLink href="/Account/logout.aspx" runat="server">
                         <asp:Label ID="lbWelkom" runat="server" Text=""></asp:Label>Uitloggen
                     </asp:HyperLink></li>
                 <%} %>
@@ -58,11 +58,11 @@
             <div class="container">
                 <ul>
                     <li>
-                        <asp:HyperLink href="../Event/EventManagementAdmin.aspx" runat="server">Event Management</asp:HyperLink></li>
+                        <asp:HyperLink href="/Event/EventManagementAdmin.aspx" runat="server">Event Management</asp:HyperLink></li>
                     <li>
-                        <asp:HyperLink href="../Account/AccountManagementAdmin.aspx" runat="server">Account Management</asp:HyperLink></li>
+                        <asp:HyperLink href="/Account/AccountManagementAdmin.aspx" runat="server">Account Management</asp:HyperLink></li>
                     <li>
-                        <asp:HyperLink href="ToegangsControle.aspx" runat="server">Toegangs Controle</asp:HyperLink></li>
+                        <asp:HyperLink href="/ToegangsControle.aspx" runat="server">Toegangs Controle</asp:HyperLink></li>
 
                 </ul>
             </div>

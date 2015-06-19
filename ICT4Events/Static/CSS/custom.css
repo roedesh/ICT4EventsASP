@@ -15,17 +15,20 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 body { background-color: #f0f0f0; }
 
-h1 { font-size: 2em; }
-h2 { font-size: 1.5em; }
-h3 { font-size: 1.17em; }
+h1 { font-size: 2em; font-weight: bold; color: #55636b;}
+h2 { font-size: 1.5em; font-weight: bold; color: #55636b; }
+h3 { font-size: 1.17em; color: #55636b; }
 h4 { font-size: 1.12em; }
 h5 { font-size: .83em; }
 h6 { font-size: .75em; }
+p { margin: 1em 0px; color: #89949b; }
 
 #header-main-nav                    { border-radius: 0px; -moz-border-radius: 0; -webkit-border-radius: 0; background-color: #2b3b44; margin-bottom: 0; border: none; padding: 50px 0;}
 #header-main-nav ul                 { float: right; }
 #header-main-nav ul li a            { font-size: 19px; display: block; height: 50px; padding: 5px 15px; color: #ffffff; text-decoration: none; line-height: 38px; }
 #header-main-nav ul li a:hover      { color: #52c2d2; }
+
+#table-place-reservation > tbody > tr { margin-bottom: 10px; display: block; }
 
 .container.main { padding: 25px 0; }
 
@@ -35,8 +38,12 @@ h6 { font-size: .75em; }
 #header-admin ul li a         { display: block; height: 50px; padding: 5px 15px; color: #0e0e0e; text-decoration: none; line-height: 38px; }
 #header-admin ul li a:hover   { background-color: #525252; color: #eeeeee; }
 
-input[type=text], input[type=password] {
+input[type=text], input[type=password], input[type=email], select {
     border: 1px solid #808080;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    padding: 5px;
 }
 
 input[type="submit"] {
@@ -50,6 +57,8 @@ input[type="submit"] {
     -o-transition: 0.3s;
     transition: 0.3s;
     border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
     margin-right: 10px;
 }
 

@@ -17,11 +17,12 @@
 </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Plaats een reservering voor een event</h2>
-    <table class="auto-style1">
+    <h1>Plaats een reservering voor een event</h1>
+    <br />
+    <table id="table-place-reservation" class="auto-style1">
     <tr>
         <td class="auto-style2">
-            <h3>Informatie over boeker</h3>
+            <h3>Informatie over de boeker</h3>
         </td>
             <td>
             &nbsp;</td>
