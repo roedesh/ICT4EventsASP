@@ -308,6 +308,15 @@ DROP SEQUENCE "VERHUUR_FCSEQ";
 	"PRODUCTCAT_ID" NUMBER(10,0), 
 	"NAAM" NVARCHAR2(255)
    ) ;
+   --------------------------------------------------------
+--  DDL FOR TABLE PRODUCTCAT
+--------------------------------------------------------
+
+  CREATE TABLE "PRODUCTCAT" 
+   (	"ID" NUMBER(10,0), 
+	"PRODUCTCAT_ID" NUMBER(10,0), 
+	"NAAM" NVARCHAR2(255)
+   ) ;
 --------------------------------------------------------
 --  DDL FOR TABLE PRODUCTEXEMPLAAR
 --------------------------------------------------------

@@ -139,6 +139,15 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.GridView gvRental;
         
         /// <summary>
+        /// Label13 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label13;
+        
+        /// <summary>
         /// Label7 control.
         /// </summary>
         /// <remarks>
@@ -157,13 +166,13 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.Label Label8;
         
         /// <summary>
-        /// Label9 control.
+        /// Label12 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
+        protected global::System.Web.UI.WebControls.Label Label12;
         
         /// <summary>
         /// Label10 control.
@@ -173,15 +182,6 @@ namespace ICT4Events {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label10;
-        
-        /// <summary>
-        /// Label11 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label11;
         
         /// <summary>
         /// btnArtikelVerwijder control.
@@ -202,6 +202,24 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.TextBox tbArtikelNaam;
         
         /// <summary>
+        /// tbArtikelMerk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbArtikelMerk;
+        
+        /// <summary>
+        /// tbArtikelSerie control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox tbArtikelSerie;
+        
+        /// <summary>
         /// tbArtikelPrijs control.
         /// </summary>
         /// <remarks>
@@ -211,40 +229,31 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.TextBox tbArtikelPrijs;
         
         /// <summary>
-        /// tbArtikelType control.
+        /// tbArtikelAantal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbArtikelType;
+        protected global::System.Web.UI.WebControls.TextBox tbArtikelAantal;
         
         /// <summary>
-        /// tbAantal control.
+        /// btnArtikelVoegToe control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox tbAantal;
+        protected global::System.Web.UI.WebControls.Button btnArtikelVoegToe;
         
         /// <summary>
-        /// Button4 control.
+        /// btnArtikelPasAan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button4;
-        
-        /// <summary>
-        /// Button5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button5;
+        protected global::System.Web.UI.WebControls.Button btnArtikelPasAan;
         
         /// <summary>
         /// gvArtikel control.
