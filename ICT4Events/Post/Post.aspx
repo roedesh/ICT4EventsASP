@@ -25,8 +25,8 @@
         <FooterTemplate></FooterTemplate>
     </asp:Repeater>
     <br />
-    <asp:Button ID="btnLike" runat="server" Text="Like" OnClick="btnLike_Click" />
-    <asp:Button ID="btnFlag" runat="server" Text="Flag" OnClick="btnFlag_Click" />
+    <asp:Button ID="btnLike" runat="server" Text="Like" OnClick="BtnLike_Click" />
+    <asp:Button ID="btnFlag" runat="server" Text="Flag" OnClick="BtnFlag_Click" />
                         <% if (IsLoggedInAsAdmin)
                        {%>
                             <asp:Button ID="btnMDel" CommandName="Delete" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Delete" runat="server" />
@@ -42,7 +42,7 @@
     <br />
     <asp:TextBox ID="tbContent" runat="server" Height="100px" Width="525px"></asp:TextBox>
     <br />
-    <asp:Button ID="btnSend" runat="server" Text="Save" CssClass="button" OnClick="btnSend_Click"/>
+    <asp:Button ID="btnSend" runat="server" Text="Save" CssClass="button" OnClick="BtnSend_Click"/>
     <br />
     <br />
     <asp:Repeater ID="repMessages" runat="server">
@@ -76,7 +76,7 @@
                        {%>
                             <asp:Button ID="btnMDel" CommandName="Delete" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Delete" runat="server" />
                     <% }%>
-            <asp:Repeater ID="repSubMessages" runat="server">
+            <asp:Repeater ID="repsubmessages" runat="server">
                 <HeaderTemplate></HeaderTemplate>
                 <ItemTemplate>
                                  <table>

@@ -13,19 +13,48 @@ namespace ICT4Events.Post
     using System.Web.UI.WebControls;
     using BAL;
 
+    /// <summary>
+    /// WebForm used to display Post & messages.
+    /// </summary>
     public partial class Post : System.Web.UI.Page
     {
+        /// <summary>
+        /// p is used for holding the PostID parameter
+        /// </summary>
         private string p = string.Empty;
-        private int like = 0;
-        private int flag = 0;
-        private DataTable Submessages = new DataTable();
 
+        /// <summary>
+        /// like is used to keep track if a post id has already been
+        /// liked by a user
+        /// </summary>
+        private int like = 0;
+
+        /// <summary>
+        /// flag is used to keep track if a post id has already been flagged by a user
+        /// </summary>
+        private int flag = 0;
+
+        /// <summary>
+        /// A data table made to keep all the values of the child messages of a message
+        /// </summary>
+        private DataTable submessages = new DataTable();
+
+        /// <summary>
+        /// Gets or sets a value indicating whether IsLoggedInAsAdmin is true or false
+        /// </summary>
         public bool IsLoggedInAsAdmin
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// On page load this method will be triggered, everything inside this
+        /// method will be executed.
+        /// This builds the website content.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             this.p = Request.QueryString["postid"];
@@ -83,6 +112,13 @@ namespace ICT4Events.Post
             }
         }
 
+        /// <summary>
+        /// Creates a button click event, which will trigger
+        /// when at the http side of the application Buttons use OnCommand.
+        /// By using Command we can send extra arguments to this method.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void CommandBtn_Click(object sender, CommandEventArgs e)
         {
             switch (e.CommandName)
@@ -178,7 +214,14 @@ namespace ICT4Events.Post
             }
         }
 
-        protected void btnSend_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Upon clicking of the button Send, this method will be triggered.
+        /// Which will create a message containing the information send with the Create Message method.
+        /// Will return message depending on result.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnSend_Click(object sender, EventArgs e)
         {
             if (new PostBAL().CreateMessage(Session["User_ID"].ToString(), tbTitle.Text, tbContent.Text, this.p) == 0)
             {
@@ -190,7 +233,14 @@ namespace ICT4Events.Post
             }
         }
 
-        protected void btnLike_Click(object sender, EventArgs e)
+        /// <summary>
+        /// This method uses the like integer to check if a user has already liked said post.
+        /// If the user hasn't liked this post, it will call the Update Like Method from POST BAL.
+        /// Will return message depending on result.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnLike_Click(object sender, EventArgs e)
         {
             if (this.like == 0)
             {
@@ -218,7 +268,14 @@ namespace ICT4Events.Post
             }
         }
 
-        protected void btnFlag_Click(object sender, EventArgs e)
+        /// <summary>
+        /// This method uses the flag integer to check if a user has already flagged said post.
+        /// If the user hasn't flag this post, it will call the Update Like flag from POST BAL.
+        /// Will return message depending on result.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnFlag_Click(object sender, EventArgs e)
         {
             if (this.flag == 0)
             {
@@ -246,14 +303,19 @@ namespace ICT4Events.Post
             }
         }
 
-        private void repMessages_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        /// <summary>
+        /// This method builds the data source of the nested repeater
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
+        private void RepMessages_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
         {
             RepeaterItem item = e.Item;
             if ((item.ItemType == ListItemType.Item) || (item.ItemType == ListItemType.AlternatingItem))
             {
-                Repeater repSubMessages = (Repeater)item.FindControl("repSubMessage");
-                repSubMessages.DataSource = this.Submessages;
-                repSubMessages.DataBind();
+                Repeater repsubmessages = (Repeater)item.FindControl("repSubMessage");
+                repsubmessages.DataSource = this.submessages;
+                repsubmessages.DataBind();
             }
         }
     }

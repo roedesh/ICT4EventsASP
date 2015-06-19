@@ -5,6 +5,6 @@
 
     <input id="inputFile" type="file" runat="server" />
     <br />
-    <asp:Button ID="btnUpload" runat="server" Text="Create" OnClick="btnUpload_Click" />
+    <asp:Button ID="btnUpload" runat="server" Text="Create" OnClick="BtnUpload_Click" />
 
     </asp:Content>
