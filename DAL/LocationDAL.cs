@@ -12,10 +12,22 @@
 
     public class LocationDAL
     {
+        /// <summary>
+        /// Constroctor LocationDAL
+        /// </summary>
         public LocationDAL()
         {
         }
 
+        /// <summary>
+        /// Method for inserting a location
+        /// </summary>
+        /// <param name="naam">location name</param>
+        /// <param name="straat">street name</param>
+        /// <param name="straatNr">street number</param>
+        /// <param name="postcode">zipcode</param>
+        /// <param name="plaats">city</param>
+        /// <returns>int if insert was succesfully done</returns>
         public int Insert(string naam, string straat, string straatNr, string postcode, string plaats)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -41,6 +53,11 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Method for loading all locations
+        /// </summary>
+        /// <returns>Datatable with all location names</returns>
         public DataTable Load()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -64,6 +81,12 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Method for deleting a location
+        /// </summary>
+        /// <param name="naam">location name</param>
+        /// <returns>int if delete was succesfully done</returns>
         public int Delete(string naam)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -85,6 +108,12 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Method for loading a location and all its data
+        /// </summary>
+        /// <param name="name">location name</param>
+        /// <returns>Datatable with all data of a location</returns>
         public DataTable Load(string name)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))

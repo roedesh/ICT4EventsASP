@@ -123,16 +123,16 @@
     <tr>
         <td class="auto-style2">Begindatum:</td>
         <td>
-            <asp:Calendar ID="calBeginData" runat="server" OnSelectionChanged="calBeginData_SelectionChanged"></asp:Calendar>
-            <asp:CustomValidator ID="cusValBeginDate" runat="server" ErrorMessage="Datum moet later dan vandaag zijn!" OnServerValidate="cusValBeginDate_ServerValidate"></asp:CustomValidator>
+            <asp:Calendar ID="calBeginData" runat="server" OnSelectionChanged="CalBeginData_SelectionChanged"></asp:Calendar>
+            <asp:CustomValidator ID="cusValBeginDate" runat="server" ErrorMessage="Datum moet later dan vandaag zijn!" OnServerValidate="CusValBeginDate_ServerValidate"></asp:CustomValidator>
         </td>
         <td>&nbsp;</td>
     </tr>
     <tr>
         <td class="auto-style2">Einddatum:</td>
         <td>
-            <asp:Calendar ID="calEndDate" runat="server" OnSelectionChanged="calEndDate_SelectionChanged"></asp:Calendar>
-            <asp:CustomValidator ID="cusValEndDate" runat="server" ErrorMessage="Einddatum moet later zijn dan begindatum!" OnServerValidate="cusValEndDate_ServerValidate"></asp:CustomValidator>
+            <asp:Calendar ID="calEndDate" runat="server" OnSelectionChanged="CalEndDate_SelectionChanged"></asp:Calendar>
+            <asp:CustomValidator ID="cusValEndDate" runat="server" ErrorMessage="Einddatum moet later zijn dan begindatum!" OnServerValidate="CusValEndDate_ServerValidate"></asp:CustomValidator>
         </td>
         <td>&nbsp;</td>
     </tr>

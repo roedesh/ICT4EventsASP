@@ -13,10 +13,10 @@
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Session["USER_ROLE"].ToString() != "ADMIN")
-            //{
-            //    Response.Redirect("../Default.aspx");
-            //}
+            if (Session["USER_ROLE"].ToString() != "ADMIN")
+            {
+                Response.Redirect("../Default.aspx");
+            }
             if (!IsPostBack)
             {
                 DataTable table = new EventBAL().GetAllEvents();
@@ -36,19 +36,22 @@
         {
             try
             {
-                string confirmValue = Request.Form["confirm_value"];
-                if (confirmValue == "Ja")
+                if (IsValid)
                 {
-                    if (new EventBAL().SetEvent(this.tbEventname.Text, this.tbStartDate.Text,
-                this.tbEndDate.Text, Convert.ToInt32(this.tbMaxVis.Text),
-                Convert.ToInt32(this.tbEventID.Text)) == 1)
+                    string confirmValue = Request.Form["confirm_value"];
+                    if (confirmValue == "Ja")
                     {
-                        Response.Write("<script>alert('Event is bijgewerkt');</script>");
-                        Response.Redirect("../Event/EventManagementAdmin.aspx");
-                    }
-                    else
-                    {
-                        Response.Write("<script>alert('Event naam is niet bekend');</script>");
+                        if (new EventBAL().SetEvent(this.tbEventname.Text, this.tbStartDate.Text,
+                    this.tbEndDate.Text, Convert.ToInt32(this.tbMaxVis.Text),
+                    Convert.ToInt32(this.tbEventID.Text)) == 1)
+                        {
+                            Response.Write("<script>alert('Event is bijgewerkt');</script>");
+                            Response.Redirect("../Event/EventManagementAdmin.aspx");
+                        }
+                        else
+                        {
+                            Response.Write("<script>alert('Er is iets fout gegaan probeer het opnieuw');</script>");
+                        }
                     }
                 }
             }
@@ -59,6 +62,27 @@
             catch(Exception)
             {
                 Response.Write("<script>alert('Event kon niet worden bijgewerkt, probeer het opnieuw.');</script>");
+            }
+        }
+
+        protected void valDateRange_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            DateTime minDate = DateTime.Parse("28-12-2010 00:00:00");
+            DateTime maxDate = DateTime.Parse("28-12-9999 23:59:59");
+            DateTime dt;
+
+            args.IsValid = (DateTime.TryParse(args.Value, out dt)
+                            && dt <= maxDate
+                            && dt >= minDate);
+        }
+        protected void valDateCompare_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (IsValid)
+            {
+                DateTime startDate = Convert.ToDateTime(this.tbStartDate.Text);
+                DateTime endDate = Convert.ToDateTime(this.tbEndDate.Text);
+
+                args.IsValid = (endDate > startDate);
             }
         }
 
@@ -94,8 +118,21 @@
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            new EventBAL().DeleteEvent(this.tbEventname.Text);
-            Response.Redirect("../Event/EventManagementAdmin.aspx");
-        }        
+            if (IsValid)
+            {
+                if (new EventBAL().DeleteEvent(this.tbEventname.Text) == 1)
+                {
+                    Response.Write("<script>alert('Event verwijderd');</script>");
+                    Response.Redirect("../Event/EventManagementAdmin.aspx");
+                }
+                else
+                {
+                    Response.Write("<script>alert('Event niet gevonden');</script>");
+                }
+            }
+        }
+
+
+     
     }
 }

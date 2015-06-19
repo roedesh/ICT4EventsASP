@@ -12,9 +12,17 @@
 
     public class EventDAL
     {
+        /// <summary>
+        /// Constroctor EventDal
+        /// </summary>
         public EventDAL()
         {
         }
+
+        /// <summary>
+        /// Method to load all event names
+        /// </summary>
+        /// <returns>Datatable with all event names</returns>
         public DataTable Load()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -38,6 +46,12 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Method to load a specific event
+        /// </summary>
+        /// <param name="eventName">event name</param>
+        /// <returns>Datatable with all information about the event</returns>
         public DataTable Load(string eventName)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -62,6 +76,16 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Method for inserting an event
+        /// </summary>
+        /// <param name="locationID">Foreign key of the location</param>
+        /// <param name="name">event name</param>
+        /// <param name="start">start date</param>
+        /// <param name="end">end date</param>
+        /// <param name="maxVis">max visitors</param>
+        /// <returns>int if insert was succesfully done</returns>
         public int Insert(int locationID, string name, string start, string end, int maxVis)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -87,6 +111,16 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Method for updateing a specific event
+        /// </summary>
+        /// <param name="name">Event name</param>
+        /// <param name="start">Start date</param>
+        /// <param name="end">End date</param>
+        /// <param name="maxVis">Max visitors</param>
+        /// <param name="eventid">Event id</param>
+        /// <returns>int if update was succesfully done</returns>
         public int Update(string name, string start, string end, int maxVis, int eventid)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -112,6 +146,12 @@
                 }
             }
         }
+
+        /// <summary>
+        /// Method for deleting an event
+        /// </summary>
+        /// <param name="naam">event name</param>
+        /// <returns>int if delete was succesfully done</returns>
         public int Delete(string naam)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))

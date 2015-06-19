@@ -112,6 +112,15 @@ namespace ICT4Events {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator reqZipCodeCreate;
         
         /// <summary>
+        /// valZipCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator valZipCode;
+        
+        /// <summary>
         /// tbCity control.
         /// </summary>
         /// <remarks>
