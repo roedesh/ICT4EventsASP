@@ -25,36 +25,22 @@ namespace BAL
         }
 
         /// <summary>
-        /// Method that validates person data and sends it to DAL
+        /// Calls a stored procedure that inserts a person, reservation and place_reservation
         /// </summary>
-        /// <param name="firstName">First name</param>
-        /// <param name="insertion">String between first and last name</param>
-        /// <param name="lastName">Last name</param>
-        /// <param name="street">Street name</param>
-        /// <param name="house_nr">House number</param>
-        /// <param name="city">Name of the city</param>
-        /// <param name="iban">A valid IBAN code</param>
-        /// <returns>0 or 1</returns>
-        public int CreatePerson(string firstName, string insertion, string lastName, string street, string house_nr, string city, string iban)
-        {
-            return new ReservationDAL().Insert(firstName, insertion, lastName, street, house_nr, city, iban);
-        }
-
-        /// <summary>
-        /// Method that validates reservation data and sends it to DAL
-        /// </summary>
-        /// <param name="personID">Person ID</param>
-        /// <param name="beginDate">Begin date of reservation</param>
+        /// <param name="firstName">First name of the booker</param>
+        /// <param name="insertion">Name insertion of the booker</param>
+        /// <param name="lastName">Last name of the booker</param>
+        /// <param name="street">Address of the booker</param>
+        /// <param name="house_nr">House number of the booker</param>
+        /// <param name="city">City of the booker</param>
+        /// <param name="iban">IBAN of the booker</param>
+        /// <param name="beginDate">Start date of reservation</param>
         /// <param name="endDate">End date of reservation</param>
-        /// <returns>0 or 1</returns>
-        public int CreateReservation(int personID, DateTime beginDate, DateTime endDate)
-        {
-            return new ReservationDAL().Insert(personID, beginDate, endDate);
-        }
-
+        /// <param name="placeID">ID of reserved place</param>
+        /// <returns>The ID of the new inserted reservation</returns>
         public int CreateReservation(string firstName, string insertion, string lastName, string street, string house_nr, string city, string iban, DateTime beginDate, DateTime endDate, int placeID)
         {
-            return new AccountDAL().Insert(firstName, insertion, lastName, street, house_nr, city, iban, beginDate, endDate, placeID);
+            return new ReservationDAL().Insert(firstName, insertion, lastName, street, house_nr, city, iban, beginDate, endDate, placeID);
         }
 
         /// <summary>

@@ -116,7 +116,7 @@ namespace ICT4Events.Reservering
             );
             if (reservationID > 0)
             {
-                Debug.WriteLine("Reservering aangemaakt!");
+                Debug.WriteLine("Reservering aangemaakt: " + reservationID);
             }
 
             mBal.SendMail(null, usernames, reservationID);
