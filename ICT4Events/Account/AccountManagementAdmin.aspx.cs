@@ -57,7 +57,8 @@ namespace ICT4Events.Account
                 this.tbEmailAdress.Text = table.Rows[0]["EMAIL"].ToString();
                 this.tbUserName.Text = table.Rows[0]["GEBRUIKERSNAAM"].ToString();
                 this.tbPassword.Text = table.Rows[0]["PASSWORD"].ToString();
-                this.tbRank.Text = table.Rows[0]["ROL"].ToString();
+                this.ddlRol.ClearSelection();
+                this.ddlRol.SelectedValue = table.Rows[0]["ROL"].ToString();
             }
             catch (IndexOutOfRangeException)
             {
@@ -87,7 +88,7 @@ namespace ICT4Events.Account
                                 Convert.ToInt32(tbAccountID.Text),
                                 this.tbUserName.Text,
                                 this.tbPassword.Text,
-                                this.tbRank.Text,
+                                this.ddlRol.SelectedValue,
                                 this.tbEmailAdress.Text,
                                 Convert.ToInt32(this.ddlActivated.SelectedItem.Value));
                             Response.Redirect("../Account/AccountManagementAdmin.aspx");
@@ -156,7 +157,8 @@ namespace ICT4Events.Account
             this.tbEmailAdress.Text = table.Rows[0]["EMAIL"].ToString();
             this.tbUserName.Text = table.Rows[0]["GEBRUIKERSNAAM"].ToString();
             this.tbPassword.Text = table.Rows[0]["PASSWORD"].ToString();
-            this.tbRank.Text = table.Rows[0]["ROL"].ToString();
+            this.ddlRol.ClearSelection();
+            this.ddlRol.SelectedValue = table.Rows[0]["ROL"].ToString();
         }
     }
 }
