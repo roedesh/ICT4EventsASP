@@ -102,22 +102,21 @@ namespace ICT4Events.Reservering
                 insertion = string.Empty;
             }
 
-            int personID = rBal.CreatePerson(this.tbFirstName.Text, insertion, this.tbLastName.Text, this.tbStreet.Text, this.tbHouseNr.Text, this.tbCity.Text, this.tbBankAccount.Text);
-            if (personID > 0)
-            {
-                Debug.WriteLine("Persoon aangemaakt!");
-            }
-
-            int reservationID = rBal.CreateReservation(personID, this.calBeginData.SelectedDate.Date, this.calEndDate.SelectedDate.Date);
+            int reservationID = rBal.CreateReservation(
+                tbFirstName.Text,
+                tbMiddleName.Text,
+                tbLastName.Text,
+                tbStreet.Text,
+                tbHouseNr.Text,
+                tbCity.Text,
+                tbBankAccount.Text,
+                calBeginData.SelectedDate.Date,
+                calEndDate.SelectedDate.Date,
+                Convert.ToInt32(ddPlace.SelectedValue)
+            );
             if (reservationID > 0)
             {
                 Debug.WriteLine("Reservering aangemaakt!");
-            }
-
-            int placeReservation = pBal.CreatePlaceReservation(Convert.ToInt32(this.ddPlace.SelectedItem.Value), reservationID);
-            if (placeReservation > 0)
-            {
-                Debug.WriteLine("Plek_Reservering aangemaakt!");
             }
 
             mBal.SendMail(null, usernames, reservationID);

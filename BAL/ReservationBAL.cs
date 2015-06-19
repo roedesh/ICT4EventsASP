@@ -52,6 +52,11 @@ namespace BAL
             return new ReservationDAL().Insert(personID, beginDate, endDate);
         }
 
+        public int CreateReservation(string firstName, string insertion, string lastName, string street, string house_nr, string city, string iban, DateTime beginDate, DateTime endDate, int placeID)
+        {
+            return new AccountDAL().Insert(firstName, insertion, lastName, street, house_nr, city, iban, beginDate, endDate, placeID);
+        }
+
         /// <summary>
         /// Method for deleting a reservation
         /// </summary>

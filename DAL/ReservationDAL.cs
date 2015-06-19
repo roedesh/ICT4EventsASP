@@ -70,6 +70,44 @@ namespace DAL
             }
         }
 
+        public int Insert(string firstName, string insertion, string lastName, string street, string house_nr, string city, string iban, DateTime beginDate, DateTime endDate, int placeID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string query = "InschrijvingPlaatsen";
+                using (OracleCommand cmd = new OracleCommand(query, conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add("P_VOORNAAM", OracleDbType.Varchar2).Value = firstName;
+                    cmd.Parameters.Add("P_TUSSENVOEGSEL", OracleDbType.Varchar2).Value = insertion;
+                    cmd.Parameters.Add("P_ACHTERNAAM", OracleDbType.Varchar2).Value = lastName;
+                    cmd.Parameters.Add("P_STRAAT", OracleDbType.Varchar2).Value = street;
+                    cmd.Parameters.Add("P_HUISNUMMER", OracleDbType.Varchar2).Value = house_nr;
+                    cmd.Parameters.Add("P_WOONPLAATS", OracleDbType.Varchar2).Value = city;
+                    cmd.Parameters.Add("P_BANKNR", OracleDbType.Varchar2).Value = iban;
+                    cmd.Parameters.Add("P_BEGINDATUM", OracleDbType.Varchar2).Value = beginDate.ToString("dd-MM-yyyy");
+                    cmd.Parameters.Add("P_EINDDATUM", OracleDbType.Date).Value = endDate.ToString("dd-MM-yyyy");
+                    cmd.Parameters.Add("P_EINDDATUM", OracleDbType.Date).Value = endDate.ToString("dd-MM-yyyy");
+                    cmd.Parameters.Add("P_PLEKID", OracleDbType.Int32).Value = placeID;
+                    OracleParameter p1 = new OracleParameter("OP_RESERVERINGID", OracleDbType.Int32);
+                    p1.Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add(p1);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        return Convert.ToInt32(p1.Value.ToString());
+                    }
+                    catch (OracleException ex)
+                    {
+                        Debug.WriteLine(this.ErrorString(ex));
+                        return 0;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Method for inserting a Reservation record
         /// </summary>
