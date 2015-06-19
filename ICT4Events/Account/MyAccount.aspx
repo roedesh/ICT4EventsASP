@@ -23,8 +23,9 @@
         <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="BtnSave_Click" />
         <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="BtnDelete_Click" OnClientClick="Confirm()" />
         </p>
-        <p>
+        
         <h3>E-mailadres:</h3>
+        <p>
         <asp:TextBox ID="tbEmailAdress" TextMode="Email" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
         </p>
         <p>
