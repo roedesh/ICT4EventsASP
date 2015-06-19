@@ -22,7 +22,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/Default.aspx">ICT4Events</a>
+                <img class="logo-img" src="/Static/IMG/logo.png" />
+              <a class="navbar-brand logo" href="/Default.aspx">ICT4Events</a> 
+                <div class="social-icons">
+                    <a href="#" class="icon-facebook-squared"></a>
+                    <a href="#" class="icon-twitter-circled"></a>
+                    <a href="#" class="icon-instagram"></a>
+                </div>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
