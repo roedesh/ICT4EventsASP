@@ -3,6 +3,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Button ID="btnCreatePost" runat="server" OnClick="btnCreatePost_Click" Text="Post"  />
+                            <% if (IsLoggedInAsAdmin||(C != ""))
+                       {%>
+                            <asp:Button ID="btnDel" Text="Delete" runat="server" OnClick="btnDel_Click" />
+                    <% }%>
     <asp:Repeater ID="repMainCat" runat="server">
     <HeaderTemplate>
         <ul>

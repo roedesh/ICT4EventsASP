@@ -93,6 +93,8 @@
     <Content Include="Static\CSS\bootstrap.css" />
     <Content Include="Static\CSS\bootstrap.min.css" />
     <Content Include="Static\CSS\custom.css" />
+    <Content Include="Static\IMG\logo.png" />
+    <Content Include="Static\IMG\Music-Festival.jpg" />
     <Content Include="Static\Javascript\bootstrap.js" />
     <Content Include="Static\Javascript\bootstrap.min.js" />
     <Content Include="Static\Javascript\jquery-1.10.2.js" />
@@ -245,8 +247,10 @@
       <Project>{9b0091bb-0d26-4b61-894c-40a0f4a4bcac}</Project>
       <Name>BAL</Name>
     </ProjectReference>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
+    <Folder Include="Static\Fonts\" />
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

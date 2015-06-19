@@ -1,4 +1,8 @@
-﻿namespace ICT4Events
+﻿// <copyright file="Registreren.aspx.cs" company="RuudIT">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+// <author>Ruud Schroën</author>
+namespace ICT4Events
 {
     using System;
     using System.Collections.Generic;  
@@ -12,21 +16,26 @@
     using BAL;
     using Oracle.DataAccess.Client;
 
+    /// <summary>
+    /// WebForm for registering a account
+    /// </summary>
     public partial class Registreren : System.Web.UI.Page
     {
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["USER_ID"].ToString() != null)
+            if (this.Session["USER_ID"] != null)
             {
-                if (Session["USER_ROLE"].ToString() == "ADMIN")
-                {
-
-                }
-                else
+                if (this.Session["USER_ROLE"].ToString() != "ADMIN")
                 {
                     Response.Redirect("../Default.aspx", false);
                 }
             }
+
             if (Request.QueryString.Count != 0)
             {
                 try
@@ -47,7 +56,12 @@
             }
         }
 
-        protected void btSubmit_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the submit button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtSubmit_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
@@ -81,7 +95,8 @@
             {
                 AccountBAL accountbal = new AccountBAL();
                 exists = accountbal.CheckUsername(this.tbUsername.Text);
-                if (exists > 0) {
+                if (exists > 0) 
+                {
                     args.IsValid = false;
                 }
             }            
@@ -106,7 +121,12 @@
             }
         }
 
-        protected void btReset_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the reset button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtReset_Click(object sender, EventArgs e)
         {
             this.tbUsername.Text = string.Empty;
             this.tbPassword.Text = string.Empty;

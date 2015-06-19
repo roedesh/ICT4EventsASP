@@ -3,6 +3,17 @@
 /* Ruud: ik leg nog wel uit wat de regel hieronder doet */
 *, *:before, *:after { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
+@font-face {
+  font-family: 'social';
+  src: url('../Fonts/ict4events_social.eot?47351657');
+  src: url('../Fonts/ict4events_social.eot?47351657#iefix') format('embedded-opentype'),
+       url('../Fonts/ict4events_social.woff?47351657') format('woff'),
+       url('../Fonts/ict4events_social.ttf?47351657') format('truetype'),
+       url('../Fonts/ict4events_social.svg?47351657#ict4events_social') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption {
     margin: 0;
     padding: 0;
@@ -23,7 +34,11 @@ h5 { font-size: .83em; }
 h6 { font-size: .75em; }
 p { margin: 1em 0px; color: #89949b; }
 
-#header-main-nav                    { border-radius: 0px; -moz-border-radius: 0; -webkit-border-radius: 0; background-color: #2b3b44; margin-bottom: 0; border: none; padding: 50px 0;}
+.logo-img { float: left; width: 50px; opacity: 0.8; margin-top: 2px; margin-right: 5px; }
+
+.navbar > .container .navbar-brand.logo { font-size: 36px; color: #52C2D2; font-weight: 300; text-transform: uppercase; }
+
+#header-main-nav                    { border-radius: 0px; -moz-border-radius: 0; -webkit-border-radius: 0; background-color: #2b3b44; margin-bottom: 0; border: none; padding: 50px 0; opacity: 0.9;}
 #header-main-nav ul                 { float: right; }
 #header-main-nav ul li a            { font-size: 19px; display: block; height: 50px; padding: 5px 15px; color: #ffffff; text-decoration: none; line-height: 38px; }
 #header-main-nav ul li a:hover      { color: #52c2d2; }
@@ -32,11 +47,11 @@ p { margin: 1em 0px; color: #89949b; }
 
 .container.main { padding: 25px 0; }
 
-#header-admin                 { width: 100%; height: 50px; border-bottom: 1px solid #525252; }
+#header-admin                 { width: 100%; height: 50px; background-color: #52C2D2; opacity: 0.9; }
 #header-admin ul              { list-style-type: none; padding: 0;  }
 #header-admin ul li           { display: inline-block; }
 #header-admin ul li a         { display: block; height: 50px; padding: 5px 15px; color: #0e0e0e; text-decoration: none; line-height: 38px; }
-#header-admin ul li a:hover   { background-color: #525252; color: #eeeeee; }
+#header-admin ul li a:hover   { background-color: #2b3b44; color: #eeeeee; }
 
 input[type=text], input[type=password], input[type=email], select {
     border: 1px solid #808080;
@@ -62,5 +77,52 @@ input[type="submit"] {
     margin-right: 10px;
 }
 
+.bottomleft { position: absolute; right: 75px; bottom: 75px; opacity: 0.85; text-align: right; }
+.bottomleft h3 { font-weight: bold; font-size: 80px; color: #FFFFFF; text-shadow: 2px 2px 10px #000000; }
+.bottomleft h4 { font-size: 50px; color: #52C2D2; text-shadow: 2px 2px 10px #000000; }
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "social";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+
+
+}
+ 
+.social-icons { float: left;  }
+.social-icons a { font-size: 24px; color: #FFFFFF; opacity: 0.8; line-height: 50px; }
+.social-icons a:hover { text-decoration: none; color: #52C2D2; }
+.icon-facebook-squared:before { content: '\e800'; } /* '' */
+.icon-twitter-circled:before { content: '\e801'; } /* '' */
+.icon-instagram:before { content: '\e802'; } /* '' */
 
 

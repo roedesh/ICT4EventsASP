@@ -99,5 +99,10 @@
             int flag = 1;
             return new PostDAL().CheckFlag(username, postid, flag);
         }
+
+        public int DeletePost(string postid)
+        {
+            return new PostDAL().DeletePost(postid);
+        }
     }
 }
