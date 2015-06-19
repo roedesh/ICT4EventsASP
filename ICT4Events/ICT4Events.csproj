@@ -88,9 +88,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Static\CSS\bootstrap-theme.css" />
+    <Content Include="Static\CSS\bootstrap-theme.min.css" />
+    <Content Include="Static\CSS\bootstrap.css" />
+    <Content Include="Static\CSS\bootstrap.min.css" />
     <Content Include="Static\CSS\custom.css" />
+    <Content Include="Static\Javascript\bootstrap.js" />
+    <Content Include="Static\Javascript\bootstrap.min.js" />
     <Content Include="Static\Javascript\jquery-1.10.2.js" />
     <Content Include="Static\Javascript\jquery-1.10.2.min.js" />
+    <Content Include="Static\Javascript\npm.js" />
     <Content Include="ToegangsControle.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>

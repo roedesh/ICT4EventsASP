@@ -5,15 +5,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link href="Static/CSS/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="Static/CSS/custom.css" rel="stylesheet" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div id="header">
-            <ul>
-
+        <!-- Fixed navbar -->
+        <nav id="header-main-nav" class="navbar navbar-inverse">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">ICT4Events</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
                 <% if (!IsLoggedIn)
                    { %>
                 <li>
@@ -35,28 +47,35 @@
                         <asp:Label ID="lbWelkom" runat="server" Text=""></asp:Label>Uitloggen
                     </asp:HyperLink></li>
                 <%} %>
-            </ul>
-        </div>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div>
+        </nav>
+
         <% if (IsLoggedInAsAdmin)
            {%>
         <div id="header-admin">
-            <ul>
-                <li>
-                    <asp:HyperLink href="../Event/EventManagementAdmin.aspx" runat="server">Event Management</asp:HyperLink></li>
-                <li>
-                    <asp:HyperLink href="../Account/AccountManagementAdmin.aspx" runat="server">Account Management</asp:HyperLink></li>
-                <li>
-                    <asp:HyperLink href="ToegangsControle.aspx" runat="server">Toegangs Controle</asp:HyperLink></li>
+            <div class="container">
+                <ul>
+                    <li>
+                        <asp:HyperLink href="../Event/EventManagementAdmin.aspx" runat="server">Event Management</asp:HyperLink></li>
+                    <li>
+                        <asp:HyperLink href="../Account/AccountManagementAdmin.aspx" runat="server">Account Management</asp:HyperLink></li>
+                    <li>
+                        <asp:HyperLink href="ToegangsControle.aspx" runat="server">Toegangs Controle</asp:HyperLink></li>
 
-            </ul>
+                </ul>
+            </div>
         </div>
         <% }%>
 
 
-        <div>
+        <div class="container main">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
         </div>
+        <script src="Static/Javascript/jquery-1.10.2.js"></script>
+        <script src="Static/Javascript/bootstrap.js"></script>
     </form>
 </body>
 </html>
