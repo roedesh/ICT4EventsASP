@@ -212,10 +212,13 @@
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = @"SELECT PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs, 
-                    count(productexemplaar.product_id) as aantal_exemplaren
-                 FROM PRODUCT LEFT JOIN productexemplaar ON (PRODUCT.ID = productexemplaar.product_id)
-                    GROUP BY PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs";
+                string loadQuery = @"SELECT PRODUCTCAT.naam, PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs, 
+ count(productexemplaar.product_id) as aantal_exemplaren
+ FROM PRODUCT 
+ LEFT JOIN productexemplaar ON (PRODUCT.ID = productexemplaar.product_id)
+ LEFT JOIN productcat ON (PRODUCT.productcat_id = PRODUCTCAT.id)
+ GROUP BY PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs,PRODUCTCAT.naam
+ ORDER BY PRODUCT.merk";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -234,5 +237,181 @@
             }
         }
 
+        public int CreateCategory(string naam)
+        {
+            int result = 0;
+            int id2 = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    string query = @"SELECT PRODUCTCAT_FCSEQ.NEXTVAL FROM DUAL";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                id2 = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+                    insertQuery = "INSERT INTO PRODUCTCAT(id,naam) VALUES(:id,:naam)";
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id", id2));
+                        cmd.Parameters.Add(new OracleParameter("naam", naam));
+                        result =  cmd.ExecuteNonQuery();
+                    }
+                }
+                if(result != 0)
+                {
+                    result = id2;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex.Message.ToString());
+                return 0;
+            }
+        }
+        public int CreateProduct(int catID, string merk, string serie, decimal prijs,int typenummer)
+        {
+            int result = 0;
+            int id2 = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    string query = @"SELECT PRODUCT_FCSEQ.NEXTVAL FROM DUAL";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                id2 = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+                    insertQuery = "INSERT INTO PRODUCT VALUES(:id2,:catID,:merk,:serie,:typenummer,:prijs)";
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id2", id2));
+                        cmd.Parameters.Add(new OracleParameter("catID", catID));
+                        cmd.Parameters.Add(new OracleParameter("merk", merk));
+                        cmd.Parameters.Add(new OracleParameter("serie", serie));
+                        cmd.Parameters.Add(new OracleParameter("typenummer", typenummer));
+                        cmd.Parameters.Add(new OracleParameter("prijs", prijs));
+                        result =  cmd.ExecuteNonQuery();
+                    }
+                }
+                if (result != 0)
+                {
+                    result = id2;
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex.Message.ToString());
+                return 0;
+            }
+        }
+        public int CreateExemplaar(int id,string barcode,int volgnummer)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "INSERT INTO PRODUCTEXEMPLAAR VALUES(PRODUCTEXEMPLAAR_FCSEQ.nextval,:id,:volgnummer,:barcode,0)";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("id", id));
+                    cmd.Parameters.Add(new OracleParameter("volgnummer", volgnummer));
+                    cmd.Parameters.Add(new OracleParameter("barcode", barcode));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
+        public int LoadTypenummer()
+        {
+                int id2 = 0;
+                string insertQuery = string.Empty;
+                try
+                {
+                    using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                    {
+                        conn.Open();
+
+                        string query = @"SELECT TYPENUMMER_FCSEQ.NEXTVAL FROM DUAL";
+
+                        using (OracleCommand cmd = new OracleCommand(query, conn))
+                        {
+                            using (OracleDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    id2 = Convert.ToInt32(reader.GetValue(0));
+                                }
+                            }
+                        }
+                    }
+                    return id2;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Error: " + ex.Message.ToString());
+                    return 0;
+                }
+        }
+
+        public int LoadVolgnummer()
+        {
+            int id2 = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    string query = @"SELECT VOLGNUMMER_FCSEQ.NEXTVAL FROM DUAL";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                id2 = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+                }
+                return id2;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex.Message.ToString());
+                return 0;
+            }
+        }
     }
 }

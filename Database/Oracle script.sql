@@ -56,6 +56,8 @@ DROP SEQUENCE "RESERVERING_FCSEQ";
 DROP SEQUENCE "RESERVERING_POLSBANDJE_FCSEQ";
 DROP SEQUENCE "SPECIFICATIE_FCSEQ";
 DROP SEQUENCE "VERHUUR_FCSEQ";
+DROP SEQUENCE  "VOLGNUMMER_FCSEQ"
+DROP SEQUENCE  "TYPENUMMER_FCSEQ"
 --------------------------------------------------------
 --  DDL FOR SEQUENCE ACCOUNT_BIJDRAGE_FCSEQ
 --------------------------------------------------------
@@ -141,6 +143,16 @@ DROP SEQUENCE "VERHUUR_FCSEQ";
 --------------------------------------------------------
 
    CREATE SEQUENCE  "VERHUUR_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 5 CACHE 20 NOORDER  NOCYCLE ;
+   --------------------------------------------------------
+--  DDL FOR SEQUENCE VOLGNUMMER_FCSEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "VOLGNUMMER_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1010 CACHE 20 NOORDER  NOCYCLE ;
+   --------------------------------------------------------
+--  DDL FOR SEQUENCE TYPENUMMER_FCSEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "TYPENUMMER_FCSEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1010 CACHE 20 NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL FOR TABLE ACCOUNT
 --------------------------------------------------------
@@ -306,8 +318,9 @@ DROP SEQUENCE "VERHUUR_FCSEQ";
   CREATE TABLE "PRODUCTCAT" 
    (	"ID" NUMBER(10,0), 
 	"PRODUCTCAT_ID" NUMBER(10,0), 
-	"NAAM" NVARCHAR2(255)
+	"NAAM" NVARCHAR2(255),
    ) ;
+
 --------------------------------------------------------
 --  DDL FOR TABLE PRODUCTEXEMPLAAR
 --------------------------------------------------------
@@ -316,7 +329,8 @@ DROP SEQUENCE "VERHUUR_FCSEQ";
    (	"ID" NUMBER(10,0), 
 	"PRODUCT_ID" NUMBER(10,0), 
 	"VOLGNUMMER" NUMBER(10,0) DEFAULT (0), 
-	"BARCODE" NVARCHAR2(255)
+	"BARCODE" NVARCHAR2(255),
+	"ISVERHUURD" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
 --  DDL FOR TABLE RESERVERING

@@ -82,7 +82,31 @@ namespace ICT4Events.Post
                     }
                     else
                     {
-                        Response.Write("<script language=javascript>alert('"+(string)e.CommandArgument+"');</script>");
+                        int mlike = new PostBAL().CheckLike(Session["User_ID"].ToString(), e.CommandArgument.ToString());
+                        if (mlike == 0)
+                        {
+                            if ((mlike = new PostBAL().UpdateLike(Session["User_ID"].ToString(), e.CommandArgument.ToString(), 1)) > 0)
+                            {
+                                Response.Write("<script language=javascript>alert('Bijdrage is geliked');</script>");
+                                btnLike.Text = "Unlike";
+                            }
+                            else
+                            {
+                                Response.Write("<script language=javascript>alert('Er ging wat fout met het liken');</script>");
+                            }
+                        }
+                        else
+                        {
+                            if ((mlike = new PostBAL().UpdateLike(Session["User_ID"].ToString(), e.CommandArgument.ToString(), 0)) > 0)
+                            {
+                                Response.Write("<script language=javascript>alert('Bijdrage is gedisliked');</script>");
+                                btnLike.Text = "Like";
+                            }
+                            else
+                            {
+                                Response.Write("<script language=javascript>alert('Er ging wat fout met het disliken');</script>");
+                            }
+                        }
                     }
                     break;
 
@@ -93,7 +117,32 @@ namespace ICT4Events.Post
                     }
                     else
                     {
-                        Response.Write("<script language=javascript>alert('" + (string)e.CommandArgument + "');</script>");
+                        int mflag = new PostBAL().CheckFlag(Session["User_ID"].ToString(), e.CommandArgument.ToString());
+                        if (mflag == 0)
+                        {
+                            if ((flag = new PostBAL().UpdateFlag(Session["User_ID"].ToString(), e.CommandArgument.ToString(), 1)) > 0)
+                            {
+                                Response.Write("<script language=javascript>alert('De bijdrage is ongewenst gemarkeerd');</script>");
+                                btnFlag.Text = "Unflag";
+                            }
+                            else
+                            {
+                                Response.Write("<script language=javascript>alert('Er ging wat fout met het ongewenst markeren');</script>");
+
+                            }
+                        }
+                        else
+                        {
+                            if ((flag = new PostBAL().UpdateFlag(Session["User_ID"].ToString(), e.CommandArgument.ToString(), 0)) > 0)
+                            {
+                                Response.Write("<script language=javascript>alert('De bijdrage is gewenst gemarkeerd');</script>");
+                                btnFlag.Text = "Flag";
+                            }
+                            else
+                            {
+                                Response.Write("<script language=javascript>alert('Er ging wat fout met het gewenst markeren');</script>");
+                            }
+                        }
                     }
                     break;
             }
@@ -130,6 +179,7 @@ namespace ICT4Events.Post
                 if((like = new PostBAL().UpdateLike(Session["User_ID"].ToString(), p, 1)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('Bijdrage is geliked');</script>");
+                    btnLike.Text = "Unlike";
                 }
                 else
                 {
@@ -141,6 +191,7 @@ namespace ICT4Events.Post
                 if((like = new PostBAL().UpdateLike(Session["User_ID"].ToString(), p, 0)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('Bijdrage is gedisliked');</script>");
+                    btnLike.Text = "Like";
                 }
                 else
                 {
@@ -157,10 +208,12 @@ namespace ICT4Events.Post
                 if ((flag = new PostBAL().UpdateFlag(Session["User_ID"].ToString(), p, 1)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('De bijdrage is ongewenst gemarkeerd');</script>");
+                    btnFlag.Text = "Unflag";
                 }
                 else
                 {
                     Response.Write("<script language=javascript>alert('Er ging wat fout met het ongewenst markeren');</script>");
+                                    
                 }
             }
             else
@@ -168,6 +221,7 @@ namespace ICT4Events.Post
                 if ((flag = new PostBAL().UpdateFlag(Session["User_ID"].ToString(), p, 0)) > 0)
                 {
                     Response.Write("<script language=javascript>alert('De bijdrage is gewenst gemarkeerd');</script>");
+                    btnFlag.Text = "Flag";
                 }
                 else
                 {

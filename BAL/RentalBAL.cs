@@ -69,5 +69,27 @@
         {
             return new RentalDAL().LoadAllItems();
         }
+        public int CreateItem(string naam, string merk, string serie, decimal prijs,int aantal)
+        {
+            int result = 0;
+            int id = new RentalDAL().CreateCategory(naam);
+            int typenummer = 0;
+            int volgnummer = 0;
+            if (id != 0)
+            {
+                typenummer = new RentalDAL().LoadTypenummer();
+                id = new RentalDAL().CreateProduct(id, merk, serie, prijs,typenummer);
+            }
+            if(id != 0)
+            {
+                for (int i = 0; i < aantal; i++)
+                {
+                    volgnummer = new RentalDAL().LoadVolgnummer();
+                    string barcode = typenummer.ToString() + "." + volgnummer.ToString();
+                    result = new RentalDAL().CreateExemplaar(id, barcode, volgnummer);
+                }
+            }
+            return result;
+        }
     }
 }

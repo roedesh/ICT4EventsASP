@@ -559,13 +559,14 @@ namespace DAL
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
-                    string insertQuery = @"UPDATE  ACCOUNT_BIJDRAGE SET LIKES = :likes WHERE account_id = :account_ID AND bijdrage_ID = :bijdrage_ID";
+                    string insertQuery = @"UPDATE ACCOUNT_BIJDRAGE SET LIKES = :likes WHERE ACCOUNT_ID = :account_ID AND BIJDRAGE_ID = :bijdrage_ID";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
+                        cmd.Parameters.Add(new OracleParameter("likes", like));
                         cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
                         cmd.Parameters.Add(new OracleParameter("bijdrage_ID", postID));
-                        cmd.Parameters.Add(new OracleParameter("likes", like));
+                        
 
                         return cmd.ExecuteNonQuery();
                     }
@@ -591,13 +592,13 @@ namespace DAL
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
-                    string insertQuery = @"UPDATE  ACCOUNT_BIJDRAGE SET ONGEWENST = :ongewenst WHERE account_id = :account_ID AND bijdrage_ID =:bijdrage_ID";
+                    string insertQuery = @"UPDATE  ACCOUNT_BIJDRAGE SET ONGEWENST = :ongewenst WHERE ACCOUNT_ID = :account_ID AND BIJDRAGE_ID =:bijdrage_ID";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
+                        cmd.Parameters.Add(new OracleParameter("ongewenst", flag));
                         cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
                         cmd.Parameters.Add(new OracleParameter("bijdrage_ID", postID));
-                        cmd.Parameters.Add(new OracleParameter("ongewenst", flag));
 
                         return cmd.ExecuteNonQuery();
                     }
