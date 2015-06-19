@@ -20,7 +20,7 @@ namespace DAL
     public class AccountDAL
     {
         /// <summary>
-        /// Class constructor
+        /// Initializes a new instance of the <see cref="AccountDAL"/> class.
         /// </summary>
         public AccountDAL() 
         { 

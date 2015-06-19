@@ -18,7 +18,7 @@ namespace BAL
     public class AccountBAL
     {
         /// <summary>
-        /// Initializes a new instance of the account bal class
+        /// Initializes a new instance of the <see cref="AccountBAL"/> class.
         /// </summary>
         public AccountBAL()
         {

@@ -35,7 +35,7 @@ namespace BAL
         private string[] returnValues;
 
         /// <summary>
-        /// Initializes an instance of the ActiveDirectoryBAL class.
+        /// Initializes a new instance of the <see cref="ActiveDirectoryBAL"/> class.
         /// </summary>
         public ActiveDirectoryBAL()
         {

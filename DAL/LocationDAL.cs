@@ -19,7 +19,7 @@ namespace DAL
     public class LocationDAL
     {
         /// <summary>
-        /// Constroctor LocationDAL
+        /// Initializes a new instance of the <see cref="LocationDAL"/> class.
         /// </summary>
         public LocationDAL()
         {
@@ -31,9 +31,9 @@ namespace DAL
         /// <param name="naam">location name</param>
         /// <param name="straat">street name of the location</param>
         /// <param name="straatNr">street number of the location</param>
-        /// <param name="postcode">zipcode of the location</param>
-        /// <param name="plaats">cityof the location</param>
-        /// <returns>int if insert was succesfully done</returns>
+        /// <param name="postcode">zip code of the location</param>
+        /// <param name="plaats">city of the location</param>
+        /// <returns>integer if insert was successfully done</returns>
         public int Insert(string naam, string straat, string straatNr, string postcode, string plaats)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -92,7 +92,7 @@ namespace DAL
         /// Method for deleting a location
         /// </summary>
         /// <param name="naam">location name</param>
-        /// <returns>int if delete was successfully done</returns>
+        /// <returns>integer if delete was successfully done</returns>
         public int Delete(string naam)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))

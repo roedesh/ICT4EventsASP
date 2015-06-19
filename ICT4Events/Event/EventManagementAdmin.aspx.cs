@@ -101,7 +101,6 @@ namespace ICT4Events.Event
             DateTime minDate = DateTime.Parse("28-12-2010 00:00:00");
             DateTime maxDate = DateTime.Parse("28-12-9999 23:59:59");
             DateTime dt;
-
             args.IsValid = (DateTime.TryParse(args.Value, out dt)
                             && dt <= maxDate
                             && dt >= minDate);

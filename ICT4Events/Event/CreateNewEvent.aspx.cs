@@ -98,7 +98,6 @@ namespace ICT4Events
             DateTime minDate = DateTime.Parse("28-12-2010 00:00:00");
             DateTime maxDate = DateTime.Parse("28-12-9999 23:59:59");
             DateTime dt;
-
             args.IsValid = (DateTime.TryParse(args.Value, out dt) && (dt <= maxDate) && (dt >= minDate));
         }
 
@@ -126,7 +125,7 @@ namespace ICT4Events
         {
             try
             {
-                DataTable table = new LocationBAL().GetLocation(ddlAllLocations.SelectedValue.ToString());
+                DataTable table = new LocationBAL().GetLocation(this.ddlAllLocations.SelectedValue.ToString());
                 this.tbLocationName.Text = table.Rows[0]["NAAM"].ToString();
                 this.tbStreet.Text = table.Rows[0]["STRAAT"].ToString();
                 this.tbStreetNr.Text = table.Rows[0]["NR"].ToString();

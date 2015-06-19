@@ -21,7 +21,7 @@ namespace DAL
     public class EventDAL
     {
         /// <summary>
-        /// Constructor EventDal
+        /// Initializes a new instance of the <see cref="EventDAL"/> class.
         /// </summary>
         public EventDAL()
         {
@@ -93,7 +93,7 @@ namespace DAL
         /// <param name="start">start date</param>
         /// <param name="end">end date</param>
         /// <param name="maxVis">max visitors</param>
-        /// <returns>integer if insert was succesfully done</returns>
+        /// <returns>integer if insert was successfully done</returns>
         public int Insert(int locationID, string name, string start, string end, int maxVis)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -128,7 +128,7 @@ namespace DAL
         /// <param name="end">End date</param>
         /// <param name="maxVis">Max visitors</param>
         /// <param name="eventid">Event id</param>
-        /// <returns>integer if update was succesfully done</returns>
+        /// <returns>integer if update was successfully done</returns>
         public int Update(string name, string start, string end, int maxVis, int eventid)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -159,7 +159,7 @@ namespace DAL
         /// Method for deleting an event
         /// </summary>
         /// <param name="naam">event name</param>
-        /// <returns>integer if delete was succesfully done</returns>
+        /// <returns>integer if delete was successfully done</returns>
         public int Delete(string naam)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -181,8 +181,6 @@ namespace DAL
                 }
             }
         }
-
-
         /// <summary>
         /// Method for returning Oracle exceptions as string
         /// </summary>

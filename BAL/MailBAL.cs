@@ -35,7 +35,6 @@ namespace BAL
         /// <summary>
         /// Integer value to work with.
         /// </summary>
-        /// 
         private int counter;
 
         /// <summary>
