@@ -21,9 +21,9 @@
 
         <asp:DropDownList ID="ddlAllLocations" runat="server"></asp:DropDownList>
         <br />
-        <asp:Button ID="btnLoad" runat="server" Text="Laad Locatie" OnClick="btnLoad_Click" />
-        <asp:Button ID="btnCreate" runat="server" ValidationGroup="create"  Text="Maak locatie aan" OnClick="btnCreate_Click" OnClientClick="Confirm()"/>
-        <asp:Button ID="btnCancel" runat="server" Text="Ga terug" OnClick="btnCancel_Click"/>
+        <asp:Button ID="btnLoad" runat="server" Text="Laad Locatie" OnClick="BtnLoad_Click" />
+        <asp:Button ID="btnCreate" runat="server" ValidationGroup="create"  Text="Maak locatie aan" OnClick="BtnCreate_Click" OnClientClick="Confirm()"/>
+        <asp:Button ID="btnCancel" runat="server" Text="Ga terug" OnClick="BtnCancel_Click"/>
         <hr />
         <br />
         <h2>Naam:</h2>

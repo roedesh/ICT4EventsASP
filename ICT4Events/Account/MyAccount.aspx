@@ -28,12 +28,13 @@
         <p>
         <asp:TextBox ID="tbEmailAdress" TextMode="Email" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
         </p>
-        <p>
         <h3>Gebruikersnaam:</h3>
+        <p>
+        
         <asp:TextBox ID="tbUserName" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
         </p>
-        </p>
         <h3>Wachtwoord</h3>
+        <p>
         <asp:TextBox ID="tbPassword" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
         <a href="../Account/ChangePassword.aspx">Klik hier om uw wachtwoord veranderen</a>
         </p>
