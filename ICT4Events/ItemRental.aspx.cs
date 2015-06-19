@@ -56,6 +56,7 @@
                 //foutmelding
             }
             int succes = rentalBAL.CreateRental(id, tbLeenUitBarcode.Text, tbLeenUitDatum.Text);
+            Response.Redirect("ItemRental.aspx");
         }
 
         protected void gvRental_RowDataBound(object sender, GridViewRowEventArgs e)
