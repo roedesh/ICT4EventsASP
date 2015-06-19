@@ -1,4 +1,8 @@
-﻿namespace ICT4Events.Event
+﻿// <copyright file="EventManagementAdmin.aspx.cs" company="JonneIT">
+//      Copyright (c) ICT4Events. All rights reserved.
+// </copyright>
+// <author>Jonne van Dreven</author>
+namespace ICT4Events.Event
 {
     using System;
     using System.Collections.Generic;    
@@ -9,15 +13,24 @@
     using System.Web.UI.WebControls;
     using BAL;
 
+    /// <summary>
+    /// WebForm for managing events
+    /// </summary>
     public partial class EventManagementAdmin : System.Web.UI.Page
     {
+        /// <summary>
+        /// Handles the Load event of the Page control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["USER_ROLE"].ToString() != "ADMIN")
             {
                 Response.Redirect("../Default.aspx");
             }
-            if (!IsPostBack)
+
+            if (!this.IsPostBack)
             {
                 DataTable table = new EventBAL().GetAllEvents();
                 ddlAllEvents.DataSource = table;
@@ -27,23 +40,36 @@
             }
         }
 
-        protected void btnCreate_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the create button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnCreate_Click(object sender, EventArgs e)
         {
             Response.Redirect("../Event/CreateNewEvent.aspx");
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the save button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnSave_Click(object sender, EventArgs e)
         {
             try
             {
-                if (IsValid)
+                if (this.IsValid)
                 {
                     string confirmValue = Request.Form["confirm_value"];
                     if (confirmValue == "Ja")
                     {
-                        if (new EventBAL().SetEvent(this.tbEventname.Text, this.tbStartDate.Text,
-                    this.tbEndDate.Text, Convert.ToInt32(this.tbMaxVis.Text),
-                    Convert.ToInt32(this.tbEventID.Text)) == 1)
+                        if (new EventBAL().SetEvent(
+                            this.tbEventname.Text, 
+                            this.tbStartDate.Text,
+                            this.tbEndDate.Text, 
+                            Convert.ToInt32(this.tbMaxVis.Text),
+                            Convert.ToInt32(this.tbEventID.Text)) == 1)
                         {
                             Response.Write("<script>alert('Event is bijgewerkt');</script>");
                             Response.Redirect("../Event/EventManagementAdmin.aspx");
@@ -55,17 +81,22 @@
                     }
                 }
             }
-            catch(FormatException)
+            catch (FormatException)
             {
                 Response.Write("<script>alert('Opslaan mislukt. Vul de gegevens juist in');</script>");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Response.Write("<script>alert('Event kon niet worden bijgewerkt, probeer het opnieuw.');</script>");
             }
         }
 
-        protected void valDateRange_ServerValidate(object source, ServerValidateEventArgs args)
+        /// <summary>
+        /// Validator for valDateRange
+        /// </summary>
+        /// <param name="source">Object to validate</param>
+        /// <param name="args">Validation arguments</param>
+        protected void ValDateRange_ServerValidate(object source, ServerValidateEventArgs args)
         {
             DateTime minDate = DateTime.Parse("28-12-2010 00:00:00");
             DateTime maxDate = DateTime.Parse("28-12-9999 23:59:59");
@@ -75,9 +106,15 @@
                             && dt <= maxDate
                             && dt >= minDate);
         }
-        protected void valDateCompare_ServerValidate(object source, ServerValidateEventArgs args)
+
+        /// <summary>
+        /// Validator for valDateCompare
+        /// </summary>
+        /// <param name="source">Object to validate</param>
+        /// <param name="args">Validation arguments</param>
+        protected void ValDateCompare_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            if (IsValid)
+            if (this.IsValid)
             {
                 DateTime startDate = Convert.ToDateTime(this.tbStartDate.Text);
                 DateTime endDate = Convert.ToDateTime(this.tbEndDate.Text);
@@ -86,7 +123,12 @@
             }
         }
 
-        protected void btnSearchEvent_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the search button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnSearchEvent_Click(object sender, EventArgs e)
         {
             try
             {
@@ -116,9 +158,14 @@
             }
         }
 
-        protected void btnDelete_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Click handler for the delete button
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (IsValid)
+            if (this.IsValid)
             {
                 if (new EventBAL().DeleteEvent(this.tbEventname.Text) == 1)
                 {
@@ -131,8 +178,5 @@
                 }
             }
         }
-
-
-     
     }
 }

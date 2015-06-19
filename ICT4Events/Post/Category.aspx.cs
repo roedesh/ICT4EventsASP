@@ -11,23 +11,39 @@
     
     public partial class Category : System.Web.UI.Page
     {
-        string c = string.Empty;
+        public string C
+        {
+            get;
+            set;
+        }
+        public bool IsLoggedInAsAdmin
+        {
+            get;
+            set;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
 
 
-                c = Request.QueryString["catid"];
-                if (c != null)
+                C = Request.QueryString["catid"];
+                if (C != null)
                 {
-                    DataTable SubCategory = new PostBAL().GetCategories(c);
+                    DataTable SubCategory = new PostBAL().GetCategories(C);
                     this.repSubCat.DataSource = SubCategory;
                     this.repSubCat.DataBind();
-                    DataTable Post = new PostBAL().GetAllPosts(c);
+                    DataTable Post = new PostBAL().GetAllPosts(C);
                     this.repFile.DataSource = Post;
                     this.repFile.DataBind();
+                    if(Session["User_ID"] != null)
+                    {
+                        if (this.Session["USER_ROLE"].ToString() == "ADMIN")
+                        {
+                            this.IsLoggedInAsAdmin = true;
+                        }
+                    }
                 }
 
-                if (c == null)
+                if (this.C == null)
                 {
                     DataTable Category = new PostBAL().GetCategories();
                     this.repMainCat.DataSource = Category;
@@ -38,7 +54,19 @@
         protected void btnCreatePost_Click(object sender, EventArgs e)
         {
             
-            Response.Redirect("../Post/CreatePost.aspx?catid="+c);
+            Response.Redirect("../Post/CreatePost.aspx?catid="+this.C);
+        }
+
+        protected void btnDel_Click(object sender, EventArgs e)
+        {
+            if (new PostBAL().DeletePost(C) > 0)
+            {
+                Response.Write("<script language=javascript>alert('Post is verwijderd');</script>");
+            }
+            else
+            {
+                Response.Write("<script language=javascript>alert('Post is niet verwijderd');</script>");
+            }
         }
     }
 }
