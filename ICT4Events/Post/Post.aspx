@@ -31,7 +31,6 @@
     <asp:Label ID="lblTitle" runat="server" Text="Title" CssClass="label"></asp:Label>
     <br />
     <asp:TextBox ID="tbTitle" runat="server" Width="525px"></asp:TextBox>
-    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="tbTitle"></asp:RequiredFieldValidator>
     <br />
 
     <asp:Label ID="lblContent" runat="server" Text="Bericht:" CssClass="label"></asp:Label>
@@ -68,6 +67,35 @@
             </table>
                 <asp:Button ID="btnMLike" CommandName="Like" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Like" runat="server" />
                 <asp:Button ID="btnMFlag" CommandName="Flag" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Flag" runat="server" />
+            <asp:Repeater ID="repSubMessages" runat="server">
+                <HeaderTemplate></HeaderTemplate>
+                <ItemTemplate>
+                                 <table>
+                 <tr>
+                     <th>Titel</th>
+                     <th>MessageID</th>
+                     <th>AccountID</th>
+                     <th>Datum</th>
+                 </tr>
+                <tr>
+                    <td><%#Eval("Titel") %></td>
+                    <td><%#Eval("ID") %></td>
+                    <td><%#Eval("ACCOUNT_ID") %></td>
+                    <td><%#Eval("Datum") %></td>
+                </tr>
+            </table>
+            <br />
+            <br />
+            <table>
+                 <tr>
+                    <td><%#Eval("Inhoud") %></td>
+                </tr>
+            </table>
+                <asp:Button ID="btnMLike" CommandName="Like" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Like" runat="server" />
+                <asp:Button ID="btnMFlag" CommandName="Flag" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Flag" runat="server" />
+                </ItemTemplate>
+                <FooterTemplate></FooterTemplate>
+            </asp:Repeater> 
         </ItemTemplate>
         <FooterTemplate>
 
