@@ -28,6 +28,18 @@
     <asp:Button ID="btnLike" runat="server" Text="Like" OnClick="btnLike_Click" />
     <asp:Button ID="btnFlag" runat="server" Text="Flag" OnClick="btnFlag_Click" />
     <br />
+    <asp:Label ID="lblTitle" runat="server" Text="Title" CssClass="label"></asp:Label>
+    <br />
+    <asp:TextBox ID="tbTitle" runat="server" Width="525px"></asp:TextBox>
+    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="RequiredFieldValidator" ControlToValidate="tbTitle"></asp:RequiredFieldValidator>
+    <br />
+
+    <asp:Label ID="lblContent" runat="server" Text="Bericht:" CssClass="label"></asp:Label>
+    <br />
+    <asp:TextBox ID="tbContent" runat="server" Height="100px" Width="525px"></asp:TextBox>
+    <br />
+    <asp:Button ID="btnSend" runat="server" Text="Save" CssClass="button" OnClick="btnSend_Click"/>
+    <br />
     <br />
     <asp:Repeater ID="repMessages" runat="server">
         <HeaderTemplate>

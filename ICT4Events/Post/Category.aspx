@@ -31,7 +31,7 @@
             <ul>
         </HeaderTemplate>
         <ItemTemplate>
-             <asp:Hyperlink ID="Posturl" runat="Server" Text='<%#Eval("BESTANDSLOCATIE") %>' NavigateUrl='<%#("Category.aspx?catid="+Eval("BIJDRAGE_ID" )) %>'><%#Eval("NAAM") %></asp:Hyperlink>
+             <asp:Hyperlink ID="Posturl" runat="Server" Text='<%#Eval("BESTANDSLOCATIE") %>' NavigateUrl='<%#("Post.aspx?postid="+Eval("ID")) %>'><%#Eval("NAAM") %></asp:Hyperlink>
         </ItemTemplate>
         <FooterTemplate>
             </ul>
