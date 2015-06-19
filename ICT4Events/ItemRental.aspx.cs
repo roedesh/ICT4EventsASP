@@ -23,12 +23,12 @@ namespace ICT4Events
         /// <summary>
         /// Often used data table that contains the info from the database
         /// </summary>
-        DataTable dt;
+        private DataTable dt;
 
         /// <summary>
         /// An initiation of the business class used to get the information needed.
         /// </summary>
-        RentalBAL rentalBAL = new RentalBAL();
+        private RentalBAL rentalBAL = new RentalBAL();
 
         /// <summary>
         /// Gets all the information from the database into the grid views.
@@ -40,14 +40,14 @@ namespace ICT4Events
             if (!this.IsPostBack)
             {
                 this.dt = this.rentalBAL.GetAllAvaillableItems(0);
-                this.gvRental.DataSource = dt;
-                this.gvRental.DataBind();
+                this.GvRental.DataSource = this.dt;
+                this.GvRental.DataBind();
                 this.dt = this.rentalBAL.GetAllItems();
-                this.gvArtikel.DataSource = dt;
-                this.gvArtikel.DataBind();
+                this.GvArtikel.DataSource = this.dt;
+                this.GvArtikel.DataBind();
                 string dateFormat = "d-MM-yyyy HH:mm:ss";
                 string now = DateTime.Now.ToString(dateFormat);
-                this.tbLeenUitDatum.Text = now;
+                this.TbLeenUitDatum.Text = now;
             }
         }
 
@@ -59,21 +59,20 @@ namespace ICT4Events
         protected void Button1_Click(object sender, EventArgs e)
         {
             this.dt = this.rentalBAL.GetAllAvaillableItems(1);
-            this.gvRental.DataSource = dt;
-            this.gvRental.DataBind();
+            this.GvRental.DataSource = this.dt;
+            this.GvRental.DataBind();
         }
-
 
         /// <summary>
         /// Gets all the items that aren't borrowed.
         /// </summary>
         /// <param name="sender">Auto generated</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void btnVrijeArtikelen_Click(object sender, EventArgs e)
+        protected void BtnVrijeArtikelen_Click(object sender, EventArgs e)
         {
             this.dt = this.rentalBAL.GetAllAvaillableItems(0);
-            this.gvRental.DataSource = dt;
-            this.gvRental.DataBind();
+            this.GvRental.DataSource = this.dt;
+            this.GvRental.DataBind();
         }
 
         /// <summary>
@@ -81,18 +80,19 @@ namespace ICT4Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void btnLeenUit_Click(object sender, EventArgs e)
+        protected void BtnLeenUit_Click(object sender, EventArgs e)
         {
             int id = -1;
             try
             {
-                id = Convert.ToInt32(tbLeenUitItemID.Text);
+                id = Convert.ToInt32(this.TbLeenUitItemID.Text);
             }
             catch
             {
-                //foutmelding
+                // foutmelding
             }
-            int succes = rentalBAL.CreateRental(id, tbLeenUitBarcode.Text, tbLeenUitDatum.Text);
+
+            int succes = this.rentalBAL.CreateRental(id, this.TbLeenUitBarcode.Text, this.TbLeenUitDatum.Text);
             Response.Redirect("ItemRental.aspx");
         }
 
@@ -101,11 +101,11 @@ namespace ICT4Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void gvRental_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void GvRental_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(this.gvRental, "Select$" + e.Row.RowIndex);
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(this.GvRental, "Select$" + e.Row.RowIndex);
                 e.Row.Attributes["style"] = "cursor:pointer";
             }
         }
@@ -115,16 +115,15 @@ namespace ICT4Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void gvRental_SelectedIndexChanged(object sender, EventArgs e)
+        protected void GvRental_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (GridViewRow row in this.gvRental.Rows)
+            foreach (GridViewRow row in this.GvRental.Rows)
             {
                 row.BackColor = Color.White;
             }
 
-            this.gvRental.SelectedRow.BackColor = Color.Pink;
-            this.tbLeenUitItemID.Text = this.gvRental.SelectedRow.Cells[0].Text;
-
+            this.GvRental.SelectedRow.BackColor = Color.Pink;
+            this.TbLeenUitItemID.Text = this.GvRental.SelectedRow.Cells[0].Text;
         }
 
         /// <summary>
@@ -132,11 +131,11 @@ namespace ICT4Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void gvArtikel_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void GvArtikel_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(this.gvArtikel, "Select$" + e.Row.RowIndex);
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(this.GvArtikel, "Select$" + e.Row.RowIndex);
                 e.Row.Attributes["style"] = "cursor:pointer";
             }
         }
@@ -146,19 +145,19 @@ namespace ICT4Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void gvArtikel_SelectedIndexChanged(object sender, EventArgs e)
+        protected void GvArtikel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (GridViewRow row in this.gvArtikel.Rows)
+            foreach (GridViewRow row in this.GvArtikel.Rows)
             {
                 row.BackColor = Color.White;
             }
 
-            this.gvArtikel.SelectedRow.BackColor = Color.Pink;
-            this.tbArtikelNaam.Text = this.gvArtikel.SelectedRow.Cells[1].Text;
-            this.tbArtikelMerk.Text = this.gvArtikel.SelectedRow.Cells[3].Text;
-            this.tbArtikelSerie.Text = this.gvArtikel.SelectedRow.Cells[4].Text;
-            this.tbArtikelPrijs.Text = this.gvArtikel.SelectedRow.Cells[6].Text;
-            this.tbArtikelAantal.Text = this.gvArtikel.SelectedRow.Cells[7].Text;
+            this.GvArtikel.SelectedRow.BackColor = Color.Pink;
+            this.TbArtikelNaam.Text = this.GvArtikel.SelectedRow.Cells[1].Text;
+            this.TbArtikelMerk.Text = this.GvArtikel.SelectedRow.Cells[3].Text;
+            this.TbArtikelSerie.Text = this.GvArtikel.SelectedRow.Cells[4].Text;
+            this.TbArtikelPrijs.Text = this.GvArtikel.SelectedRow.Cells[6].Text;
+            this.TbArtikelAantal.Text = this.GvArtikel.SelectedRow.Cells[7].Text;
         }
 
         /// <summary>
@@ -166,28 +165,25 @@ namespace ICT4Events
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void btnArtikelVoegToe_Click(object sender, EventArgs e)
+        protected void BtnArtikelVoegToe_Click(object sender, EventArgs e)
         {
             decimal prijs = 0;
             int aantal = 0;
             try
             {
-                prijs = Convert.ToDecimal(tbArtikelPrijs.Text);
-                aantal = Convert.ToInt32(tbArtikelAantal.Text);
+                prijs = Convert.ToDecimal(this.TbArtikelPrijs.Text);
+                aantal = Convert.ToInt32(this.TbArtikelAantal.Text);
             }
             catch
             {
-                //invalid prijs of aantal
+                // invalid prijs of aantal
             }
-            this.rentalBAL.CreateItem(tbArtikelNaam.Text,tbArtikelMerk.Text, tbArtikelSerie.Text, prijs, aantal);
+
+            this.rentalBAL.CreateItem(this.TbArtikelNaam.Text, this.TbArtikelMerk.Text, this.TbArtikelSerie.Text, prijs, aantal);
+
             Response.Redirect("ItemRental.aspx");
         }
 
-        /// <summary>
-        /// Take a rented item and set it to be free to be rented again.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         /// <summary>
         /// Take a rented item and set it to be free to be rented again.
         /// </summary>
@@ -198,13 +194,14 @@ namespace ICT4Events
             int id = -1;
             try
             {
-                id = Convert.ToInt32(this.gvRental.SelectedRow.Cells[0].Text);
+                id = Convert.ToInt32(this.GvRental.SelectedRow.Cells[0].Text);
             }
             catch
             {
-                //foutmelding
+                // foutmelding
             }
-            int succes = rentalBAL.UpdateExemplaar(id, 0);
+
+            int succes = this.rentalBAL.UpdateExemplaar(id, 0);
             Response.Redirect("ItemRental.aspx");
         }
 
@@ -219,16 +216,16 @@ namespace ICT4Events
             int aantal = 0;
             try
             {
-                prijs = Convert.ToDecimal(tbArtikelPrijs.Text);
-                aantal = Convert.ToInt32(tbArtikelAantal.Text);
+                prijs = Convert.ToDecimal(this.TbArtikelPrijs.Text);
+                aantal = Convert.ToInt32(this.TbArtikelAantal.Text);
             }
             catch
             {
-                //invalid prijs of aantal
+                // invalid prijs of aantal
             }
-            this.rentalBAL.CreateItem(tbArtikelNaam.Text, tbArtikelMerk.Text, tbArtikelSerie.Text, prijs, aantal);
+
+            this.rentalBAL.CreateItem(this.TbArtikelNaam.Text, this.TbArtikelMerk.Text, this.TbArtikelSerie.Text, prijs, aantal);
             Response.Redirect("ItemRental.aspx");
         }
-
     }
 }
