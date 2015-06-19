@@ -548,6 +548,13 @@ namespace DAL
         #endregion
 
         #region Update Queries
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="postID"></param>
+        /// <param name="like"></param>
+        /// <returns></returns>
         public int UpdateLike(string userName, string postID, int like)
         {
             int result = 0;
@@ -567,7 +574,6 @@ namespace DAL
                         cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
                         cmd.Parameters.Add(new OracleParameter("bijdrage_ID", postID));
                         
-
                         return cmd.ExecuteNonQuery();
                     }
                 }
@@ -581,6 +587,13 @@ namespace DAL
             return result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="postID"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
         public int UpdateFlag(string userName, string postID, int flag)
         {
             int result = 0;
@@ -723,6 +736,40 @@ namespace DAL
 
             return result;
         }
+
+        /// <summary>
+        /// Method for deleting a target post from the database.
+        /// </summary>
+        /// <param name="postID">Identifier of the post</param>
+        /// <returns>Is "1" if it is a like, otherwise "0".</returns>
+        public int DeletePost(string postID)
+        {
+            if (this.DeletePostLikeFlags(postID) == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string insertQuery = "DELETE FROM BIJDRAGE WHERE ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+                        try
+                        {
+                            return cmd.ExecuteNonQuery();
+                        }
+                        catch (OracleException ex)
+                        {
+                            Debug.WriteLine(this.ErrorString(ex));
+                            return 0;
+                        }
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Check Methods
@@ -757,6 +804,7 @@ namespace DAL
                 return 0;
             }
         }
+
         public int CheckLike(string userName, string postID, int like)
         {
             try
@@ -789,6 +837,7 @@ namespace DAL
                 return 0;
             }
         }
+
         public int CheckFlag(string userName, string postID, int flag)
         {
             try
@@ -889,40 +938,6 @@ namespace DAL
             }
 
             return result;
-        }
-
-        /// <summary>
-        /// Method for deleting a target post from the database.
-        /// </summary>
-        /// <param name="postID">Identifier of the post</param>
-        /// <returns>Is "1" if it is a like, otherwise "0".</returns>
-        public int DeletePost(string postID)
-        {
-            if (this.DeletePostLikeFlags(postID) == 0)
-            {
-                return 0;
-            }
-            else
-            {
-                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-                {
-                    conn.Open();
-                    string insertQuery = "DELETE FROM BIJDRAGE WHERE ID = :postID";
-                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                    {
-                        cmd.Parameters.Add(new OracleParameter("postID", postID));
-                        try
-                        {
-                            return cmd.ExecuteNonQuery();
-                        }
-                        catch (OracleException ex)
-                        {
-                            Debug.WriteLine(this.ErrorString(ex));
-                            return 0;
-                        }
-                    }
-                }
-            }
         }
         #endregion
     }

@@ -54,6 +54,9 @@ namespace DAL
         /// </summary>
         private int resultValue;
 
+        /// <summary>
+        /// Reservation id value to store values in.
+        /// </summary>
         private int reservationID = 0;
 
         /// <summary>
@@ -63,18 +66,27 @@ namespace DAL
         {
         }
 
+        /// <summary>
+        /// Gets or sets property for reservation id
+        /// </summary>
         public int ReservationID
         {
             get { return this.reservationID; }
             set { this.ReservationID = value; }
         }
 
+        /// <summary>
+        /// Gets or sets property for accounts list
+        /// </summary>
         public List<string> Accounts
         {
             get { return this.accounts; }
             set { this.Accounts = value; }
         }
 
+        /// <summary>
+        /// Gets or sets property for id list
+        /// </summary>
         public List<int> IDs
         {
             get { return this.ids; }
@@ -181,6 +193,10 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method to get the first available barcode
+        /// </summary>
+        /// <returns>returns a barcode</returns>
         public string GetAvailableBarcode()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -207,6 +223,10 @@ namespace DAL
             return this.hash;
         }
 
+        /// <summary>
+        /// Generates the jpg file for a given barcode.
+        /// </summary>
+        /// <param name="barcodes">barcode value</param>
         public void GenerateBarcode(string barcodes)
         {
             string barcode = barcodes;
@@ -227,6 +247,12 @@ namespace DAL
             bitmap.Save(physicalPath + "bitmap.jpeg", System.Drawing.Imaging.ImageFormat.Jpeg);
         }
 
+        /// <summary>
+        /// Create reservation record for account and barcode
+        /// </summary>
+        /// <param name="accountNames">accounts given</param>
+        /// <param name="reservationID">reservation id given</param>
+        /// <returns>return mail dal instance, to preserve the lists</returns>
         public MailDAL CheckAccountsAndCouple(string[] accountNames, int reservationID)
         {
             this.reservationID = reservationID;
@@ -335,6 +361,11 @@ namespace DAL
             return this;
         }
 
+        /// <summary>
+        /// Select barcode for given account id.
+        /// </summary>
+        /// <param name="id">id value</param>
+        /// <returns>return barcode</returns>
         public string SelectBarcode(int id)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
