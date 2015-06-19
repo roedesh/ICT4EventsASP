@@ -45,7 +45,7 @@
             return new PostDAL().LoadFile(id);
         }
 
-        public int CreatePost(string username, string categoryID, string location, string size)
+        public int CreateFile(string username, string categoryID, string location, string size)
         {
             return new PostDAL().InsertFile(username, categoryID, location, size);
         }

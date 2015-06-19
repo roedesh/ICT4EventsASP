@@ -49,52 +49,52 @@
             switch(e.CommandName)
             {
                 case "Like":
-                    if((String)e.CommandArgument == "")
+                    if((string)e.CommandArgument == "")
                     {
 
                     }
                     else
                     {
-                        Response.Write("<script language=javascript>alert('"+(String)e.CommandArgument+"');</script>");
+                        Response.Write("<script language=javascript>alert('"+(string)e.CommandArgument+"');</script>");
                     }
                     break;
 
                 case "Flag":
-                    if((String)e.CommandArgument == "")
+                    if((string)e.CommandArgument == "")
                     {
 
                     }
                     else
                     {
-                        Response.Write("<script language=javascript>alert('" + (String)e.CommandArgument + "');</script>");
+                        Response.Write("<script language=javascript>alert('" + (string)e.CommandArgument + "');</script>");
                     }
                     break;
             }
         }
 
-        protected void repMessagesCommand(Object Sender, RepeaterCommandEventArgs e)
+        protected void repMessagesCommand(object Sender, RepeaterCommandEventArgs e)
             {
                 switch (e.CommandName)
                 {
                     case "Like":
-                        if ((String)e.CommandArgument == "")
+                        if ((string)e.CommandArgument == "")
                         {
 
                         }
                         else
                         {
-                            Response.Write("<script language=javascript>alert('" + (String)e.CommandArgument + "');</script>");
+                            Response.Write("<script language=javascript>alert('" + (string)e.CommandArgument + "');</script>");
                         }
                         break;
 
                     case "Flag":
-                        if ((String)e.CommandArgument == "")
+                        if ((string)e.CommandArgument == "")
                         {
 
                         }
                         else
                         {
-                            Response.Write("<script language=javascript>alert('" + (String)e.CommandArgument + "');</script>");
+                            Response.Write("<script language=javascript>alert('" + (string)e.CommandArgument + "');</script>");
                         }
                         break;
                 }

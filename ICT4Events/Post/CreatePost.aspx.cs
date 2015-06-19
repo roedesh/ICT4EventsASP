@@ -11,8 +11,8 @@
 
     public partial class CreatePost : System.Web.UI.Page
     {
-        string c = "";
-        string cn = "";
+        string c = string.Empty;
+        string cn = string.Empty;
         protected void Page_Load(object sender, EventArgs e)
         {
             c = Request.QueryString["catid"];
@@ -31,7 +31,7 @@
             }
             else
             {
-                if (c != "")
+                if (c != string.Empty)
                 {
                     DirectoryInfo subdir = new DirectoryInfo(Server.MapPath("~/Media/" + c));
                     if (!subdir.Exists)
@@ -57,7 +57,7 @@
                 {
                     inputFile.PostedFile.SaveAs(SaveLocation);
                     string filelength = Convert.ToString(new FileInfo(SaveLocation).Length);
-                    if (new PostBAL().CreatePost((Session["USER_ID"].ToString()), c, SaveLocation, filelength) == 0)
+                    if (new PostBAL().CreateFile(Session["USER_ID"].ToString(), c, SaveLocation, filelength) == 0)
                     {
                         File.Delete(SaveLocation);
                         Response.Write("<script language=javascript>alert('Bestand is niet toegevoegd');</script>");
@@ -71,9 +71,6 @@
                 catch (Exception ex)
                 {
                     Response.Write("<script language=javascript>alert("+ ex.Message+");</script>");
-                    //Note: Exception.Message returns a detailed message that describes the current exception. 
-                    //For security reasons, we do not recommend that you return Exception.Message to end users in 
-                    //production environments. It would be better to return a generic error message. 
                 }
             }
             else
