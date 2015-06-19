@@ -27,6 +27,11 @@
     <br />
     <asp:Button ID="btnLike" runat="server" Text="Like" OnClick="btnLike_Click" />
     <asp:Button ID="btnFlag" runat="server" Text="Flag" OnClick="btnFlag_Click" />
+                        <% if (IsLoggedInAsAdmin)
+                       {%>
+                            <asp:Button ID="btnMDel" CommandName="Delete" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Delete" runat="server" />
+                    <% }%>
+    <br />
     <br />
     <asp:Label ID="lblTitle" runat="server" Text="Title" CssClass="label"></asp:Label>
     <br />
@@ -67,6 +72,10 @@
             </table>
                 <asp:Button ID="btnMLike" CommandName="Like" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Like" runat="server" />
                 <asp:Button ID="btnMFlag" CommandName="Flag" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Flag" runat="server" />
+                      <% if (IsLoggedInAsAdmin)
+                       {%>
+                            <asp:Button ID="btnMDel" CommandName="Delete" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Delete" runat="server" />
+                    <% }%>
             <asp:Repeater ID="repSubMessages" runat="server">
                 <HeaderTemplate></HeaderTemplate>
                 <ItemTemplate>
@@ -93,6 +102,10 @@
             </table>
                 <asp:Button ID="btnMLike" CommandName="Like" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Like" runat="server" />
                 <asp:Button ID="btnMFlag" CommandName="Flag" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Flag" runat="server" />
+                    <% if (IsLoggedInAsAdmin)
+                       {%>
+                            <asp:Button ID="btnMDel" CommandName="Delete" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Delete" runat="server" />
+                    <% }%>
                 </ItemTemplate>
                 <FooterTemplate></FooterTemplate>
             </asp:Repeater> 

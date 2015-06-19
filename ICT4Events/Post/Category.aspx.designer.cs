@@ -22,6 +22,15 @@ namespace ICT4Events.Post {
         protected global::System.Web.UI.WebControls.Button btnCreatePost;
         
         /// <summary>
+        /// btnDel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDel;
+        
+        /// <summary>
         /// repMainCat control.
         /// </summary>
         /// <remarks>
