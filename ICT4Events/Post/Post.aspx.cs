@@ -64,11 +64,11 @@ namespace ICT4Events.Post
                 if (this.p != null)
                 {
                     DataTable post = new PostBAL().GetPost(this.p);
-                    repPost.DataSource = post;
-                    repPost.DataBind();
+                    this.repPost.DataSource = post;
+                    this.repPost.DataBind();
                     DataTable messages = new PostBAL().GetMessages(this.p);
-                    repMessages.DataSource = messages;
-                    repMessages.DataBind();
+                    this.repMessages.DataSource = messages;
+                    this.repMessages.DataBind();
                     
                     if (this.p == null)
                     {
@@ -223,7 +223,7 @@ namespace ICT4Events.Post
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnSend_Click(object sender, EventArgs e)
         {
-            if (new PostBAL().CreateMessage(Session["User_ID"].ToString(), tbTitle.Text, tbContent.Text, this.p) == 0)
+            if (new PostBAL().CreateMessage(Session["User_ID"].ToString(), this.tbTitle.Text, this.tbContent.Text, this.p) == 0)
             {
                 Response.Write("<script language=javascript>alert('Er ging wat fout met het toevoegen van het bericht');</script>");
             }

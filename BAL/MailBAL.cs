@@ -191,10 +191,10 @@ namespace BAL
             return succesnumber == 0 ? false : true;
         }
 
-        //public void InsertValuesPolsbandje()
-        //{
-        //    MailDAL maildal = new MailDAL();
-        //}
+        ////public void InsertValuesPolsbandje()
+        ////{
+        ////    MailDAL maildal = new MailDAL();
+        ////}
 
         /// <summary>
         /// method to couple accounts to a reservation.

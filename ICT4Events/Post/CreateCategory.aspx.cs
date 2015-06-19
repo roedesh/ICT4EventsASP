@@ -30,11 +30,11 @@ using BAL;
             if (!this.IsPostBack)
             {
                 DataTable categories = new PostBAL().GetAllCategories();
-                ddlCategory.DataSource = categories;
-                ddlCategory.DataTextField = "NAAM";
-                ddlCategory.DataValueField = "NAAM";
-                ddlCategory.DataBind();
-                ddlCategory.Items.Insert(0, string.Empty);
+                this.ddlCategory.DataSource = categories;
+                this.ddlCategory.DataTextField = "NAAM";
+                this.ddlCategory.DataValueField = "NAAM";
+                this.ddlCategory.DataBind();
+                this.ddlCategory.Items.Insert(0, string.Empty);
             }
         }
 
@@ -48,9 +48,9 @@ using BAL;
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnCategory_Click(object sender, EventArgs e)
         {
-            if (ddlCategory.SelectedValue == string.Empty)
+            if (this.ddlCategory.SelectedValue == string.Empty)
             {
-                if (new PostBAL().CreateCategory(Session["User_ID"].ToString(), string.Empty, tbCategory.Text) == 0)
+                if (new PostBAL().CreateCategory(Session["User_ID"].ToString(), string.Empty, this.tbCategory.Text) == 0)
                 {
                     Response.Write("<script language=javascript>alert('Er ging wat fout met het toevoegen van de categorie');</script>");
                 }
@@ -61,7 +61,7 @@ using BAL;
             }
             else
             {
-                if (new PostBAL().CreateCategory(Session["User_ID"].ToString(), ddlCategory.SelectedValue, tbCategory.Text) == 0)
+                if (new PostBAL().CreateCategory(Session["User_ID"].ToString(), this.ddlCategory.SelectedValue, this.tbCategory.Text) == 0)
                 {
                     Response.Write("<script language=javascript>alert('Er ging wat fout met het toevoegen van de categorie');</script>");
                 }
