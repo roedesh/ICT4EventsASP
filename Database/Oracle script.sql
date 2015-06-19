@@ -318,7 +318,7 @@ DROP SEQUENCE  "TYPENUMMER_FCSEQ"
   CREATE TABLE "PRODUCTCAT" 
    (	"ID" NUMBER(10,0), 
 	"PRODUCTCAT_ID" NUMBER(10,0), 
-	"NAAM" NVARCHAR2(255)
+	"NAAM" NVARCHAR2(255),
    ) ;
 
 --------------------------------------------------------
@@ -329,7 +329,8 @@ DROP SEQUENCE  "TYPENUMMER_FCSEQ"
    (	"ID" NUMBER(10,0), 
 	"PRODUCT_ID" NUMBER(10,0), 
 	"VOLGNUMMER" NUMBER(10,0) DEFAULT (0), 
-	"BARCODE" NVARCHAR2(255)
+	"BARCODE" NVARCHAR2(255),
+	"ISVERHUURD" NVARCHAR2(255)
    ) ;
 --------------------------------------------------------
 --  DDL FOR TABLE RESERVERING
