@@ -2,6 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Button ID="btnCreatePost" runat="server" OnClick="btnCreatePost_Click" Text="Post"  />
     <asp:Repeater ID="repMainCat" runat="server">
     <HeaderTemplate>
         <ul>
@@ -13,6 +14,7 @@
         </ul>
     </FooterTemplate>
         </asp:Repeater>
+    <br />
     <asp:Repeater ID="repSubCat" runat="server">
         <HeaderTemplate>
             <ul>

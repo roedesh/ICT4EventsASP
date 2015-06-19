@@ -24,7 +24,7 @@ namespace DAL
         /// Method for getting the data of a file.
         /// </summary>
         /// <param name="fileID">Identifier of the file</param>
-        /// <returns>Returns a datatable containing the file data.</returns>
+        /// <returns>Returns a data table containing the file data.</returns>
         public DataTable LoadFile(string fileID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -55,7 +55,7 @@ namespace DAL
         /// Method for getting the data of all the files within a category.
         /// </summary>
         /// <param name="categoryID">Identifier of the target category</param>
-        /// <returns>Returns a datatable containing the file data of all the files.</returns>
+        /// <returns>Returns a data table containing the file data of all the files.</returns>
         public DataTable LoadCategoryFiles(string categoryID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -86,7 +86,7 @@ namespace DAL
         /// Method for getting the data of all the messages of a post.
         /// </summary>
         /// <param name="postID">Identifier of the target post</param>
-        /// <returns>Returns a datatable containing the message data of all the messages.</returns>
+        /// <returns>Returns a data table containing the message data of all the messages.</returns>
         public DataTable LoadPostMessages(string postID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -171,7 +171,7 @@ namespace DAL
         /// <summary>
         /// Method for getting all the root categories (categories without a parent).
         /// </summary>
-        /// <returns>Returns a datatable containing the root category data.</returns>
+        /// <returns>Returns a data table containing the root category data.</returns>
         public DataTable LoadRootCategories()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -199,7 +199,7 @@ namespace DAL
         /// <summary>
         /// Method for getting all the categories (Both parent and child).
         /// </summary>
-        /// <returns>Returns a datatable containing the all category data</returns>
+        /// <returns>Returns a data table containing all category data</returns>
         public DataTable LoadAllCategories()
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -228,7 +228,7 @@ namespace DAL
         /// Method for getting all the child categories of a certain parent.
         /// </summary>
         /// <param name="parentID">Identifier of the parent category</param>
-        /// <returns></returns>
+        /// <returns>Returns a data table containing the child category data></returns>
         public DataTable LoadChildCategories(string parentID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -256,7 +256,11 @@ namespace DAL
         #endregion
 
         #region Insert Queries
-
+        /// <summary>
+        /// Method for getting the user ID based on a username.
+        /// </summary>
+        /// <param name="userName">Target username</param>
+        /// <returns>Returns an integer with the user ID.</returns>
         public int GetAccountID(string userName)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -291,6 +295,11 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method for getting the user ID based on a category name.
+        /// </summary>
+        /// <param name="categoryName">Target category name</param>
+        /// <returns>Returns an integer with the category ID.</returns>
         public int GetCategoryID(string categoryName)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
@@ -325,6 +334,347 @@ namespace DAL
             }
         }
 
+        /// <summary>
+        /// Method for inserting a file in the database.
+        /// </summary>
+        /// <param name="userName">Username of the uploader</param>
+        /// <param name="categoryID">ID of the category of the file</param>
+        /// <param name="location">Full path to the location of the file on the file server</param>
+        /// <param name="size">Size of the file in bytes</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int InsertFile(string userName, string categoryID, string location, string size)
+        {
+            int result = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                int id = this.InsertPost(userName, "CATEGORIE");
+
+                string accountID = this.GetAccountID(userName).ToString();
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
+                    VALUES (:id, :categoryID, :location, :filesize)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
+                        cmd.Parameters.Add(new OracleParameter("location", location));
+                        cmd.Parameters.Add(new OracleParameter("filesize", size));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                result = 0;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Method for inserting a category in the database.
+        /// </summary>
+        /// <param name="userName">Username of the creator</param>
+        /// <param name="parentName">Name of a potential parent category</param>
+        /// <param name="name">Name of the new category</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int InsertCategory(string userName, string parentName, string name)
+        {
+            int result = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                int id = this.InsertPost(userName, "CATEGORIE");
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    if (parentName == string.Empty)
+                    {
+                        insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, NAAM) VALUES (:id, :categoryName)";
+                    }
+                    else
+                    {
+                        insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, CATEGORIE_ID, NAAM) VALUES (:id, :parentID, :categoryName)";
+                    }
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        if (parentName == string.Empty)
+                        {
+                            cmd.Parameters.Add(new OracleParameter("id", id));
+                            cmd.Parameters.Add(new OracleParameter("categoryName", name));
+                        }
+                        else
+                        {
+                            string parentID = this.GetCategoryID(parentName).ToString();
+
+                            cmd.Parameters.Add(new OracleParameter("id", id));
+                            cmd.Parameters.Add(new OracleParameter("parentID", parentID));
+                            cmd.Parameters.Add(new OracleParameter("categoryName", name));
+                        }
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                result = 0;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Method for inserting a new message in the database.
+        /// </summary>
+        /// <param name="userName">Username of the creator</param>
+        /// <param name="title">Title of the new message</param>
+        /// <param name="content">Content of the new message</param>
+        /// <param name="targetID">ID of the target post</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int InsertMessage(string userName, string title, string content, string targetID)
+        {
+            int result = 0;
+            string insertQuery = string.Empty;
+            try
+            {
+                int id = this.InsertPost(userName, "BERICHT");
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    insertQuery = @"INSERT INTO BERICHT (BIJDRAGE_ID, TITEL, INHOUD) 
+                    VALUES (:id, :title, :content)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        cmd.Parameters.Add(new OracleParameter("title", title));
+                        cmd.Parameters.Add(new OracleParameter("content", content));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+
+                    insertQuery = @"INSERT INTO BIJDRAGE_BERICHT (BIJDRAGE_ID, BERICHT_ID) 
+                    VALUES (:id, :targetID)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        cmd.Parameters.Add(new OracleParameter("targetID", targetID));
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                result = 0;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Method for inserting a like or flag in the database
+        /// </summary>
+        /// <param name="userName">Username of the creator</param>
+        /// <param name="postID">ID of the target post</param>
+        /// <param name="like">Is "1" if it is a like, otherwise "0"</param>
+        /// <param name="flag">Is "1" if it is a like, otherwise "0</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int InsertLikeFlag(string userName, string postID, int like, int flag)
+        {
+            int result = 0;
+            int id = 0;
+
+            try
+            {
+                string accountID = this.GetAccountID(userName).ToString();
+
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    string query = @"SELECT BIJDRAGE_FCSEQ.NEXTVAL FROM DUAL";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                id = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+
+                    string insertQuery = @"INSERT INTO ACCOUNT_BIJDRAGE (ID, ACCOUNT_ID, LIKE, ONGEWENST) VALUES (:id, :account_ID, :post_ID, :like, :flag)";
+
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
+                        cmd.Parameters.Add(new OracleParameter("post_ID", postID));
+                        cmd.Parameters.Add(new OracleParameter("like", like));
+                        cmd.Parameters.Add(new OracleParameter("flag", flag));
+
+                        return cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                result = 0;
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Delete Queries
+        /// <summary>
+        /// Method for deleting a file from the database.
+        /// </summary>
+        /// <param name="postID">Identifier of the post</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int DeleteFile(string postID)
+        {
+            int result = 0;
+
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string deleteQuery = "DELETE FROM BESTAND WHERE BIJDRAGE_ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(deleteQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result = this.DeletePost(postID);
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Method for deleting all the likes and flags of a post
+        /// </summary>
+        /// <param name="postID">Identifier of the post</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int DeletePostLikeFlags(string postID)
+        {
+            int result = 0;
+
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string deleteQuery = "DELETE FROM ACCOUNT_BIJDRAGE WHERE BIJDRAGE_ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(deleteQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Method for deleting a category and all childs
+        /// </summary>
+        /// <param name="postID">Identifier of the post</param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
+        public int DeleteCategory(string postID)
+        {
+            int result = 0;
+
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    // Delete child categories:
+                    string deleteQuery = "DELETE FROM CATEGORIE WHERE BIJDRAGE_ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(deleteQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+
+                    deleteQuery = "DELETE FROM CATEGORIE WHERE BIJDRAGE_ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(deleteQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result = this.DeletePost(postID);
+            }
+            catch (OracleException ex)
+            {
+                Debug.WriteLine(this.ErrorString(ex));
+                return 0;
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Private Methods
+        /// <summary>
+        /// Method for returning Oracle exceptions as string
+        /// </summary>
+        /// <param name="ex">Oracle exception</param>
+        /// <returns>Oracle exception as string</returns>
+        private string ErrorString(OracleException ex)
+        {
+            return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;
+        }
+
+        /// <summary>
+        /// Method for inserting a post in the database.
+        /// </summary>
+        /// <param name="userName">Username of the post creator</param>
+        /// <param name="type">Type of the post (file, message, category></param>
+        /// <returns>Returns a "1" if the insert was successful, otherwise "0".</returns>
         private int InsertPost(string userName, string type)
         {
             int result = 0;
@@ -370,250 +720,46 @@ namespace DAL
             }
             catch (OracleException ex)
             {
-                Debug.WriteLine(ErrorString(ex));
+                Debug.WriteLine(this.ErrorString(ex));
                 result = 0;
             }
 
             return result;
         }
-
-        public int InsertFile(string userName, string categoryID, string location, string size)
-        {
-            int result = 0;
-            string insertQuery = string.Empty;
-            try
-            {
-                int id = this.InsertPost(userName, "CATEGORIE");
-
-                string accountID = this.GetAccountID(userName).ToString();
-
-                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-                {
-                    conn.Open();
-
-                    insertQuery = @"INSERT INTO BESTAND (BIJDRAGE_ID, CATEGORIE_ID, BESTANDSLOCATIE, GROOTTE) 
-                    VALUES (:id, :categoryID, :location, :size)";
-
-                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                    {
-                        cmd.Parameters.Add(new OracleParameter("id", id));
-                        cmd.Parameters.Add(new OracleParameter("categoryID", categoryID));
-                        cmd.Parameters.Add(new OracleParameter("location", location));
-                        cmd.Parameters.Add(new OracleParameter("size", size));
-
-                        result = cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (OracleException ex)
-            {
-                Debug.WriteLine(ErrorString(ex));
-                result = 0;
-            }
-
-            return result;
-        }
-
-        public int InsertCategory(string userName, string parentName, string name)
-        {
-            int result = 0;
-            string insertQuery = string.Empty;
-            try
-            {
-                int id = this.InsertPost(userName, "CATEGORIE");
-
-                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-                {
-                    conn.Open();
-
-                    if (parentName == string.Empty)
-                    {
-                        insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, NAAM) VALUES (:id, :categoryName)";
-                    }
-                    else
-                    {
-                        insertQuery = @"INSERT INTO CATEGORIE (BIJDRAGE_ID, CATEGORIE_ID, NAAM) VALUES (:id, :parentID, :categoryName)";
-                    }
-
-                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                    {
-                        if (parentName == string.Empty)
-                        {
-                            cmd.Parameters.Add(new OracleParameter("id", id));
-                            cmd.Parameters.Add(new OracleParameter("categoryName", name));
-                        }
-                        else
-                        {
-                            string parentID = this.GetCategoryID(parentName).ToString();
-
-                            cmd.Parameters.Add(new OracleParameter("id", id));
-                            cmd.Parameters.Add(new OracleParameter("categoryName", name));
-                            cmd.Parameters.Add(new OracleParameter("parentID", parentID));
-                        }
-
-                        result = cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (OracleException ex)
-            {
-                Debug.WriteLine(ErrorString(ex));
-                result = 0;
-            }
-
-            return result;
-        }
-
-        public int InsertMessage(string userName, string title, string content, string targetID)
-        {
-            int result = 0;
-            string insertQuery = string.Empty;
-            try
-            {
-                int id = this.InsertPost(userName, "BERICHT");
-
-                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-                {
-                    conn.Open();
-
-                    insertQuery = @"INSERT INTO BERICHT (BIJDRAGE_ID, TITEL, INHOUD) 
-                    VALUES (:id, :title, :content)";
-
-                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                    {
-                        cmd.Parameters.Add(new OracleParameter("id", id));
-                        cmd.Parameters.Add(new OracleParameter("title", title));
-                        cmd.Parameters.Add(new OracleParameter("content", content));
-
-                        result = cmd.ExecuteNonQuery();
-                    }
-
-                    insertQuery = @"INSERT INTO BIJDRAGE_BERICHT (BIJDRAGE_ID, BERICHT_ID) 
-                    VALUES (:id, :targetID)";
-
-                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                    {
-                        cmd.Parameters.Add(new OracleParameter("id", id));
-                        cmd.Parameters.Add(new OracleParameter("targetID", targetID));
-                        result = cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (OracleException ex)
-            {
-                Debug.WriteLine(ErrorString(ex));
-                result = 0;
-            }
-
-            return result;
-        }
-
-        public int InsertLikeFlag(string userName, string postID, int like, int flag)
-        {
-            int result = 0;
-            int id = 0;
-
-            try
-            {
-                string accountID = this.GetAccountID(userName).ToString();
-
-                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-                {
-                    conn.Open();
-
-                    string query = @"SELECT BIJDRAGE_FCSEQ.NEXTVAL FROM DUAL";
-
-                    using (OracleCommand cmd = new OracleCommand(query, conn))
-                    {
-                        using (OracleDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                id = Convert.ToInt32(reader.GetValue(0));
-                            }
-                        }
-                    }
-
-                    string insertQuery = @"INSERT INTO ACCOUNT_BIJDRAGE (ID, ACCOUNT_ID, LIKE, ONGEWENST) VALUES (:id, :account_ID, :post_ID, :like, :flag)";
-
-                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                    {
-                        cmd.Parameters.Add(new OracleParameter("id", id));
-                        cmd.Parameters.Add(new OracleParameter("account_ID", accountID));
-                        cmd.Parameters.Add(new OracleParameter("post_ID", postID));
-                        cmd.Parameters.Add(new OracleParameter("like", like));
-                        cmd.Parameters.Add(new OracleParameter("flag", flag));
-
-                        return cmd.ExecuteNonQuery();
-                    }
-                }
-            }
-            catch (OracleException ex)
-            {
-                Debug.WriteLine(ErrorString(ex));
-                result = 0;
-            }
-            return result;
-        }
-        #endregion
-
-        #region Delete Queries
-        private int DeletePost(string postID)
-        {
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-            {
-                conn.Open();
-                string insertQuery = "DELETE FROM BIJDRAGE WHERE ID = :postID";
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.Add(new OracleParameter("postID", postID));
-                    try
-                    {
-                        return cmd.ExecuteNonQuery();
-                    }
-                    catch (OracleException ex)
-                    {
-                        Debug.WriteLine(ErrorString(ex));
-                        return 0;
-                    }
-                }
-            }
-        }
-
-        public int DeleteFile(string postID)
-        {
-            int result = 0;
-            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-            {
-                conn.Open();
-                string insertQuery = "DELETE FROM BESTAND WHERE ID = :postID";
-                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.Add(new OracleParameter("postID", postID));
-                    try
-                    {
-                        result = cmd.ExecuteNonQuery();
-                    }
-                    catch (OracleException ex)
-                    {
-                        Debug.WriteLine(ErrorString(ex));
-                        result = 0;
-                    }
-                }
-            }
-
-            return result;
-        }
-        #endregion
 
         /// <summary>
-        /// Method for returning Oracle exceptions as string
+        /// Method for deleting a target post from the database.
         /// </summary>
-        /// <param name="ex">Oracle exception</param>
-        /// <returns>Oracle exception as string</returns>
-        public string ErrorString(OracleException ex)
+        /// <param name="postID">Identifier of the post</param>
+        /// <returns>Is "1" if it is a like, otherwise "0".</returns>
+        private int DeletePost(string postID)
         {
-            return "Code: " + ex.ErrorCode + "\n" + "Message: " + ex.Message;
+            if (this.DeletePostLikeFlags(postID) == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string insertQuery = "DELETE FROM BIJDRAGE WHERE ID = :postID";
+                    using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("postID", postID));
+                        try
+                        {
+                            return cmd.ExecuteNonQuery();
+                        }
+                        catch (OracleException ex)
+                        {
+                            Debug.WriteLine(this.ErrorString(ex));
+                            return 0;
+                        }
+                    }
+                }
+            }
         }
+        #endregion
     }
 }

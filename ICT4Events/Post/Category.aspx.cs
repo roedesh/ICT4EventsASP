@@ -11,9 +11,12 @@
 
     public partial class Category : System.Web.UI.Page
     {
+        string c = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            string c = Request.QueryString["catid"];
+
+
+                c = Request.QueryString["catid"];
                 if (c != null)
                 {
                     DataTable SubCategory = new PostBAL().GetCategories(c);
@@ -27,6 +30,12 @@
                     this.repMainCat.DataSource = Category;
                     this.repMainCat.DataBind();
                 }
+        }
+
+        protected void btnCreatePost_Click(object sender, EventArgs e)
+        {
+            
+            Response.Redirect("../Post/CreatePost.aspx?catid="+c);
         }
     }
 }
