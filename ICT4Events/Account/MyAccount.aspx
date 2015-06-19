@@ -32,7 +32,7 @@
         <br />
         <h2>Wachtwoord</h2>
         <asp:TextBox ID="tbPassword" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
-        <a href="ChangePassword.aspx">Klik hier om uw wachtwoord veranderen</a>
+        <a href="../Account/ChangePassword.aspx">Klik hier om uw wachtwoord veranderen</a>
         <br />
         
         
