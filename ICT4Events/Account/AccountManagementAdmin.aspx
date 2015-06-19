@@ -27,7 +27,7 @@
         <asp:DropDownList ID="ddlAllAcounts" runat="server"></asp:DropDownList>
         <asp:Button ID="btnLoadUser" runat="server" Text="Persoon laden" OnClick="BtnLoadUser_Click" />
         <hr />
-        <asp:Button ID="btnSave" runat="server" Text="Sla gegevens op" OnClick="BtnSave_Click" OnClientClick="Confirm()"/>
+        <asp:Button ID="btnSave" ValidationGroup="save" runat="server" Text="Sla gegevens op" OnClick="BtnSave_Click" OnClientClick="Confirm()"/>
         <asp:Button ID="btnDelete" runat="server" Text="Verwijder account" OnClick="BtnDelete_Click" OnClientClick="Confirm()" />
         <asp:Button ID="btnCreate" runat="server" Text="Nieuw account aanmaken" OnClick="BtnCreate_Click" />
         <br />
@@ -43,10 +43,14 @@
         <br />
         <h2>E-mailadres:</h2>
         <asp:TextBox ID="tbEmailAdress" runat="server" Height="25px" Width="250px"></asp:TextBox>
+        <asp:RegularExpressionValidator Display="Dynamic" ValidationGroup="save" ID="regexEmailValid" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="tbEmailAdress" ErrorMessage="Vul een geldig E-Mailadres in"></asp:RegularExpressionValidator>
         <br />
         <h2>Rol:</h2>
         <br />
-        <asp:TextBox ID="tbRank" runat="server" Height="25px" Width="250px"></asp:TextBox>
+        <asp:DropDownList ID="ddlRol" runat="server">
+            <asp:ListItem Value = "GEBRUIKER" >GEBRUIKER</asp:ListItem>
+            <asp:ListItem Value = "ADMIN" >ADMIN</asp:ListItem>
+        </asp:DropDownList>
 
         <h2>Gebruikersnaam:</h2>
         <asp:TextBox ID="tbUserName" runat="server" Height="25px" Width="250px"></asp:TextBox>
