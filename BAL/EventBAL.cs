@@ -61,7 +61,7 @@ namespace BAL
         /// Deletes an event
         /// </summary>
         /// <param name="naam">event name</param>
-        /// <returns>int if delete was successful</returns>
+        /// <returns>integer if delete was successful</returns>
         public int DeleteEvent(string naam)
         {
             return new EventDAL().Delete(naam);
