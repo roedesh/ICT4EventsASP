@@ -37,7 +37,6 @@ namespace BAL
         {
             return new RentalDAL().UpdatePresence(personID, aanwezig);
         }
-<<<<<<< HEAD
         public int UpdateExemplaar(int personID, int isVerhuurd)
         {
             return new RentalDAL().UpdateExemplaar(personID, isVerhuurd);
@@ -54,8 +53,6 @@ namespace BAL
         /// </summary>
         /// <param name="aanwezig">0 or 1 based on presence</param>
         /// <returns>DataTable of persons</returns>
-=======
->>>>>>> origin/master
         public DataTable GetPersonByAanwezig(int aanwezig)
         {
             if (aanwezig == 1 || aanwezig == 0)
