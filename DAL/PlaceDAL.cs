@@ -16,6 +16,12 @@
         {
         }
 
+        /// <summary>
+        /// Method for inserting a new place reservation
+        /// </summary>
+        /// <param name="placeID">Place ID</param>
+        /// <param name="reservationID">Reservation ID</param>
+        /// <returns>0 or 1</returns>
         public int Insert(int placeID, int reservationID)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))

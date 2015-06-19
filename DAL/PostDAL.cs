@@ -896,7 +896,7 @@ namespace DAL
         /// </summary>
         /// <param name="postID">Identifier of the post</param>
         /// <returns>Is "1" if it is a like, otherwise "0".</returns>
-        private int DeletePost(string postID)
+        public int DeletePost(string postID)
         {
             if (this.DeletePostLikeFlags(postID) == 0)
             {
