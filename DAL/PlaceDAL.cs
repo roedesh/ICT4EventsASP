@@ -1,4 +1,7 @@
-﻿namespace DAL
+﻿// <copyright file="PlaceDAL.cs" company="ICT4EventsASP">
+//     Copyright (c) ICT4EventsASP. All rights reserved.
+// </copyright>
+namespace DAL
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +13,14 @@
     using System.Threading.Tasks;
     using Oracle.DataAccess.Client;
 
+    /// <summary>
+    /// Class with data layer for places
+    /// </summary>
     public class PlaceDAL
     {
+        /// <summary>
+        /// Initializes a new instance of the PlaceDAL class.
+        /// </summary>
         public PlaceDAL()
         {
         }
@@ -77,7 +86,7 @@
         /// <summary>
         /// Method for deleting a place reservation
         /// </summary>
-        /// <param name="placeID">ID of the place</param>
+        /// <param name="reservationID">ID of the reservation</param>
         /// <returns>0 or 1</returns>
         public int DeletePlaceReservation(int reservationID)
         {

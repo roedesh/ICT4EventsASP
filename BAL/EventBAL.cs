@@ -73,7 +73,7 @@ namespace BAL
         /// <param name="name">Name of the event</param>
         /// <param name="start">Start date</param>
         /// <param name="end">End date</param>
-        /// <param name="maxVis"Maximum amount of visitors>Maximum amount of visitors</param>
+        /// <param name="maxVis">Maximum amount of visitors>Maximum amount of visitors</param>
         /// <param name="eventid">ID of event</param>
         /// <returns>0 or 1</returns>
         public int SetEvent(string name, string start, string end, int maxVis, int eventid)

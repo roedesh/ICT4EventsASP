@@ -73,7 +73,7 @@ namespace BAL
         /// <param name="userID">userID value</param>
         /// <param name="usernames">usernames array</param>
         /// <param name="reservationID">reservation id value</param>
-        /// <returns>Method to send an activation email to a specified email address.</returns>
+        /// <returns>Returns a list of results.</returns>
         public string[] SendMail(string userID, string[] usernames, int reservationID)
         {
             if (usernames != null && reservationID != 0)

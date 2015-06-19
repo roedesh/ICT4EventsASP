@@ -1,4 +1,4 @@
-﻿// <copyright file="PostBAL.cs" company="ICT4EventsASP">
+﻿// <copyright file="LocationBAL.cs" company="ICT4EventsASP">
 //     Copyright (c) ICT4EventsASP. All rights reserved.
 // </copyright>
 

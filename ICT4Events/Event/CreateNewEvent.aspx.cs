@@ -98,7 +98,7 @@ namespace ICT4Events
             DateTime minDate = DateTime.Parse("28-12-2010 00:00:00");
             DateTime maxDate = DateTime.Parse("28-12-9999 23:59:59");
             DateTime dt;
-            args.IsValid = (DateTime.TryParse(args.Value, out dt) && (dt <= maxDate) && (dt >= minDate));
+            args.IsValid = DateTime.TryParse(args.Value, out dt) && (dt <= maxDate) && (dt >= minDate);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace ICT4Events
             {
                 DateTime startDate = Convert.ToDateTime(this.tbStartDate.Text);
                 DateTime endDate = Convert.ToDateTime(this.tbEndDate.Text);
-                args.IsValid = (endDate > startDate);
+                args.IsValid = endDate > startDate;
             }
         }
 

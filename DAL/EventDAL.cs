@@ -16,12 +16,12 @@ namespace DAL
     using Oracle.DataAccess.Client;
 
     /// <summary>
-    /// All the database methods for the events
+    /// Class with data layer for places
     /// </summary>
     public class EventDAL
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventDAL"/> class.
+        /// Initializes a new instance of the EventDAL class.
         /// </summary>
         public EventDAL()
         {
@@ -181,6 +181,7 @@ namespace DAL
                 }
             }
         }
+
         /// <summary>
         /// Method for returning Oracle exceptions as string
         /// </summary>

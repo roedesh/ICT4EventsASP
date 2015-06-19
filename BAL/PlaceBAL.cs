@@ -1,4 +1,4 @@
-﻿// <copyright file="PostBAL.cs" company="ICT4EventsASP">
+﻿// <copyright file="PlaceBAL.cs" company="ICT4EventsASP">
 //     Copyright (c) ICT4EventsASP. All rights reserved.
 // </copyright>
 namespace BAL
@@ -9,13 +9,14 @@ namespace BAL
     using System.Text;
     using System.Threading.Tasks;
     using DAL;
+
     /// <summary>
-    /// Initializes a new instance of the <see cref="PlaceBAL"/> class.
+    /// Class with business layer for places
     /// </summary>
     public class PlaceBAL
     {
         /// <summary>
-        /// The constructor of PlaceBAL
+        /// Initializes a new instance of the PlaceBAL class.
         /// </summary>
         public PlaceBAL()
         {
