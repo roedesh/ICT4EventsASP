@@ -35,6 +35,7 @@ namespace BAL
         /// <summary>
         /// Integer value to work with.
         /// </summary>
+        /// 
         private int counter;
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace BAL
 
         /// <summary>
         /// File stream to use for attachments.
-        /// </summary>
+        /// </summary> 
         private FileStream fs;
 
         /// <summary>

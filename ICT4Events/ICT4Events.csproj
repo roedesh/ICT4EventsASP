@@ -80,6 +80,7 @@
     <Content Include="Reservering\PlaatsReservering.aspx" />
     <Content Include="Site.Master" />
     <None Include="Properties\PublishProfiles\Berry.pubxml" />
+    <None Include="Properties\PublishProfiles\webdeployopnieuwewebsite.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -247,7 +248,7 @@
       <Project>{9b0091bb-0d26-4b61-894c-40a0f4a4bcac}</Project>
       <Name>BAL</Name>
     </ProjectReference>
-	</ItemGroup>
+  </ItemGroup>
   <ItemGroup>
     <Folder Include="NewFolder1\" />
     <Folder Include="Static\Fonts\" />
