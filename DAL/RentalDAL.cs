@@ -158,7 +158,7 @@ namespace DAL
         /// </summary>
         /// <param name="naam">Account name</param>
         /// <returns>DataTable with account</returns>
-        public DataTable LoadPersonByName(string naam)
+        public DataTable LoadPersonByName(string name)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
@@ -168,12 +168,12 @@ namespace DAL
                                     LEFT JOIN account a ON (rp.account_id = a.id)
                                     LEFT JOIN reservering r ON (rp.reservering_id = r.id)
                                     LEFT JOIN polsbandje p ON (rp.polsbandje_id = p.id)
-                                    WHERE a.gebruikersnaam LIKE '%'||:naam||'%'";
+                                    WHERE a.gebruikersnaam LIKE '%'||:name||'%'";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
                     DataTable t = new DataTable();
-                    cmd.Parameters.Add(new OracleParameter("naam", naam));
+                    cmd.Parameters.Add(new OracleParameter("name", name));
                     try
                     {
                         a.Fill(t);
@@ -198,12 +198,11 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = @"SELECT pe.id,p.merk, p.serie, p.typenummer, p.prijs, pc.naam  
-                FROM productexemplaar pe, product p, productcat pc
-                WHERE pe.product_id = p.id 
-                AND p.productcat_id = pc.id
-                AND pe.ISVERHUURD = :availlable
-                ORDER BY pe.id";
+                string loadQuery = @"SELECT pe.id, pe.barcode, pc.naam as Categorie_Naam, p.merk, p.serie, p.prijs
+                                    FROM productexemplaar pe
+                                    LEFT JOIN product p ON (pe.product_id = p.id)
+                                    LEFT JOIN productcat pc ON (p.productcat_id = pc.id)
+                                    WHERE pe.isverhuurd = :availlable";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -239,15 +238,15 @@ namespace DAL
                 string insertQuery = "INSERT INTO VERHUUR VALUES(VERHUUR_FCSEQ.nextval,:exemplaarId,:personId,TO_DATE(:datumIn,'DD-MM-YYYY HH24:MI:SS'),TO_DATE(:datumOut,'DD-MM-YYYY HH24:MI:SS'),0,0)";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
-                    cmd.Parameters.Add(new OracleParameter("aanwezig", personId));
                     cmd.Parameters.Add(new OracleParameter("personID", exemplaarId));
+                    cmd.Parameters.Add(new OracleParameter("aanwezig", personId));
                     cmd.Parameters.Add(new OracleParameter("datumIn", datumIn));
                     cmd.Parameters.Add(new OracleParameter("datumOut", datumOut));
                     try
                     {
                         return cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
+                        catch (Exception ex)
                     {
                         Debug.WriteLine("Error: " + ex.Message.ToString());
                         return 0;
@@ -294,12 +293,12 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = @"SELECT PRODUCTCAT.naam, PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs, 
+                string loadQuery = @"SELECT PRODUCTCAT.naam, PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs, PRODUCT.typenummer,
                  count(productexemplaar.product_id) as aantal_exemplaren
                  FROM PRODUCT 
                  LEFT JOIN productexemplaar ON (PRODUCT.ID = productexemplaar.product_id)
                  LEFT JOIN productcat ON (PRODUCT.productcat_id = PRODUCTCAT.id)
-                 GROUP BY PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs,PRODUCTCAT.naam
+                 GROUP BY PRODUCT.id,PRODUCT.merk,PRODUCT.serie,PRODUCT.typenummer,PRODUCT.prijs,PRODUCTCAT.naam, PRODUCT.typenummer
                  ORDER BY PRODUCT.merk";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
@@ -380,7 +379,7 @@ namespace DAL
         /// <param name="prijs">The price</param>
         /// <param name="typenummer">Type number</param>
         /// <returns>The ID of the created product or 0 when it failed</returns>
-        public int CreateProduct(int catID, string merk, string serie, decimal prijs, int typenummer)
+        public int CreateProduct(int catID, string merk, string serie, double prijs, int typenummer)
         {
             int result = 0;
             int id2 = 0;
@@ -533,6 +532,283 @@ namespace DAL
             {
                 Debug.WriteLine("Error: " + ex.Message.ToString());
                 return 0;
+            }
+        }
+
+        public DataTable LoadExemplaar(string barcode)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = @"SELECT pe.id, pe.barcode, pc.naam as Categorie_Naam, p.merk, p.serie, p.prijs
+                                    FROM productexemplaar pe
+                                    LEFT JOIN product p ON (pe.product_id = p.id)
+                                    LEFT JOIN productcat pc ON (p.productcat_id = pc.id)
+                                    WHERE pe.barcode = :barcode";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    cmd.Parameters.Add(new OracleParameter("barcode", barcode));
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
+
+        public DataTable LoadRentalFromPerson(string name)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = @"SELECT pe.id, pc.naam as categorie_naam, p.merk, p.serie, v.datumin, v.datumuit, p.prijs, a.gebruikersnaam
+                                    FROM verhuur v
+                                    LEFT JOIN productexemplaar pe ON (v.productexemplaar_id = pe.id)
+                                    LEFT JOIN product p ON (pe.product_id = p.id)
+                                    LEFT JOIN productcat pc ON (p.productcat_id = pc.id)
+                                    LEFT JOIN reservering_polsbandje rp ON (v.res_pb_id = rp.id)
+                                    LEFT JOIN account a ON (rp.account_id = a.id)
+                                    WHERE a.gebruikersnaam LIKE '%'||:name||'%'";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    cmd.Parameters.Add(new OracleParameter("name", name));
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
+
+        public int UpdateItem(int id, string naam, string merk, string serie, double prijs)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                int succes = 0;
+                conn.Open();
+                string insertQuery = @"UPDATE productcat SET naam = :naam WHERE id IN (SELECT pc.id
+                                    FROM productexemplaar pe
+                                    LEFT JOIN product p ON (pe.product_id = p.id)
+                                    LEFT JOIN productcat pc ON (p.productcat_id = pc.id)
+                                    WHERE p.id = :id)";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("naam", naam));
+                    cmd.Parameters.Add(new OracleParameter("id", id));
+                    try
+                    {
+                        succes = cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                    if(succes == 0)
+                    {
+                        return 0;
+                    }
+                }
+                insertQuery = @"UPDATE product SET merk = :merk, serie = :serie, prijs = :prijs  WHERE id = :id";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("merk", merk));
+                    cmd.Parameters.Add(new OracleParameter("serie", serie));
+                    cmd.Parameters.Add(new OracleParameter("prijs", prijs));
+                    cmd.Parameters.Add(new OracleParameter("id", id));
+                    try
+                    {
+                        succes = cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+                if (succes == 0)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
+        }
+
+        public int LoadItemStatus(int id)
+        {
+            int result = -1;
+            string insertQuery = string.Empty;
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    string query = @"SELECT isverhuurd FROM productexemplaar WHERE id = :id";
+
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex.Message.ToString());
+                return 0;
+            }
+        }
+
+        public int DeleteItem(int id)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "DELETE FROM productexemplaar WHERE id = :id";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("id", id));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
+
+        public List<int> GetAllItemsFromProduct(int id)
+        {
+            List<int> t = new List<int>();
+            try{
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string loadQuery = @"SELECT id FROM productexemplaar where product_id = :id";
+                    using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                    {
+                        OracleDataAdapter a = new OracleDataAdapter(cmd);
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                t.Add(Convert.ToInt32(reader.GetValue(0)));
+                            }
+                        }
+                    }
+                }
+                return t;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex.Message.ToString());
+                return t;
+            }
+        }
+
+        public List<int> GetAllItemsFromVerhuur(int id)
+        {
+            List<int> t = new List<int>();
+            try
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+                    string loadQuery = @"SELECT id FROM verhuur where productexemplaar_id = :id";
+                    using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                    {
+                        OracleDataAdapter a = new OracleDataAdapter(cmd);
+                        cmd.Parameters.Add(new OracleParameter("id", id));
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                t.Add(Convert.ToInt32(reader.GetValue(0)));
+                            }
+                        }
+                    }
+                }
+                return t;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex.Message.ToString());
+                return t;
+            }
+        }
+
+        public int DeleteProduct(int id)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "DELETE FROM product WHERE id = :id";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("id", id));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
+            }
+        }
+        public int DeleteVerhuur(int id)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string insertQuery = "DELETE FROM verhuur WHERE id = :id";
+                using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("id", id));
+                    try
+                    {
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return 0;
+                    }
+                }
             }
         }
     }

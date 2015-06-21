@@ -81,19 +81,46 @@ namespace ICT4Events
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnLeenUit_Click(object sender, EventArgs e)
-        {
-            int id = -1;
+        {    
+            if (this.GvRental.SelectedIndex == -1)
+            {
+                Response.Write("<script>alert('Selecteer een rij');</script>");
+                return;
+            }
+            if (this.TbLeenUitBarcode.Text == "")
+            {
+                Response.Write("<script>alert('Vul een barcode in');</script>");
+                return;
+            }
+            if (this.TbLeenUitItemID.Text == null)
+            {
+                Response.Write("<script>alert('Vul een Item ID in');</script>");
+                return;
+            }
+            if (this.TbLeenUitDatum.Text == null)
+            {
+                Response.Write("<script>alert('Vul een datum in');</script>");
+                return;
+            }
+            int id = Convert.ToInt32(this.TbLeenUitItemID.Text);
             try
             {
-                id = Convert.ToInt32(this.TbLeenUitItemID.Text);
+                int succes = this.rentalBAL.CreateRental(id, this.TbLeenUitBarcode.Text, this.TbLeenUitDatum.Text);
+                if (succes == 1)
+                {
+                    Response.Redirect("ItemRental.aspx");
+                }
+                else
+                {
+                    Response.Write("<script>alert('Uitlenen mislukt');</script>");
+                }
             }
-            catch
+            catch(Exception x)
             {
-                // foutmelding
+                Response.Write("<script>alert('Ongeldige barcode');</script>");
             }
 
-            int succes = this.rentalBAL.CreateRental(id, this.TbLeenUitBarcode.Text, this.TbLeenUitDatum.Text);
-            Response.Redirect("ItemRental.aspx");
+            
         }
 
         /// <summary>
@@ -157,7 +184,7 @@ namespace ICT4Events
             this.TbArtikelMerk.Text = this.GvArtikel.SelectedRow.Cells[3].Text;
             this.TbArtikelSerie.Text = this.GvArtikel.SelectedRow.Cells[4].Text;
             this.TbArtikelPrijs.Text = this.GvArtikel.SelectedRow.Cells[6].Text;
-            this.TbArtikelAantal.Text = this.GvArtikel.SelectedRow.Cells[7].Text;
+            this.TbArtikelAantal.Text = this.GvArtikel.SelectedRow.Cells[8].Text;
         }
 
         /// <summary>
@@ -167,18 +194,33 @@ namespace ICT4Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnArtikelVoegToe_Click(object sender, EventArgs e)
         {
-            decimal prijs = 0;
+            double prijs = 0;
             int aantal = 0;
+            if (this.TbArtikelNaam.Text == "" || TbArtikelMerk.Text == "" || TbArtikelSerie.Text == "")
+            {
+                Response.Write("<script>alert('Vul alle velden in.');</script>");
+                return;
+            }
             try
             {
-                prijs = Convert.ToDecimal(this.TbArtikelPrijs.Text);
+                string prijsTemp = this.TbArtikelPrijs.Text;
+                prijs = Convert.ToDouble(prijsTemp, new System.Globalization.CultureInfo("nl"));
+            }
+            catch
+            {
+                Response.Write("<script>alert('Ongeldige prijs.');</script>");
+                return;
+            } 
+            try
+            {
                 aantal = Convert.ToInt32(this.TbArtikelAantal.Text);
             }
             catch
             {
-                // invalid prijs of aantal
+                Response.Write("<script>alert('Ongeldig aantal.');</script>");
+                return;
             }
-
+            
             this.rentalBAL.CreateItem(this.TbArtikelNaam.Text, this.TbArtikelMerk.Text, this.TbArtikelSerie.Text, prijs, aantal);
 
             Response.Redirect("ItemRental.aspx");
@@ -191,18 +233,21 @@ namespace ICT4Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnNeemIn_Click(object sender, EventArgs e)
         {
-            int id = -1;
-            try
+            if (this.GvRental.SelectedIndex == -1)
             {
-                id = Convert.ToInt32(this.GvRental.SelectedRow.Cells[0].Text);
+                Response.Write("<script>alert('Selecteer een rij');</script>");
+                return;
             }
-            catch
-            {
-                // foutmelding
-            }
-
+            int id = Convert.ToInt32(this.GvRental.SelectedRow.Cells[0].Text);
             int succes = this.rentalBAL.UpdateExemplaar(id, 0);
-            Response.Redirect("ItemRental.aspx");
+            if (succes == 1)
+            {
+                Response.Redirect("ItemRental.aspx");
+            }
+            else
+            {
+                Response.Write("<script>alert('Innemen mislukt');</script>");
+            }
         }
 
         /// <summary>
@@ -212,19 +257,116 @@ namespace ICT4Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnArtikelPasAan_Click(object sender, EventArgs e)
         {
-            decimal prijs = 0;
-            int aantal = 0;
+            double prijs = 0;
+            int aantalNew = 0;
+            if (this.TbArtikelNaam.Text == "" || TbArtikelMerk.Text == "" || TbArtikelSerie.Text == "")
+            {
+                Response.Write("<script>alert('Vul alle velden in.');</script>");
+                return;
+            }
+            if(GvArtikel.SelectedIndex == -1)
+            {
+                Response.Write("<script>alert('Selecteer een product.');</script>");
+                return;
+            }
             try
             {
-                prijs = Convert.ToDecimal(this.TbArtikelPrijs.Text);
-                aantal = Convert.ToInt32(this.TbArtikelAantal.Text);
+                prijs = Convert.ToDouble(this.TbArtikelPrijs.Text, new System.Globalization.CultureInfo("nl"));
+                
             }
             catch
             {
-                // invalid prijs of aantal
+                Response.Write("<script>alert('Ongeldige prijs.');</script>");
+                return;
             }
+            try
+            {
+                aantalNew = Convert.ToInt32(this.TbArtikelAantal.Text);
 
-            this.rentalBAL.CreateItem(this.TbArtikelNaam.Text, this.TbArtikelMerk.Text, this.TbArtikelSerie.Text, prijs, aantal);
+            }
+            catch
+            {
+                Response.Write("<script>alert('Ongeldig aantal.');</script>");
+                return;
+            }
+            int id = Convert.ToInt32(this.GvArtikel.SelectedRow.Cells[2].Text);
+            int aantalOld = Convert.ToInt32(this.GvArtikel.SelectedRow.Cells[8].Text);
+            int typenummer = Convert.ToInt32(this.GvArtikel.SelectedRow.Cells[7].Text);
+            if(aantalNew < aantalOld)
+            {
+                Response.Write("<script>alert('Aantal kan niet minder zijn dan het originele aantal. Als je exemplaren wil verwijderen kan dat hierboven.');</script>");
+                return;
+            }
+            int succes = this.rentalBAL.UpdateItem(id, this.TbArtikelNaam.Text, this.TbArtikelMerk.Text, this.TbArtikelSerie.Text, prijs, aantalOld, aantalNew,typenummer);
+            Response.Redirect("ItemRental.aspx");
+        }
+
+        protected void BtnZoekenExemplaar_Click(object sender, EventArgs e)
+        {
+            this.dt = this.rentalBAL.LoadExemplaar(this.TbZoekExemplaar.Text);
+            this.GvRental.DataSource = this.dt;
+            this.GvRental.DataBind();
+        }
+
+        protected void BtnZoekenPersoon_Click(object sender, EventArgs e)
+        {
+            this.dt = this.rentalBAL.LoadRentalFromPerson(this.TbZoekPersoon.Text);
+            this.GvZoekPersoon.DataSource = this.dt;
+            this.GvZoekPersoon.DataBind();
+        }
+
+        protected void BtnVerwijder_Click(object sender, EventArgs e)
+        {
+            if (GvRental.SelectedIndex == -1)
+            {
+                Response.Write("<script>alert('Selecteer een rij.');</script>");
+                return;
+            }
+            int id = Convert.ToInt32(GvRental.SelectedRow.Cells[0].Text);
+            int status = this.rentalBAL.LoadItemStatus(id);
+            if(status == -1)
+            {
+                Response.Write("<script>alert('Error. Kan het exemplaar niet vinden.');</script>");
+                return;
+            }
+            if (status == 1)
+            {
+                Response.Write("<script>alert('Kan geen uitgeleende artikelen verwijderen. Neem het exemplaar eerst in.');</script>");
+                return;
+            }
+            //delete all verhuur
+            List<int> ids = this.rentalBAL.GetAllItemsFromVerhuur(id);
+            foreach(int i in ids)
+            {
+                int succes = this.rentalBAL.DeleteVerhuur(i);
+            }
+            // delete het exemplaar
+            this.rentalBAL.DeleteItem(id);
+            Response.Redirect("ItemRental.aspx");
+        }
+
+        protected void BtnArtikelVerwijder_Click(object sender, EventArgs e)
+        {
+            if (GvArtikel.SelectedIndex == -1)
+            {
+                Response.Write("<script>alert('Selecteer een rij.');</script>");
+                return;
+            }
+            //delete het aantal exemplaren
+            int id = Convert.ToInt32(GvArtikel.SelectedRow.Cells[2].Text);
+            List<int> ids = this.rentalBAL.GetAllItemsFromProduct(id);
+            foreach(int i in ids)
+            {
+                //delete het aantal verhuurs
+                List<int> idsVerhuur = this.rentalBAL.GetAllItemsFromVerhuur(i);
+                foreach (int i2 in idsVerhuur)
+                {
+                    this.rentalBAL.DeleteVerhuur(i2);
+                }
+                this.rentalBAL.DeleteItem(i);
+            }
+            //delete het product
+            this.rentalBAL.DeleteProduct(id);
             Response.Redirect("ItemRental.aspx");
         }
     }

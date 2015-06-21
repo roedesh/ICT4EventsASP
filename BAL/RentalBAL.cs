@@ -136,8 +136,15 @@ namespace BAL
             catch
             {
             }
-
+            if (pbID == 0)
+            {
+                throw new Exception();
+            }
             succes = new RentalDAL().CreateRental(pbID, id, now, datumOut);
+            if(succes == 0)
+            {
+                throw new Exception();
+            }
             succes = new RentalDAL().UpdateExemplaar(id, 1);
             return succes;
         }
@@ -160,7 +167,7 @@ namespace BAL
         /// <param name="prijs">The price</param>
         /// <param name="aantal">The amount</param>
         /// <returns>0 or 1</returns>
-        public int CreateItem(string naam, string merk, string serie, decimal prijs, int aantal)
+        public int CreateItem(string naam, string merk, string serie, double prijs, int aantal)
         {
             int result = 0;
             int id = new RentalDAL().CreateCategory(naam);
@@ -183,6 +190,60 @@ namespace BAL
             }
 
             return result;
+        }
+
+        public int UpdateItem(int id, string naam, string merk, string serie, double prijs, int aantalOld, int aantalNew, int typenummer)
+        {
+            int succes =  new RentalDAL().UpdateItem(id,naam,merk,serie,prijs);
+            if(aantalNew > aantalOld)
+            {
+                for (int i = 0; i < aantalNew - aantalOld; i++)
+                {
+                    int volgnummer = new RentalDAL().LoadVolgnummer();
+                    string barcode = typenummer.ToString() + "." + volgnummer.ToString();
+                    new RentalDAL().CreateExemplaar(id, barcode, volgnummer);
+                }
+            }
+            return succes;
+        }
+        public DataTable LoadExemplaar(string barcode)
+        {
+            return new RentalDAL().LoadExemplaar(barcode);
+        }
+
+        public DataTable LoadRentalFromPerson(string name)
+        {
+            return new RentalDAL().LoadRentalFromPerson(name);
+        }
+
+        public int LoadItemStatus(int id)
+        {
+            return new RentalDAL().LoadItemStatus(id);
+        }
+
+        public int DeleteItem(int id)
+        {
+            return new RentalDAL().DeleteItem(id);
+        }
+
+        public List<int> GetAllItemsFromProduct(int id)
+        {
+            return new RentalDAL().GetAllItemsFromProduct(id);
+        }
+
+        public int DeleteProduct(int id)
+        {
+            return new RentalDAL().DeleteProduct(id);
+        }
+
+        public List<int> GetAllItemsFromVerhuur(int id)
+        {
+            return new RentalDAL().GetAllItemsFromVerhuur(id);
+        }
+
+        public int DeleteVerhuur(int id)
+        {
+            return new RentalDAL().DeleteVerhuur(id);
         }
     }
 }
