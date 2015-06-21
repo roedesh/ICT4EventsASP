@@ -21,7 +21,7 @@
         <h1>Zoek naar een event:</h1>
         <p>
             <asp:DropDownList ID="ddlAllEvents" runat="server"></asp:DropDownList>
-            <asp:Button ID="btnSearchEvent" runat="server" Text="Laad event" OnClick="btnSearchEvent_Click" />
+            <asp:Button ID="btnSearchEvent" runat="server" Text="Laad event" OnClick="BtnSearchEvent_Click" />
         </p>
         <p>
             <asp:Button ID="btnSave" ValidationGroup="save" runat="server" Text="Sla veranderingen op" OnClick="BtnSave_Click" OnClientClick="Confirm()"/>

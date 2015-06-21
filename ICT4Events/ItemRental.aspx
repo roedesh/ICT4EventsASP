@@ -15,10 +15,10 @@
         <asp:TextBox ID="TbLeenUitDatum" runat="server"></asp:TextBox>
         DD-MM-YYYY&nbsp; HH24:MI:SS</p>
     <p>
-&nbsp;<asp:Button ID="BtnVrijeArtikelen" runat="server" OnClick="btnVrijeArtikelen_Click" Text="Vrije artikelen" />
+&nbsp;<asp:Button ID="BtnVrijeArtikelen" runat="server" OnClick="BtnVrijeArtikelen_Click" Text="Vrije artikelen" />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Geleende artikelen" Width="126px" />
 &nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Button ID="BtnLeenUit" runat="server" OnClick="btnLeenUit_Click" Text="Leen uit" />
+        <asp:Button ID="BtnLeenUit" runat="server" OnClick="BtnLeenUit_Click" Text="Leen uit" />
 &nbsp;
         <asp:Button ID="Button2" runat="server" Text="Neem in" OnClick="BtnNeemIn_Click" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -27,7 +27,7 @@
         <asp:Button ID="Button3" runat="server" Text="Zoek" />
     </p>
     <p>
-        <asp:GridView ID="GvRental" runat="server" OnRowDataBound="gvRental_RowDataBound" OnSelectedIndexChanged="gvRental_SelectedIndexChanged">
+        <asp:GridView ID="GvRental" runat="server" OnRowDataBound="GvRental_RowDataBound" OnSelectedIndexChanged="GvRental_SelectedIndexChanged">
         </asp:GridView>
     </p>
     <p>
@@ -54,10 +54,10 @@
     <asp:TextBox ID="TbArtikelAantal" runat="server" Width="84px"></asp:TextBox>
     <br />
     <p>
-        <asp:Button ID="BtnArtikelVoegToe" runat="server" Text="Voeg toe" Width="199px" OnClick="btnArtikelVoegToe_Click"  />
+        <asp:Button ID="BtnArtikelVoegToe" runat="server" Text="Voeg toe" Width="199px" OnClick="BtnArtikelVoegToe_Click"  />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <asp:Button ID="BtnArtikelPasAan" runat="server" Text="Pas aan" Width="199px" OnClick="btnArtikelPasAan_Click" />
-        &nbsp;*Aantal verminderen bij exemplaren.<asp:GridView ID="GvArtikel" runat="server" OnRowDataBound="gvArtikel_RowDataBound" OnSelectedIndexChanged="gvArtikel_SelectedIndexChanged" AutoGenerateSelectButton="True">
+        <asp:Button ID="BtnArtikelPasAan" runat="server" Text="Pas aan" Width="199px" OnClick="BtnArtikelPasAan_Click" />
+        &nbsp;*Aantal verminderen bij exemplaren.<asp:GridView ID="GvArtikel" runat="server" OnRowDataBound="GvArtikel_RowDataBound" OnSelectedIndexChanged="GvArtikel_SelectedIndexChanged" AutoGenerateSelectButton="True">
         </asp:GridView>
     </p>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
