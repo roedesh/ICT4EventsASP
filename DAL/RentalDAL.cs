@@ -29,7 +29,12 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT rp.ID, p.VOORNAAM ,p.TUSSENVOEGSEL ,p.ACHTERNAAM ,p.STRAAT ,p.HUISNR ,p.WOONPLAATS ,p.BANKNR,rp.AANWEZIG, r.BETAALD FROM POLSBANDJE pb, RESERVERING_POLSBANDJE rp, RESERVERING r, PERSOON p WHERE p.ID = r.PERSOON_ID AND r.ID = rp.RESERVERING_ID AND pb.ID = POLSBANDJE_ID AND pb.BARCODE =  :barcode ";
+                string loadQuery = @"SELECT rp.id, a.gebruikersnaam, rp.aanwezig, r.betaald, p.barcode
+                                    FROM Reservering_polsbandje rp
+                                    LEFT JOIN account a ON (rp.account_id = a.id)
+                                    LEFT JOIN reservering r ON (rp.reservering_id = r.id)
+                                    LEFT JOIN polsbandje p ON (rp.polsbandje_id = p.id)
+                                    WHERE p.BARCODE =  :barcode";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -55,16 +60,16 @@ namespace DAL
         /// <param name="personID">ID of the person</param>
         /// <param name="aanwezig">0 or 1 based on presence</param>
         /// <returns>0 or 1</returns>
-        public int UpdatePresence(int personID, int aanwezig)
+        public int UpdatePresence(int reserveringPolsbandjeID, int aanwezig)
         {
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string insertQuery = "UPDATE RESERVERING_POLSBANDJE SET AANWEZIG = :aanwezig WHERE ID = :personID";
+                string insertQuery = "UPDATE RESERVERING_POLSBANDJE SET AANWEZIG = :aanwezig WHERE ID = :reserveringPolsbandjeID";
                 using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                 {
                     cmd.Parameters.Add(new OracleParameter("aanwezig", aanwezig));
-                    cmd.Parameters.Add(new OracleParameter("personID", personID));
+                    cmd.Parameters.Add(new OracleParameter("personID", reserveringPolsbandjeID));
                     try
                     {
                         return cmd.ExecuteNonQuery();
@@ -88,7 +93,12 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT rp.ID, p.VOORNAAM ,p.TUSSENVOEGSEL ,p.ACHTERNAAM ,p.STRAAT ,p.HUISNR ,p.WOONPLAATS ,p.BANKNR,rp.AANWEZIG, r.BETAALD FROM PERSOON p, RESERVERING r, RESERVERING_POLSBANDJE rp WHERE p.ID = r.PERSOON_ID AND rp.RESERVERING_ID = r.ID AND rp.AANWEZIG = :aanwezig ";
+                string loadQuery = @"SELECT rp.id, a.gebruikersnaam, rp.aanwezig, r.betaald, p.barcode
+                                    FROM Reservering_polsbandje rp
+                                    LEFT JOIN account a ON (rp.account_id = a.id)
+                                    LEFT JOIN reservering r ON (rp.reservering_id = r.id)
+                                    LEFT JOIN polsbandje p ON (rp.polsbandje_id = p.id)
+                                    WHERE rp.AANWEZIG = :aanwezig ";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -118,7 +128,12 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT rp.ID, p.VOORNAAM ,p.TUSSENVOEGSEL ,p.ACHTERNAAM ,p.STRAAT ,p.HUISNR ,p.WOONPLAATS ,p.BANKNR,rp.AANWEZIG, r.BETAALD FROM POLSBANDJE pb, RESERVERING_POLSBANDJE rp, RESERVERING r, PERSOON p WHERE p.ID = r.PERSOON_ID AND r.ID = rp.RESERVERING_ID AND pb.ID = POLSBANDJE_ID AND p.id = :id ";
+                string loadQuery = @"SELECT rp.id, a.gebruikersnaam, rp.aanwezig, r.betaald, p.barcode
+                                    FROM Reservering_polsbandje rp
+                                    LEFT JOIN account a ON (rp.account_id = a.id)
+                                    LEFT JOIN reservering r ON (rp.reservering_id = r.id)
+                                    LEFT JOIN polsbandje p ON (rp.polsbandje_id = p.id)
+                                    WHERE a.id = :id ";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);
@@ -148,7 +163,12 @@ namespace DAL
             using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
             {
                 conn.Open();
-                string loadQuery = "SELECT RP.ID, P.VOORNAAM, P.TUSSENVOEGSEL, P.ACHTERNAAM, P.STRAAT, P.HUISNR, P.WOONPLAATS, P.BANKNR, RP.AANWEZIG, R.BETAALD, R.ID, RP.ID FROM PERSOON P INNER JOIN RESERVERING R ON P.ID = R.PERSOON_ID INNER JOIN RESERVERING_POLSBANDJE RP ON R.ID = RP.RESERVERING_ID INNER JOIN POLSBANDJE PB ON PB.ID = RP.POLSBANDJE_ID WHERE P.VOORNAAM LIKE '%'||:naam||'%' OR P.ACHTERNAAM LIKE '%'||:naam||'%'";
+                string loadQuery = @"SELECT rp.id, a.gebruikersnaam, rp.aanwezig, r.betaald, p.barcode
+                                    FROM Reservering_polsbandje rp
+                                    LEFT JOIN account a ON (rp.account_id = a.id)
+                                    LEFT JOIN reservering r ON (rp.reservering_id = r.id)
+                                    LEFT JOIN polsbandje p ON (rp.polsbandje_id = p.id)
+                                    WHERE a.gebruikersnaam LIKE '%'||:naam||'%'";
                 using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                 {
                     OracleDataAdapter a = new OracleDataAdapter(cmd);

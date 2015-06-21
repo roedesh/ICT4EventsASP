@@ -33,9 +33,9 @@ namespace BAL
         /// <param name="personID">ID of the person</param>
         /// <param name="aanwezig">0 or 1 based on presence</param>
         /// <returns>0 or 1</returns>
-        public int UpdatePresence(int personID, int aanwezig)
+        public int UpdatePresence(int reserveringPolsbandjeID, int aanwezig)
         {
-            return new RentalDAL().UpdatePresence(personID, aanwezig);
+            return new RentalDAL().UpdatePresence(reserveringPolsbandjeID, aanwezig);
         }
 
         /// <summary>

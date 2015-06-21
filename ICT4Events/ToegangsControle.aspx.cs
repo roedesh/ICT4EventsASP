@@ -116,7 +116,7 @@ namespace ICT4Events
             }
 
             this.GvData.SelectedRow.BackColor = Color.Pink;
-            string betaald = this.GvData.SelectedRow.Cells[9].Text;
+            string betaald = this.GvData.SelectedRow.Cells[3].Text;
             try
             {
                 if (Convert.ToInt32(betaald) == 1)
@@ -140,8 +140,13 @@ namespace ICT4Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnCheckInOut_Click(object sender, EventArgs e)
         {
+            if(this.GvData.SelectedIndex == -1)
+            {
+                Response.Write("<script>alert('Selecteer een rij');</script>");
+                return;
+            }
             string id = this.GvData.SelectedRow.Cells[0].Text;
-            string aanwezig = this.GvData.SelectedRow.Cells[8].Text;
+            string aanwezig = this.GvData.SelectedRow.Cells[2].Text;
             try
             {
                 int id2 = Convert.ToInt32(id);
