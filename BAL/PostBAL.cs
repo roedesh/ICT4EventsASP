@@ -201,5 +201,37 @@ namespace BAL
         {
             return new PostDAL().DeletePost(postid);
         }
+
+        public int DeleteCategory(string id)
+        {
+            PostDAL postdal = new PostDAL();
+            int result = 0;
+
+            DataTable childs =postdal.LoadChildCategories(id);
+            foreach (DataRow child in childs.Rows)
+            {
+                result = postdal.DeletePost(child.Field<long>("BIJDRAGE_ID").ToString());
+            }
+
+            result = postdal.DeletePost(id);
+
+            return result;
+        }
+
+        public string GetCategoryName(string id)
+        {
+            return new PostDAL().GetCategoryName(id);
+        }
+
+        public int GetParentCategoryID(string childID)
+        {
+            return new PostDAL().GetParentCategoryID(childID);
+        }
+
+        public List<int> GetLikeFlagCount(string id)
+        {
+            return new PostDAL().GetLikeFlagCount(id);
+
+        }
     }
 }

@@ -13,13 +13,130 @@ namespace ICT4Events.Post {
     public partial class Post {
         
         /// <summary>
-        /// repPost control.
+        /// BtnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repPost;
+        protected global::System.Web.UI.WebControls.Button BtnBack;
+        
+        /// <summary>
+        /// litFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litFile;
+        
+        /// <summary>
+        /// lbl_Preview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Preview;
+        
+        /// <summary>
+        /// img_Preview control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image img_Preview;
+        
+        /// <summary>
+        /// lbl_UploaderText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_UploaderText;
+        
+        /// <summary>
+        /// lbl_Uploader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Uploader;
+        
+        /// <summary>
+        /// lbl_DateText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DateText;
+        
+        /// <summary>
+        /// lbl_Date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Date;
+        
+        /// <summary>
+        /// lbl_SizeText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_SizeText;
+        
+        /// <summary>
+        /// lbl_Size control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Size;
+        
+        /// <summary>
+        /// lbl_LikesText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_LikesText;
+        
+        /// <summary>
+        /// lbl_Likes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Likes;
+        
+        /// <summary>
+        /// lbl_FlagsText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_FlagsText;
+        
+        /// <summary>
+        /// lbl_Flags control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_Flags;
         
         /// <summary>
         /// btnLike control.
@@ -40,13 +157,13 @@ namespace ICT4Events.Post {
         protected global::System.Web.UI.WebControls.Button btnFlag;
         
         /// <summary>
-        /// btnDel control.
+        /// btnReply control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDel;
+        protected global::System.Web.UI.WebControls.Button btnReply;
         
         /// <summary>
         /// BtnDownload control.
@@ -58,13 +175,13 @@ namespace ICT4Events.Post {
         protected global::System.Web.UI.WebControls.Button BtnDownload;
         
         /// <summary>
-        /// btnReply control.
+        /// btnDel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnReply;
+        protected global::System.Web.UI.WebControls.Button btnDel;
         
         /// <summary>
         /// repMessages control.
