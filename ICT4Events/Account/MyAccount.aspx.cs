@@ -54,7 +54,7 @@ namespace ICT4Events.Account
                                 table.Rows[0]["PASSWORD"].ToString(),
                                 table.Rows[0]["ROL"].ToString());
                 ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
-                adbal.ChangeUser(Session["USER_ID"].ToString(), table.Rows[0]["GEBRUIKERSNAAM"].ToString(), "Username");
+                //adbal.ChangeUser(Session["USER_ID"].ToString(), table.Rows[0]["GEBRUIKERSNAAM"].ToString(), "Username");
                 adbal.ChangeUser(Session["USER_ID"].ToString(), table.Rows[0]["PASSWORD"].ToString(), "Password");
                 adbal.ChangeUser(Session["USER_ID"].ToString(), table.Rows[0]["EMAIL"].ToString(), "Email");
                 if (table.Rows[0]["ROL"].ToString() == "GEBRUIKER")

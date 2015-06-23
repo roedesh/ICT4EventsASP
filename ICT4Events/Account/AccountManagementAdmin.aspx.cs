@@ -94,7 +94,7 @@ namespace ICT4Events.Account
                             ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
                             string[] accountData = new AccountBAL().SelectAccount(Convert.ToInt32(this.tbAccountID.Text));
                             string username = accountData[0];
-                            adbal.ChangeUser(username, this.tbUserName.Text, "Username");
+                            //adbal.ChangeUser(username, this.tbUserName.Text, "Username");
                             adbal.ChangeUser(username, this.tbPassword.Text, "Password");
                             adbal.ChangeUser(username, this.tbEmailAdress.Text, "Email");
                             if (this.ddlRol.SelectedValue.ToString() == "GEBRUIKER")
@@ -148,7 +148,7 @@ namespace ICT4Events.Account
                 {
                     new AccountBAL().DeleteAccount(this.tbUserName.Text);
                     ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
-                    adbal.DeleteUser(this.tbUserName.Text);
+                    adbal.DisableAccount(this.tbUserName.Text);
                     Response.Redirect("../Account/AccountManagementAdmin.aspx");
                 }
                 catch (Exception)
