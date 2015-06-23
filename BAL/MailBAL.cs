@@ -100,7 +100,7 @@ namespace BAL
             
                 sb.AppendFormat("<br /><br />   Thank you for registering at <b>PTS23</b>. <br />To complete your registration, please follow the link below:<br />");
                 string link = string.Format(
-                    "http://localhost:2359/Registreren.aspx?RegistrationCode={1}&AccountID={0}", userID.ToString(), this.hash.ToString());
+                    "http://pts23.com/Registreren.aspx?RegistrationCode={1}&AccountID={0}", userID.ToString(), this.hash.ToString());
                 sb.AppendFormat(@"<a href=""{0}"">PTS23.com Complete Registration</a>", link);
                 sb.Append("<br /><br />When you have followed the link, you will be able to log in and use your account.<br />");
                 sb.Append("If your email system does not allow linking, please copy and paste the following into your browser:<br />");

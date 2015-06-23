@@ -86,7 +86,7 @@ namespace ICT4Events.Account
             {
                 new AccountBAL().DeleteAccount(this.tbUserName.Text);
                 ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
-                adbal.DeleteUser(this.tbUserName.Text);
+                adbal.DisableAccount(this.tbUserName.Text);
                 Response.Write("<script>alert('Uw account is verwijderd');</script>");
                 Session.Remove("USER_ID");
                 Session.RemoveAll();

@@ -1,0 +1,20 @@
+bugfix demo
+
+-reserveren zonder in te loggen (object null reference)
+
+-reserveren, geen email wordt verzonden (niemand in het coop textbox)
+
+-reserveren, object null reference, altijd bij iemand in de coop textbox
+
+-reserveren na het verzenden -> url klopt niet 
+
+
+-ondanks ingelogd te zijn als admin
+	-username veranderen is verboden
+
+-database wordt toch veranderd ook al krijg je error op AD
+
+-reply soms buggy, wanneer reply failed -> melding geven
+
+-artikel verhuur en toegangscontrole niet getest
+

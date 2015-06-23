@@ -22,7 +22,7 @@
                 <br />
                 <asp:Literal runat="server"  ID="FailureText" Text="" EnableViewState="False"></asp:Literal>
                 <asp:Button ID="btnLogin" runat="server" CommandName="Login" Text="Inloggen" ValidationGroup="Login1" />
-                <asp:Button ID="btnRegister" runat="server" Text="Registreren" />
+                <asp:Button ID="btnRegister" runat="server" Text="Registreren" OnClick="btnRegister_Click" />
             </LayoutTemplate>
         </asp:Login>
 

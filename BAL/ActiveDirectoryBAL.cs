@@ -42,30 +42,36 @@ namespace BAL
             this.counter = 0;
         }
 
-        /// <summary>
-        /// Method to create a user within the active directory, by default the account is disabled.
-        /// Do not forget to add the user to a certain group, using the AddToGroup method.
-        /// </summary>
-        /// <param name="username">username value</param>
-        /// <param name="password">password value</param>
-        /// <param name="email">email address value</param>
-        /// <returns>array with username, password, email and (1/0) error index</returns>
         public string[] CreateUser(string username, string password, string email)
         {
             try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry newUser = localMachine.Children.Add("CN=" + username, "user"))
                 {
                     newUser.Properties["samAccountName"].Value = username;
                     newUser.CommitChanges();
-                    newUser.Invoke("SetPassword", new object[] { password });
-                    newUser.CommitChanges();
-                    newUser.Invoke("EmailAddress", new object[] { email });
-                    newUser.CommitChanges();
+                    localMachine.CommitChanges();
                     newUser.Close();
                     localMachine.Close();
                 }
+
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
+                using (DirectoryEntry user = localMachine.Children.Find("CN=" + username, "user"))
+                {
+                    user.Properties["samAccountName"].Value = username;
+                    user.CommitChanges();
+                    localMachine.CommitChanges();
+                    user.Invoke("SetPassword", password);
+                    user.CommitChanges();
+                    localMachine.CommitChanges();
+                    user.Properties["mail"].Value = email;
+                    user.CommitChanges();
+                    localMachine.CommitChanges();
+                    user.Close();
+                    localMachine.Close();
+                }
+                
             }
             catch (System.Runtime.InteropServices.COMException)
             {
@@ -88,15 +94,16 @@ namespace BAL
         {
             try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry newUser = localMachine.Children.Add("CN=" + username, "user"))
                 {
                     newUser.DeleteTree();
+                    newUser.CommitChanges();
                     newUser.Close();
                     localMachine.Close();
                 }
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (System.Runtime.InteropServices.COMException x)
             {
                 this.counter++;
             }
@@ -122,7 +129,7 @@ namespace BAL
                 object nativeObject = entry.NativeObject;
                 entry.Close();
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (System.Runtime.InteropServices.COMException x)
             {
                 this.counter++;
             }
@@ -143,17 +150,17 @@ namespace BAL
         {
             try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry user = localMachine.Children.Find("CN=" + username, "user"))
                 {
-                    int val = (int)user.Properties["userAccountControl"].Value;
-                    user.Properties["userAccountControl"].Value = val & ~0x2;
+                    user.Invoke("Put", new object[] { "userAccountControl", "512" });
                     user.CommitChanges();
+                    localMachine.CommitChanges();
                     user.Close();
                     localMachine.Close();
                 }
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (System.Runtime.InteropServices.COMException x)
             {
                 this.counter++;
             }
@@ -174,17 +181,17 @@ namespace BAL
         {
             try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry user = localMachine.Children.Find("CN=" + username, "user"))
                 {
-                    int val = (int)user.Properties["userAccountControl"].Value;
-                    user.Properties["userAccountControl"].Value = val | 0x2;
+                    user.Invoke("Put", new object[] { "userAccountControl", "2" });
                     user.CommitChanges();
+                    localMachine.CommitChanges();
                     user.Close();
                     localMachine.Close();
                 }
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (System.Runtime.InteropServices.COMException x)
             {
                 this.counter++;
             }
@@ -206,17 +213,18 @@ namespace BAL
         {
             try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry group = localMachine.Children.Find("CN=" + groupname, "group"))
                 {
                     string userDN = "LDAP://ICT4EVENTS.PARENT/CN=" + username + ",CN=Users,DC=ICT4EVENTS,DC=PARENT";
                     group.Invoke("Add", new object[] { userDN });
                     group.CommitChanges();
+                    localMachine.CommitChanges();
                     group.Close();
                     localMachine.Close();
                 }
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (System.Runtime.InteropServices.COMException x)
             {
                 this.counter++;
             }
@@ -238,17 +246,18 @@ namespace BAL
         {
             try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry group = localMachine.Children.Find("CN=" + groupname, "group"))
                 {
                     string userDN = "LDAP://ICT4EVENTS.PARENT/CN=" + username + ",CN=Users,DC=ICT4EVENTS,DC=PARENT";
-                    group.Properties["member"].Remove(userDN);
+                    group.Invoke("Remove", new object[] { userDN });
                     group.CommitChanges();
+                    localMachine.CommitChanges();
                     group.Close();
                     localMachine.Close();
                 }
             }
-            catch (System.Runtime.InteropServices.COMException)
+            catch (System.Runtime.InteropServices.COMException x)
             {
                 this.counter++;
             }
@@ -273,11 +282,12 @@ namespace BAL
                 case "Password":
                     try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry newUser = localMachine.Children.Find("CN=" + username, "user"))
                 {
-                    newUser.Invoke("SetPassword", new object[] { password });
+                    newUser.Invoke("SetPassword", password);
                     newUser.CommitChanges();
+                    localMachine.CommitChanges();
                     newUser.Close();
                     localMachine.Close();
                 }
@@ -296,11 +306,12 @@ namespace BAL
                 case "Email":
                     try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry newUser = localMachine.Children.Find("CN=" + username, "user"))
                 {
-                    newUser.Invoke("EmailAddress", new object[] { password });
+                    newUser.Properties["mail"].Value = password;
                     newUser.CommitChanges();
+                    localMachine.CommitChanges();
                     newUser.Close();
                     localMachine.Close();
                 }
@@ -319,11 +330,12 @@ namespace BAL
                 case "Username":
                     try
             {
-                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23"))
                 using (DirectoryEntry newUser = localMachine.Children.Find("CN=" + username, "user"))
                 {
                     newUser.Properties["samAccountName"].Value = password;
                     newUser.CommitChanges();
+                    localMachine.CommitChanges();
                     newUser.Close();
                     localMachine.Close();
                 }
