@@ -37,6 +37,14 @@ namespace ICT4Events
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Session["USER_ID"] == null)
+            {
+                Response.Redirect("~/account/login.aspx");
+            }
+            if (Session["USER_ROLE"].ToString() != "ADMIN")
+            {
+                Response.Redirect("~/default.aspx");
+            }
             if (!this.IsPostBack)
             {
                 this.dt = this.rentalBAL.GetAllAvaillableItems(0);
