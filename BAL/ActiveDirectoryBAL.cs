@@ -227,5 +227,119 @@ namespace BAL
 
             return this.returnValues;
         }
+
+        /// <summary>
+        /// Remove a user from a group.
+        /// </summary>
+        /// <param name="username">username parameter</param>
+        /// <param name="groupname">group name parameter</param>
+        /// <returns>array with all inserted data and error index</returns>
+        public string[] RemoveFromGroup(string username, string groupname)
+        {
+            try
+            {
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry group = localMachine.Children.Find("CN=" + groupname, "group"))
+                {
+                    string userDN = "LDAP://ICT4EVENTS.PARENT/CN=" + username + ",CN=Users,DC=ICT4EVENTS,DC=PARENT";
+                    group.Properties["member"].Remove(userDN);
+                    group.CommitChanges();
+                    group.Close();
+                    localMachine.Close();
+                }
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                this.counter++;
+            }
+            finally
+            {
+                this.returnValues = new string[] { username, groupname, this.counter.ToString() };
+            }
+
+            return this.returnValues;
+        }
+
+        /// <summary>
+        /// Change a user.
+        /// </summary>
+        /// <param name="username">username parameter</param>
+        /// <param name="password">password parameter</param>
+        /// <returns>array with all inserted data and error index</returns>
+        public string[] ChangeUser(string username, string password, string value)
+        {
+            switch (value)
+            {
+                case "Password":
+                    try
+            {
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry newUser = localMachine.Children.Find("CN=" + username, "user"))
+                {
+                    newUser.Invoke("SetPassword", new object[] { password });
+                    newUser.CommitChanges();
+                    newUser.Close();
+                    localMachine.Close();
+                }
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                this.counter++;
+            }
+            finally
+            {
+                this.returnValues = new string[] { username, password, this.counter.ToString() };
+            }
+
+            return this.returnValues;
+
+                case "Email":
+                    try
+            {
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry newUser = localMachine.Children.Find("CN=" + username, "user"))
+                {
+                    newUser.Invoke("EmailAddress", new object[] { password });
+                    newUser.CommitChanges();
+                    newUser.Close();
+                    localMachine.Close();
+                }
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                this.counter++;
+            }
+            finally
+            {
+                this.returnValues = new string[] { username, password, this.counter.ToString() };
+            }
+
+            return this.returnValues;
+                
+                case "Username":
+                    try
+            {
+                using (DirectoryEntry localMachine = new DirectoryEntry(Url, "Administrator", "FONTYSPTS-23", AuthenticationTypes.Secure))
+                using (DirectoryEntry newUser = localMachine.Children.Find("CN=" + username, "user"))
+                {
+                    newUser.Properties["samAccountName"].Value = password;
+                    newUser.CommitChanges();
+                    newUser.Close();
+                    localMachine.Close();
+                }
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                this.counter++;
+            }
+            finally
+            {
+                this.returnValues = new string[] { username, password, this.counter.ToString() };
+            }
+
+            return this.returnValues;
+            }
+            return this.returnValues;
+        }
     }
 }

@@ -52,6 +52,8 @@ namespace ICT4Events.Account
             }
 
             int success = abal.UpdateAccount(Convert.ToInt32(account.Rows[0]["ID"]), this.tbNewPassword.Text);
+            ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
+            adbal.ChangeUser(this.tbUserName.Text, this.tbNewPassword.Text, "Password");
             if (success > 0)
             {
                 Response.Redirect("/Default.aspx", false);

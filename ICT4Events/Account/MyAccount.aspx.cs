@@ -53,6 +53,20 @@ namespace ICT4Events.Account
                                 table.Rows[0]["GEBRUIKERSNAAM"].ToString(),
                                 table.Rows[0]["PASSWORD"].ToString(),
                                 table.Rows[0]["ROL"].ToString());
+                ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
+                adbal.ChangeUser(Session["USER_ID"].ToString(), table.Rows[0]["GEBRUIKERSNAAM"].ToString(), "Username");
+                adbal.ChangeUser(Session["USER_ID"].ToString(), table.Rows[0]["PASSWORD"].ToString(), "Password");
+                adbal.ChangeUser(Session["USER_ID"].ToString(), table.Rows[0]["EMAIL"].ToString(), "Email");
+                if (table.Rows[0]["ROL"].ToString() == "GEBRUIKER")
+                {
+                    adbal.RemoveFromGroup(table.Rows[0]["GEBRUIKERSNAAM"].ToString(), "PremiumLeden");
+                    adbal.AddToGroup(table.Rows[0]["GEBRUIKERSNAAM"].ToString(), "Leden");
+                }
+                else if (table.Rows[0]["ROL"].ToString() == "ADMIN")
+                {
+                    adbal.RemoveFromGroup(table.Rows[0]["GEBRUIKERSNAAM"].ToString(), "Leden");
+                    adbal.AddToGroup(table.Rows[0]["GEBRUIKERSNAAM"].ToString(), "PremiumLeden");
+                }
             }
             catch (Exception)
             {
@@ -71,6 +85,8 @@ namespace ICT4Events.Account
             if (confirmValue == "Ja")
             {
                 new AccountBAL().DeleteAccount(this.tbUserName.Text);
+                ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
+                adbal.DeleteUser(this.tbUserName.Text);
                 Response.Write("<script>alert('Uw account is verwijderd');</script>");
                 Session.Remove("USER_ID");
                 Session.RemoveAll();

@@ -33,6 +33,13 @@ namespace BAL
         /// <returns>1 or 0</returns>
         public int CreateAccount(string username, string password, string email)
         {
+            ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
+            string[] returnData = adbal.CreateUser(username, password, email);
+            if (returnData[3] != "0")
+            {
+                return 0;
+            }
+            adbal.AddToGroup(username, "Leden");
             return new AccountDAL().Insert(username, password, email);
         }
 
@@ -47,6 +54,11 @@ namespace BAL
         public int UpdateAccount(int accountID, string username, string password, string role)
         {
             return new AccountDAL().Update(accountID, username, password, role);
+        }
+
+        public string[] SelectAccount(int id)
+        {
+            return new AccountDAL().Load(id);
         }
 
         /// <summary>

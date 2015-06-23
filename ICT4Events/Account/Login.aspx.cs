@@ -43,6 +43,12 @@ namespace ICT4Events
                 string username = ((TextBox)this.Login1.FindControl("username")).Text;
                 string password = ((TextBox)this.Login1.FindControl("password")).Text;
                 int login = new AccountBAL().GetAccountLogin(username, password);
+                ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
+                string[] resultData = adbal.Authenticate(username, password);
+                if (resultData[2] != "0")
+                {
+                    login = 0;
+                }
                 if (login == 1)
                 {
                     DataTable table = new AccountBAL().GetAccount(username, password);

@@ -47,6 +47,7 @@ namespace ICT4Events
                     if (b)
                     {
                         Response.Write("<script language=javascript>alert('Registratie succesvol!');</script>");
+                        AccountBAL accountbal = new AccountBAL();                        
                     }
                 }
                 catch (Exception)
@@ -68,7 +69,11 @@ namespace ICT4Events
                 try
                 {
                     AccountBAL accountbal = new AccountBAL();
-                    accountbal.CreateAccount(this.tbUsername.Text, this.tbPassword.Text, this.tbEmail.Text);
+                    int result = accountbal.CreateAccount(this.tbUsername.Text, this.tbPassword.Text, this.tbEmail.Text);
+                    if (result == 0)
+                    {
+                        Response.Write("<script language=javascript>alert('Something went wrong during the account creation!');</script>");
+                    }
                     DataTable t = accountbal.GetAccount(this.tbUsername.Text);
                     string accountID = t.Rows[0]["ID"].ToString();
                     MailBAL mailbal = new MailBAL(true);

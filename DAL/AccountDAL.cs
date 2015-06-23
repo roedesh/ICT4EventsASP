@@ -215,7 +215,36 @@ namespace DAL
                 }
             }
         }
+        public string[] Load(int id)
+        {
+            string[] accountData = new string[2];
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = "SELECT GEBRUIKERSNAAM, PASSWORD FROM ACCOUNT WHERE ID = :V1";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    cmd.Parameters.Add(new OracleParameter("V1", id));
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        if (reader.Read())
+                        {
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                accountData[i] = reader[i].ToString(); 
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                    }
 
+                    return accountData;
+                }
+            }
+        }
         /// <summary>
         /// A method to load an account
         /// </summary>

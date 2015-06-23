@@ -91,6 +91,22 @@ namespace ICT4Events.Account
                                 this.ddlRol.SelectedValue,
                                 this.tbEmailAdress.Text,
                                 Convert.ToInt32(this.ddlActivated.SelectedItem.Value));
+                            ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
+                            string[] accountData = new AccountBAL().SelectAccount(Convert.ToInt32(this.tbAccountID.Text));
+                            string username = accountData[0];
+                            adbal.ChangeUser(username, this.tbUserName.Text, "Username");
+                            adbal.ChangeUser(username, this.tbPassword.Text, "Password");
+                            adbal.ChangeUser(username, this.tbEmailAdress.Text, "Email");
+                            if (this.ddlRol.SelectedValue.ToString() == "GEBRUIKER")
+                            {
+                                adbal.RemoveFromGroup(this.tbUserName.Text, "PremiumLeden");
+                                adbal.AddToGroup(this.tbUserName.Text, "Leden");
+                            }
+                            else if (this.ddlRol.SelectedValue.ToString() == "ADMIN")
+                            {
+                                adbal.RemoveFromGroup(this.tbUserName.Text, "Leden");
+                                adbal.AddToGroup(this.tbUserName.Text, "PremiumLeden");
+                            }
                             Response.Redirect("../Account/AccountManagementAdmin.aspx");
                         }
                         catch (FormatException)
@@ -131,6 +147,8 @@ namespace ICT4Events.Account
                 try
                 {
                     new AccountBAL().DeleteAccount(this.tbUserName.Text);
+                    ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
+                    adbal.DeleteUser(this.tbUserName.Text);
                     Response.Redirect("../Account/AccountManagementAdmin.aspx");
                 }
                 catch (Exception)

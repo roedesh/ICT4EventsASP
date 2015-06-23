@@ -187,6 +187,14 @@ namespace BAL
         {
             MailDAL maildal = new MailDAL();
             int succesnumber = maildal.ActivateAccount(userID, hash);
+            AccountDAL accountdal = new AccountDAL();
+            string[] accountData = accountdal.Load(Convert.ToInt32(userID));
+            ActiveDirectoryBAL adbal = new ActiveDirectoryBAL();
+            string[] returnData = adbal.EnableAccount(accountData[0]);
+            if (returnData[1] != "0")
+            {
+                succesnumber = 0;
+            }
             return succesnumber == 0 ? false : true;
         }
 
