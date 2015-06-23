@@ -85,12 +85,22 @@ namespace ICT4Events.Reservering
                 return; 
             }
 
-            string[] usernames = (this.tbOtherPersons.Text + "," + Session["USER_ID"].ToString()).Split(',').Select(sValue => sValue.Trim()).ToArray();
-            
+            string[] usernames = new string[400];
+
+            if (string.IsNullOrWhiteSpace(this.tbOtherPersons.Text))
+            {
+                usernames[0] = Session["USER_ID"].ToString();
+            }
+            else
+            {
+                usernames = (this.tbOtherPersons.Text + "," + Session["USER_ID"].ToString()).Split(',').Select(sValue => sValue.Trim()).ToArray(); 
+            }
+
             foreach (string u in usernames)
             {
                 Debug.WriteLine(u);
             }
+            
 
             ReservationBAL rbal = new ReservationBAL();
             MailBAL mbal = new MailBAL(false);

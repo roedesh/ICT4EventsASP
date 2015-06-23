@@ -150,7 +150,6 @@
         <td class="auto-style4">
             <asp:TextBox ID="tbOtherPersons" runat="server" Width="240px"></asp:TextBox>
             <asp:RegularExpressionValidator ID="RegularExpressionValidator6" runat="server" ControlToValidate="tbOtherPersons" ErrorMessage="Gebruikersnamen moeten worden gescheiden door een komma" ValidationExpression="^[a-zA-Z]+(,\s[a-zA-Z]+)*"></asp:RegularExpressionValidator>
-            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" ControlToValidate="tbOtherPersons" ErrorMessage="Aantal mensen is verplicht"></asp:RequiredFieldValidator>
         </td>
         <td class="auto-style4"></td>
     </tr>
