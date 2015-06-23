@@ -5,19 +5,16 @@
     <asp:Repeater ID="repPost" runat="server">
         <HeaderTemplate></HeaderTemplate>
         <ItemTemplate>
+            <img src="<%#Eval("BESTANDSLOCATIE") %>" alt="image"></img>
             <table>
                 <tr>
-                    <th>ID</th>
-                    <th>Account ID</th>
+                    <th> Naam</th>
                     <th> Datum </th>
-                    <th> Bestandslocatie</th>
                     <th> Bestands Grootte</th>
                     </tr>
                 <tr>
-                    <td><%#Eval("ID")%></td>
-                    <td><%#Eval("ACCOUNT_ID") %></td>
+                    <td><%#filename%></td>
                     <td><%#Eval("DATUM") %></td>
-                    <td><%#Eval("BESTANDSLOCATIE") %></td>
                     <td><%#Eval("GROOTTE") %></td>
                 </tr>
                 </table>
@@ -25,24 +22,14 @@
         <FooterTemplate></FooterTemplate>
     </asp:Repeater>
     <br />
-    <asp:Button ID="btnLike" runat="server" Text="Like" OnClick="BtnLike_Click" />
-    <asp:Button ID="btnFlag" runat="server" Text="Flag" OnClick="BtnFlag_Click" />
-                        <% if (IsLoggedInAsAdmin)
+       <asp:Button ID="btnLike" runat="server" Text="Like" OnClick="BtnLike_Click" />
+       <asp:Button ID="btnFlag" runat="server" Text="Flag" OnClick="BtnFlag_Click" />
+    <% if (IsLoggedInAsAdmin)
                        {%>
-                            <asp:Button ID="btnMDel" CommandName="Delete" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Delete" runat="server" />
-                    <% }%>
-    <br />
-    <br />
-    <asp:Label ID="lblTitle" runat="server" Text="Title" CssClass="label"></asp:Label>
-    <br />
-    <asp:TextBox ID="tbTitle" runat="server" Width="525px"></asp:TextBox>
-    <br />
-
-    <asp:Label ID="lblContent" runat="server" Text="Bericht:" CssClass="label"></asp:Label>
-    <br />
-    <asp:TextBox ID="tbContent" runat="server" Height="100px" Width="525px"></asp:TextBox>
-    <br />
-    <asp:Button ID="btnSend" runat="server" Text="Save" CssClass="button" OnClick="BtnSend_Click"/>
+    <asp:Button ID="btnDel" CommandName="Delete" runat="server" Text="Delete" OnClick="BtnDel_Click" />
+    <% }%>
+    <asp:Button ID="BtnDownload" runat="server" OnClick="BtnDownload_Click" Text="Download" />
+    <asp:Button ID="btnReply" runat="server" Text="Reply" CssClass="button" OnClick="BtnReply_Click"/>
     <br />
     <br />
     <asp:Repeater ID="repMessages" runat="server">
@@ -52,14 +39,10 @@
              <table>
                  <tr>
                      <th>Titel</th>
-                     <th>MessageID</th>
-                     <th>AccountID</th>
                      <th>Datum</th>
                  </tr>
                 <tr>
                     <td><%#Eval("Titel") %></td>
-                    <td><%#Eval("ID") %></td>
-                    <td><%#Eval("ACCOUNT_ID") %></td>
                     <td><%#Eval("Datum") %></td>
                 </tr>
             </table>
@@ -72,6 +55,7 @@
             </table>
                 <asp:Button ID="btnMLike" CommandName="Like" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Like" runat="server" />
                 <asp:Button ID="btnMFlag" CommandName="Flag" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Flag" runat="server" />
+                <asp:Button ID="btnMReply" CommandName="Reply" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Reply" runat="server" />
                       <% if (IsLoggedInAsAdmin)
                        {%>
                             <asp:Button ID="btnMDel" CommandName="Delete" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Delete" runat="server" />
@@ -82,14 +66,10 @@
                                  <table>
                  <tr>
                      <th>Titel</th>
-                     <th>MessageID</th>
-                     <th>AccountID</th>
                      <th>Datum</th>
                  </tr>
                 <tr>
                     <td><%#Eval("Titel") %></td>
-                    <td><%#Eval("ID") %></td>
-                    <td><%#Eval("ACCOUNT_ID") %></td>
                     <td><%#Eval("Datum") %></td>
                 </tr>
             </table>
@@ -102,6 +82,7 @@
             </table>
                 <asp:Button ID="btnMLike" CommandName="Like" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Like" runat="server" />
                 <asp:Button ID="btnMFlag" CommandName="Flag" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Flag" runat="server" />
+                <asp:Button ID="btnMReply" CommandName="Reply" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Reply" runat="server" />
                     <% if (IsLoggedInAsAdmin)
                        {%>
                             <asp:Button ID="btnMDel" CommandName="Delete" CommandArgument='<%#Eval("ID")%>' OnCommand="CommandBtn_Click"  Text="Delete" runat="server" />

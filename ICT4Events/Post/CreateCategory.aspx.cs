@@ -35,6 +35,7 @@ using BAL;
                 this.ddlCategory.DataValueField = "NAAM";
                 this.ddlCategory.DataBind();
                 this.ddlCategory.Items.Insert(0, string.Empty);
+                ViewState["PreviousPageURL"] = Request.UrlReferrer.ToString();
             }
         }
 
@@ -57,6 +58,7 @@ using BAL;
                 else
                 {
                     Response.Write("<script language=javascript>alert('Categorie is toegevoegd');</script>");
+                    Response.Redirect(ViewState["PreviousPageURL"].ToString());
                 }
             }
             else
@@ -68,6 +70,7 @@ using BAL;
                 else
                 {
                     Response.Write("<script language=javascript>alert('Categorie is toegevoegd');</script>");
+                    Response.Redirect(ViewState["PreviousPageURL"].ToString());
                 }
             }
         }

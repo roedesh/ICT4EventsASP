@@ -18,6 +18,7 @@ namespace ICT4Events.Post
     /// </summary>
     public partial class Category : System.Web.UI.Page
     {
+        public string filename = string.Empty;
         /// <summary>
         /// Gets or sets the identifier of the category stored
         /// </summary>
@@ -27,6 +28,14 @@ namespace ICT4Events.Post
             set;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the category is a main category
+        /// </summary>
+        public bool IsMainCategory
+        {
+            get;
+            set;
+        }
         /// <summary>
         /// Gets or sets a value indicating whether the user is logged in as an admin
         /// </summary>
@@ -48,12 +57,21 @@ namespace ICT4Events.Post
                 this.C = Request.QueryString["catid"];
                 if (this.C != null)
                 {
+                    IsMainCategory = false;
                     DataTable subCategory = new PostBAL().GetCategories(this.C);
                     this.repSubCat.DataSource = subCategory;
                     this.repSubCat.DataBind();
                     DataTable post = new PostBAL().GetAllPosts(this.C);
+                    post.Columns.Add("NAAM");
+                    foreach(DataRow Row in post.Rows)
+                    {
+                        filename = Row.Field<string>("BESTANDSLOCATIE").Split('\\').Last();
+                        Row["NAAM"] = filename;
+                    }
                     this.repFile.DataSource = post;
                     this.repFile.DataBind();
+                    
+
                     if (this.Session["User_ID"] != null)
                     {
                         if (this.Session["USER_ROLE"].ToString() == "ADMIN")
@@ -65,6 +83,7 @@ namespace ICT4Events.Post
 
                 if (this.C == null)
                 {
+                    IsMainCategory = true;
                     DataTable category = new PostBAL().GetCategories();
                     this.repMainCat.DataSource = category;
                     this.repMainCat.DataBind();

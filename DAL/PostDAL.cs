@@ -744,12 +744,12 @@ namespace DAL
         /// <returns>Is "1" if it is a like, otherwise "0".</returns>
         public int DeletePost(string postID)
         {
-            if (this.DeletePostLikeFlags(postID) == 0)
-            {
-                return 0;
-            }
-            else
-            {
+            //if (this.DeletePostLikeFlags(postID) == 0)
+            //{
+            //    return 0;
+            //}
+            //else
+            //{
                 using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
                 {
                     conn.Open();
@@ -768,7 +768,7 @@ namespace DAL
                         }
                     }
                 }
-            }
+            //}
         }
         #endregion
 

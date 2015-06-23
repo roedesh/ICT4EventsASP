@@ -75,6 +75,7 @@
     <Content Include="Post\CreateCategory.aspx" />
     <Content Include="Post\CreatePost.aspx" />
     <Content Include="Post\Post.aspx" />
+    <Content Include="Post\Reply.aspx" />
     <Content Include="Registreren.aspx" />
     <Content Include="Reservering\ManageReservations.aspx" />
     <Content Include="Reservering\PlaatsReservering.aspx" />
@@ -205,6 +206,13 @@
     </Compile>
     <Compile Include="Post\Post.aspx.designer.cs">
       <DependentUpon>Post.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Post\Reply.aspx.cs">
+      <DependentUpon>Reply.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Post\Reply.aspx.designer.cs">
+      <DependentUpon>Reply.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Registreren.aspx.cs">

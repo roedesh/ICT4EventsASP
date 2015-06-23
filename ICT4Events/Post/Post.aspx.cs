@@ -12,6 +12,7 @@ namespace ICT4Events.Post
     using System.Web.UI;
     using System.Web.UI.WebControls;
     using BAL;
+    using System.Net;
 
     /// <summary>
     /// WebForm used to display Post and messages.
@@ -23,6 +24,17 @@ namespace ICT4Events.Post
         /// </summary>
         private string p = string.Empty;
 
+        /// <summary>
+        /// String is used to store filepath
+        /// </summary>
+        private string filelocation = string.Empty;
+
+        /// <summary>
+        /// String is used to store filename
+        /// </summary>
+        public string filename = string.Empty;
+
+        private int count = 0;
         /// <summary>
         /// like is used to keep track if a post id has already been
         /// liked by a user
@@ -39,6 +51,7 @@ namespace ICT4Events.Post
         /// </summary>
         private DataTable submessages = new DataTable();
 
+        private DataTable post = new DataTable();
         /// <summary>
         /// Gets or sets a value indicating whether IsLoggedInAsAdmin is true or false
         /// </summary>
@@ -57,60 +70,80 @@ namespace ICT4Events.Post
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
+
             this.p = Request.QueryString["postid"];
+            post = new PostBAL().GetPost(this.p);
+            filelocation = post.Rows[0].Field<string>("BESTANDSLOCATIE");
+            filename = filelocation.Split('\\').Last();
             if (!this.IsPostBack)
             {
                 this.p = Request.QueryString["postid"];
                 if (this.p != null)
                 {
-                    DataTable post = new PostBAL().GetPost(this.p);
+                    
                     this.repPost.DataSource = post;
                     this.repPost.DataBind();
                     DataTable messages = new PostBAL().GetMessages(this.p);
                     this.repMessages.DataSource = messages;
                     this.repMessages.DataBind();
-                    
+                    foreach (RepeaterItem item in repMessages.Items)
+                    {
+                        Repeater repsubmessages = (Repeater)item.FindControl("repsubmessages");
+                        try
+                        {
+                            DataTable tablesub = new PostBAL().GetMessages(messages.Rows[count].Field<Int64>("ID").ToString());
+                            repsubmessages.DataSource = tablesub;
+                            repsubmessages.DataBind();
+                            count++;
+                            
+                        }
+                        catch
+                        {
+                            count++;
+                        }
+                      }
+                    }
+
                     if (this.p == null)
                     {
                         Response.Redirect("~/category.aspx");
                     }
                 }
-            }
 
-            if (this.Session["User_ID"] == null)
-            {
-                Response.Redirect("~/account/login.aspx");
-            }
-            else if (this.Session["User_ID"] != null)
-            {
-                if ((this.like = new PostBAL().CheckLike(Session["User_ID"].ToString(), this.p)) > 0)
+                if (this.Session["User_ID"] == null)
                 {
-                    this.btnLike.Text = "Unlike";
-                    this.like = 1;
+                    Response.Redirect("~/account/login.aspx");
                 }
-                else
+                else if (this.Session["User_ID"] != null)
                 {
-                    this.btnLike.Text = "like";
-                    this.like = 0;
-                }
+                    if ((this.like = new PostBAL().CheckLike(Session["User_ID"].ToString(), this.p)) > 0)
+                    {
+                        this.btnLike.Text = "Unlike";
+                        this.like = 1;
+                    }
+                    else
+                    {
+                        this.btnLike.Text = "like";
+                        this.like = 0;
+                    }
 
-                if ((this.flag = new PostBAL().CheckFlag(Session["User_ID"].ToString(), this.p)) > 0)
-                {
-                    this.btnFlag.Text = "Gewenst";
-                    this.flag = 1;
-                }
-                else
-                {
-                    this.btnFlag.Text = "Ongewenst";
-                    this.flag = 0;
-                }
+                    if ((this.flag = new PostBAL().CheckFlag(Session["User_ID"].ToString(), this.p)) > 0)
+                    {
+                        this.btnFlag.Text = "Gewenst";
+                        this.flag = 1;
+                    }
+                    else
+                    {
+                        this.btnFlag.Text = "Ongewenst";
+                        this.flag = 0;
+                    }
 
-                if (this.Session["USER_ROLE"].ToString() == "ADMIN")
-                {
-                    this.IsLoggedInAsAdmin = true;
+                    if (this.Session["USER_ROLE"].ToString() == "ADMIN")
+                    {
+                        this.IsLoggedInAsAdmin = true;
+                    }
                 }
             }
-        }
 
         /// <summary>
         /// Creates a button click event, which will trigger
@@ -193,7 +226,7 @@ namespace ICT4Events.Post
                     }
 
                     break;
-                case "delete":
+                case "Delete":
                     if ((string)e.CommandArgument == string.Empty)
                     {
                         Response.Write("<script language=javascript>alert('Post is niet bekend in database');</script>");
@@ -211,25 +244,11 @@ namespace ICT4Events.Post
                     }
 
                     break;
-            }
-        }
-
-        /// <summary>
-        /// Upon clicking of the button Send, this method will be triggered.
-        /// Which will create a message containing the information send with the Create Message method.
-        /// Will return message depending on result.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
-        protected void BtnSend_Click(object sender, EventArgs e)
-        {
-            if (new PostBAL().CreateMessage(Session["User_ID"].ToString(), this.tbTitle.Text, this.tbContent.Text, this.p) == 0)
-            {
-                Response.Write("<script language=javascript>alert('Er ging wat fout met het toevoegen van het bericht');</script>");
-            }
-            else
-            {
-                Response.Write("<script language=javascript>alert('Bericht is toegevoegd');</script>");
+                case "Reply":
+                    {
+                        Response.Redirect("~/Post/Reply.aspx?id="+e.CommandArgument.ToString());
+                    }
+                    break;
             }
         }
 
@@ -304,19 +323,57 @@ namespace ICT4Events.Post
         }
 
         /// <summary>
-        /// This method builds the data source of the nested repeater
+        /// Method sends user to reply page
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Web.UI.WebControls.RepeaterItemEventArgs"/> instance containing the event data.</param>
-        private void RepMessages_ItemDataBound(object sender, System.Web.UI.WebControls.RepeaterItemEventArgs e)
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnReply_Click(object sender, EventArgs e)
         {
-            RepeaterItem item = e.Item;
-            if ((item.ItemType == ListItemType.Item) || (item.ItemType == ListItemType.AlternatingItem))
+            Response.Redirect("~/Post/Reply.aspx?id=" + p);
+        }
+
+        /// <summary>
+        /// Method for handling download upon button click
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnDownload_Click(object sender, EventArgs e)
+        {
+            try
             {
-                Repeater repsubmessages = (Repeater)item.FindControl("repSubMessage");
-                repsubmessages.DataSource = this.submessages;
-                repsubmessages.DataBind();
+                WebClient req = new WebClient();
+                HttpResponse response = HttpContext.Current.Response;
+                response.Clear();
+                response.ClearContent();
+                response.ClearHeaders();
+                response.Buffer = true;
+                response.AddHeader("Content-Disposition", "attachment;filename=\"" + filename + "\"");
+                byte[] data = req.DownloadData(filelocation);
+                response.BinaryWrite(data);
+                response.End();
+            }
+            catch (Exception ex)
+            {
             }
         }
+
+        /// <summary>
+        /// Event for handling deletion of post
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
+        protected void BtnDel_Click(object sender, EventArgs e)
+        {
+            if (new PostBAL().DeletePost(p) > 0)
+            {
+                Response.Write("<script language=javascript>alert('Post is verwijderd');</script>");
+            }
+            else
+            {
+                Response.Write("<script language=javascript>alert('Post is niet verwijderd');</script>");
+            }
+        }
+
+
     }
 }

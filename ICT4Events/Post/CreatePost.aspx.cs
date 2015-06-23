@@ -38,6 +38,11 @@ namespace ICT4Events.Post
         protected void Page_Load(object sender, EventArgs e)
         {
             this.c = Request.QueryString["catid"];
+            if (!this.IsPostBack)
+            {
+
+                ViewState["PreviousPageURL"] = Request.UrlReferrer.ToString();
+            }
         }
 
         /// <summary>
@@ -95,6 +100,7 @@ namespace ICT4Events.Post
                     else
                     {
                         Response.Write("<script language=javascript>alert('Bestand is toegevoegd');</script>");
+                        Response.Redirect(ViewState["PreviousPageURL"].ToString());
                     }   
                 }
                 catch (Exception ex)

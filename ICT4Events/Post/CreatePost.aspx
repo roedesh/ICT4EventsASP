@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+    <h3>Maak een nieuwe post aan:</h3>
     <input id="inputFile" type="file" runat="server" />
     <br />
     <asp:Button ID="btnUpload" runat="server" Text="Create" OnClick="BtnUpload_Click" />

@@ -38,14 +38,19 @@
                 <h3>Posts</h3>
         </HeaderTemplate>
         <ItemTemplate>
-             <asp:Hyperlink ID="Posturl" runat="Server" Text='<%#Eval("BESTANDSLOCATIE") %>' NavigateUrl='<%#("Post.aspx?postid="+Eval("ID")) %>'><%#Eval("NAAM") %></asp:Hyperlink>
+             <asp:Hyperlink ID="Posturl" runat="Server" Text='<%#Eval("NAAM") %>' NavigateUrl='<%#("Post.aspx?postid="+Eval("ID")) %>'><%#Eval("NAAM") %></asp:Hyperlink>
             <br />
         </ItemTemplate>
         <FooterTemplate>
             </ul>
         </FooterTemplate>
     </asp:Repeater>
-        <asp:Button ID="btnCreatePost" runat="server" OnClick="BtnCreatePost_Click" Text="Nieuwe post" />
+    <% if (!IsMainCategory)
+       { %>
+                   <asp:Button ID="btnCreatePost" runat="server" OnClick="BtnCreatePost_Click" Text="Nieuwe post" />
+       <%}
+        %>
+
                             <% if (IsLoggedInAsAdmin)
                                {
                                    if(C != string.Empty)
