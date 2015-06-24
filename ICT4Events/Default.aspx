@@ -5,7 +5,6 @@
         {
             background: url(/Static/IMG/Music-Festival.jpg) #000000;
             background-size: cover;
-            background-position-y: -50%;
         }
     </style>
 </asp:Content>
