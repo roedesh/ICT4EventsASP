@@ -75,13 +75,18 @@ namespace ICT4Events.Post
             post = new PostBAL().GetPost(this.p);
             filelocation = post.Rows[0].Field<string>("BESTANDSLOCATIE");
             filename = filelocation.Split('\\').Last();
+            string serverPath = "~/Media/" + post.Rows[0].Field<long>("CATEGORIE_ID").ToString() + "/" + filename;
+
             if (!this.IsPostBack)
             {
                 this.p = Request.QueryString["postid"];
                 if (this.p != null)
                 {
                     litFile.Text = "Bestand - " + filename;
-                    img_Preview.ImageUrl = filelocation;
+
+
+
+                    img_Preview.ImageUrl = serverPath;
                    // ImageUrl="~/Media/78/Koala.jpg"
 
                     int uploaderID = Convert.ToInt32(post.Rows[0].Field<long>("ACCOUNT_ID"));

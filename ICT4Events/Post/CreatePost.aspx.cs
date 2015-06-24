@@ -58,22 +58,21 @@ namespace ICT4Events.Post
             {
                 dir.Create();
             }
-            else
+
+            if (this.c != string.Empty)
             {
-                if (this.c != string.Empty)
+                DirectoryInfo subdir = new DirectoryInfo(Server.MapPath("~/Media/" + this.c));
+                if (!subdir.Exists)
                 {
-                    DirectoryInfo subdir = new DirectoryInfo(Server.MapPath("~/Media/" + this.c));
-                    if (!subdir.Exists)
-                    {
-                        subdir.Create();
-                        this.Upload(this.c);
-                    }
-                    else
-                    {
-                        this.Upload(this.c);
-                    }
+                    subdir.Create();
+                    this.Upload(this.c);
+                }
+                else
+                {
+                    this.Upload(this.c);
                 }
             }
+
         }
 
         /// <summary>
@@ -93,8 +92,9 @@ namespace ICT4Events.Post
                     this.inputFile.PostedFile.SaveAs(savelocation);
                     string filelength = Convert.ToString(new FileInfo(savelocation).Length);
 
-                    string dbPath = "~\\Media\\" + category + "\\" + fn;
-                    if (new PostBAL().CreateFile(Session["USER_ID"].ToString(), this.c, dbPath, filelength) == 0)
+                    //string dbPath = "~\\Media\\" + category + "\\" + fn;
+
+                    if (new PostBAL().CreateFile(Session["USER_ID"].ToString(), this.c, savelocation, filelength) == 0)
                     {
                         File.Delete(savelocation);
                         Response.Write("<script language=javascript>alert('Bestand is niet geüpload.');</script>");
@@ -103,7 +103,7 @@ namespace ICT4Events.Post
                     {
                         Response.Write("<script language=javascript>alert('Bestand is geüpload.');</script>");
                         Response.Redirect(ViewState["PreviousPageURL"].ToString());
-                    }   
+                    }
                 }
                 catch (Exception ex)
                 {
