@@ -63,6 +63,8 @@
                     <li>
                         <asp:HyperLink href="/Account/AccountManagementAdmin.aspx" runat="server">Account Management</asp:HyperLink></li>
                     <li>
+                        <asp:HyperLink href="/Reservering/ManageReservations.aspx" runat="server">Reservering Management</asp:HyperLink></li>
+                    <li>
                         <asp:HyperLink href="/ToegangsControle.aspx" runat="server">Toegangs Controle</asp:HyperLink></li>
                     <li>
                         <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/ItemRental.aspx">Artikel Verhuur</asp:HyperLink>
