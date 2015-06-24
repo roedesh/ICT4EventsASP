@@ -234,7 +234,7 @@ namespace DAL
             Bitmap bitmap = new Bitmap(barcode.Length * 40, 150);
             using (Graphics graphics = Graphics.FromImage(bitmap))
             {
-                Font ofont = new System.Drawing.Font("IDAutomationHC39M", 20);
+                Font ofont = new System.Drawing.Font("IDAutomationHC39M Free Version", 20);
                 PointF point = new PointF(2f, 2f);
                 SolidBrush black = new SolidBrush(Color.Black);
                 SolidBrush white = new SolidBrush(Color.White);
