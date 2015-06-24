@@ -395,34 +395,34 @@ namespace DAL
             return this.hash;
         }
 
-        ////public void SetBarcodes()
-        ////{
-        ////    for (int i = 0; i < 100; i++)
-        ////    {
-        ////    using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
-        ////    {
-        ////        conn.Open();
-                
-        ////            try
-        ////            {
-        ////                Guid gg = Guid.NewGuid();
-        ////                string guid = gg.ToString().Substring(0, 10);
-        ////                guid = guid.ToUpper();
-        ////                string insertQuery = "INSERT INTO POLSBANDJE VALUES(POLSBANDJE_FCSEQ.nextval, :v1 ,1)";
-        ////                OracleCommand cmd = new OracleCommand(insertQuery, conn);
-        ////                cmd.Parameters.Add("v1", guid);
-        ////                cmd.Prepare();
-        ////                cmd.ExecuteNonQuery();
-        ////                conn.Close();
-        ////            }
-        ////            catch (OracleException x)
-        ////            {
-        ////                x.ToString();
-        ////                //retry;
-        ////            }
-        ////        }
-        ////    }
-        ////}
+        public void SetBarcodes()
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+                {
+                    conn.Open();
+
+                    try
+                    {
+                        Guid gg = Guid.NewGuid();
+                        string guid = gg.ToString().Substring(0, 10);
+                        guid = guid.ToUpper();
+                        string insertQuery = "INSERT INTO POLSBANDJE VALUES(POLSBANDJE_FCSEQ.nextval, :v1 ,1)";
+                        OracleCommand cmd = new OracleCommand(insertQuery, conn);
+                        cmd.Parameters.Add("v1", guid);
+                        cmd.Prepare();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    catch (OracleException x)
+                    {
+                        x.ToString();
+                        //retry;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Method for returning Oracle exceptions as string

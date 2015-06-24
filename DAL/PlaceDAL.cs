@@ -111,6 +111,34 @@ namespace DAL
         }
 
         /// <summary>
+        /// Method that returns DataTable with places
+        /// </summary>
+        /// <returns>DataTable with places</returns>
+        public DataTable Load()
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                conn.Open();
+                string loadQuery = "SELECT * FROM PLEK";
+                using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
+                {
+                    OracleDataAdapter a = new OracleDataAdapter(cmd);
+                    DataTable t = new DataTable();
+                    try
+                    {
+                        a.Fill(t);
+                        return t;
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Error: " + ex.Message.ToString());
+                        return t;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Method for returning Oracle exceptions as string
         /// </summary>
         /// <param name="ex">Oracle exception</param>

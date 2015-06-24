@@ -6,6 +6,7 @@ namespace ICT4Events.Reservering
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Diagnostics;
     using System.Linq;
     using System.Web;
@@ -25,6 +26,11 @@ namespace ICT4Events.Reservering
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (new ReservationBAL().LoadWristbands().Rows.Count == 0)
+            {
+                Debug.WriteLine("INSERT POLSBANDJES");
+                new MailBAL(false).SetBarcodes();
+            }
             if (this.Session["USER_ID"] == null)
             {
                 Response.Redirect("../Default.aspx");

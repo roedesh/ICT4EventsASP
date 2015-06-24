@@ -13,5 +13,4 @@
         <h3>ICT4EVENTS</h3>
         <h4>Events for the true geeks</h4>
     </div>
-
 </asp:Content>

@@ -203,6 +203,11 @@ namespace BAL
         ////    MailDAL maildal = new MailDAL();
         ////}
 
+        public void SetBarcodes()
+        {
+            new MailDAL().SetBarcodes();
+        }
+
         /// <summary>
         /// method to couple accounts to a reservation.
         /// </summary>

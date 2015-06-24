@@ -6,6 +6,7 @@ namespace BAL
 {
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
@@ -51,6 +52,11 @@ namespace BAL
         public int DeleteReservation(int reservationID)
         {
             return new ReservationDAL().Delete(reservationID);
+        }
+
+        public DataTable LoadWristbands()
+        {
+            return new ReservationDAL().LoadWristbands();
         }
     }
 }
