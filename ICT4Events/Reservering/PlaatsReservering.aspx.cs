@@ -85,22 +85,16 @@ namespace ICT4Events.Reservering
                 return; 
             }
 
-            string[] usernames = new string[400];
+            string[] usernames;
 
             if (string.IsNullOrWhiteSpace(this.tbOtherPersons.Text))
             {
-                usernames[0] = Session["USER_ID"].ToString();
+                usernames = new string[]{Session["USER_ID"].ToString()};
             }
             else
             {
-                usernames = (this.tbOtherPersons.Text + "," + Session["USER_ID"].ToString()).Split(',').Select(sValue => sValue.Trim()).ToArray(); 
+                usernames = (this.tbOtherPersons.Text + "," + Session["USER_ID"].ToString()).Split(',').Select(sValue => sValue.Trim()).ToArray();
             }
-
-            foreach (string u in usernames)
-            {
-                Debug.WriteLine(u);
-            }
-            
 
             ReservationBAL rbal = new ReservationBAL();
             MailBAL mbal = new MailBAL(false);
@@ -127,7 +121,7 @@ namespace ICT4Events.Reservering
             if (reservationID > 0)
             {
                 Debug.WriteLine("Reservering aangemaakt: " + reservationID);
-                Response.Redirect("/Default.aspx", false);
+                Response.Redirect("/Reservering/ManageReservations.aspx", false);
             }
         }
     }
