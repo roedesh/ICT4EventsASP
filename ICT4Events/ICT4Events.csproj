@@ -82,6 +82,7 @@
     <Content Include="Site.Master" />
     <None Include="Properties\PublishProfiles\Berry.pubxml" />
     <None Include="Properties\PublishProfiles\webdeployopnieuwewebsite.pubxml" />
+    <None Include="Properties\PublishProfiles\WebDeployPackageJeroen.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
