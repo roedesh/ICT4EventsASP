@@ -25,6 +25,10 @@ namespace ICT4Events.Reservering
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (this.Session["USER_ID"] == null)
+            {
+                Response.Redirect("../Default.aspx");
+            }
         }
 
         /// <summary>
@@ -121,7 +125,7 @@ namespace ICT4Events.Reservering
             if (reservationID > 0)
             {
                 Debug.WriteLine("Reservering aangemaakt: " + reservationID);
-                Response.Redirect("/Reservering/ManageReservations.aspx", false);
+                Response.Redirect("../Default.aspx", false);
             }
         }
     }

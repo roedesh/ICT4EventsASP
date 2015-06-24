@@ -92,14 +92,16 @@ namespace ICT4Events.Post
                 {
                     this.inputFile.PostedFile.SaveAs(savelocation);
                     string filelength = Convert.ToString(new FileInfo(savelocation).Length);
-                    if (new PostBAL().CreateFile(Session["USER_ID"].ToString(), this.c, savelocation, filelength) == 0)
+
+                    string dbPath = "~\\Media\\" + category + "\\" + fn;
+                    if (new PostBAL().CreateFile(Session["USER_ID"].ToString(), this.c, dbPath, filelength) == 0)
                     {
                         File.Delete(savelocation);
-                        Response.Write("<script language=javascript>alert('Bestand is niet toegevoegd');</script>");
+                        Response.Write("<script language=javascript>alert('Bestand is niet geüpload.');</script>");
                     }
                     else
                     {
-                        Response.Write("<script language=javascript>alert('Bestand is toegevoegd');</script>");
+                        Response.Write("<script language=javascript>alert('Bestand is geüpload.');</script>");
                         Response.Redirect(ViewState["PreviousPageURL"].ToString());
                     }   
                 }
@@ -110,7 +112,7 @@ namespace ICT4Events.Post
             }
             else
             {
-                Response.Write("Please select a file to upload.");
+                Response.Write("Selecteer een bestand om te uploaden.");
             }
         }
     }

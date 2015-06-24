@@ -125,7 +125,7 @@ namespace DAL
                 List<int> result = new List<int>();
 
                 conn.Open();
-                string loadQuery = "SELECT SUM(LIKES) FROM ACCOUNT_BIJDRAGE WHERE BIJDRAGE_ID = :post_id";
+                string loadQuery = "SELECT COALESCE(SUM(LIKES), 0) FROM ACCOUNT_BIJDRAGE WHERE BIJDRAGE_ID = :post_id";
 
                 try
                 {
@@ -142,7 +142,7 @@ namespace DAL
                         }
                     }
 
-                    loadQuery = "SELECT SUM(ONGEWENST) FROM ACCOUNT_BIJDRAGE WHERE BIJDRAGE_ID = :post_id";
+                    loadQuery = "SELECT COALESCE(SUM(ONGEWENST), 0) FROM ACCOUNT_BIJDRAGE WHERE BIJDRAGE_ID = :post_id";
 
                     using (OracleCommand cmd = new OracleCommand(loadQuery, conn))
                     {
@@ -157,7 +157,7 @@ namespace DAL
                         }
                     }
                 }
-                catch (Exception ex)
+                catch (OracleException ex)
                 {
                     Console.WriteLine("Error: " + ex.Message.ToString());
                     result.Add(0);
@@ -314,6 +314,74 @@ namespace DAL
                     using (OracleCommand cmd = new OracleCommand(query, conn))
                     {
                         cmd.Parameters.Add(new OracleParameter("name", categoryName));
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result = Convert.ToInt32(reader.GetValue(0));
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message.ToString());
+                    result = 0;
+                }
+
+                return result;
+            }
+        }
+
+
+        public string GetCategoryName(string categoryID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                string result = string.Empty;
+
+                conn.Open();
+                string query = "SELECT NAAM FROM CATEGORIE WHERE BIJDRAGE_ID = :id";
+
+                try
+                {
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id", categoryID));
+
+                        using (OracleDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                result = reader.GetValue(0).ToString();
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    result = "Error: " + ex.Message.ToString();
+                }
+
+                return result;
+            }
+        }
+
+        public int GetParentCategoryID(string childID)
+        {
+            using (OracleConnection conn = new OracleConnection(ConfigurationManager.ConnectionStrings["OracleConnectionString"].ConnectionString))
+            {
+                int result = 0;
+
+                conn.Open();
+                string query = "SELECT CATEGORIE_ID FROM CATEGORIE WHERE BIJDRAGE_ID = :id";
+
+                try
+                {
+                    using (OracleCommand cmd = new OracleCommand(query, conn))
+                    {
+                        cmd.Parameters.Add(new OracleParameter("id", childID));
 
                         using (OracleDataReader reader = cmd.ExecuteReader())
                         {
@@ -937,13 +1005,13 @@ namespace DAL
                         }
                     }
 
-                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) VALUES (:id, :accountID, TO_DATE(:uploadDate, 'dd/mm/yyyy'), :kind)";
+                    insertQuery = @"INSERT INTO BIJDRAGE (ID, ACCOUNT_ID, DATUM, SOORT) VALUES (:id, :accountID, TO_DATE(:uploadDate, 'dd/mm/yyyy hh24:mi:ss'), :kind)";
 
                     using (OracleCommand cmd = new OracleCommand(insertQuery, conn))
                     {
                         cmd.Parameters.Add(new OracleParameter("id", id));
                         cmd.Parameters.Add(new OracleParameter("accountID", accountID));
-                        cmd.Parameters.Add(new OracleParameter("uploadDate", DateTime.Now.ToString("dd-MM-yyyy")));
+                        cmd.Parameters.Add(new OracleParameter("uploadDate", DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss")));
                         cmd.Parameters.Add(new OracleParameter("kind", type));
 
                         result = cmd.ExecuteNonQuery();
@@ -963,5 +1031,6 @@ namespace DAL
             return result;
         }
         #endregion
+
     }
 }

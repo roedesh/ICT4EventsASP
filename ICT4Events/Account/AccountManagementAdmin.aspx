@@ -49,7 +49,7 @@
         </p>
         <p>
             <h3>E-mailadres:</h3>
-            <asp:TextBox ID="tbEmailAdress" runat="server" Height="25px" Width="250px"></asp:TextBox>
+            <asp:TextBox ID="tbEmailAdress" ReadOnly="true" runat="server" Height="25px" Width="250px"></asp:TextBox>
             <asp:RegularExpressionValidator Display="Dynamic" ValidationGroup="save" ID="regexEmailValid" runat="server" ValidationExpression="\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*" ControlToValidate="tbEmailAdress" ErrorMessage="Vul een geldig E-Mailadres in"></asp:RegularExpressionValidator>
             <asp:RequiredFieldValidator ValidationGroup="save"  Display="Dynamic" ID="reqEmail" runat="server" ControlToValidate="tbEmailAdress" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
         </p>
@@ -62,7 +62,7 @@
         </p>
         <p>
             <h3>Gebruikersnaam:</h3>
-            <asp:TextBox ID="tbUserName" runat="server" Height="25px" Width="250px"></asp:TextBox>
+            <asp:TextBox ID="tbUserName" runat="server" ReadOnly="true" Height="25px" Width="250px"></asp:TextBox>
             <asp:RequiredFieldValidator ValidationGroup="save"  Display="Dynamic" ID="reqUserName" runat="server" ControlToValidate="tbUserName" ErrorMessage="Dit veld is verplicht"></asp:RequiredFieldValidator>
         </p>
         <p>

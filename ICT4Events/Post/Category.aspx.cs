@@ -45,6 +45,16 @@ namespace ICT4Events.Post
             set;
         }
 
+        public bool FilesFound
+        {
+            get;
+            set;
+        }
+
+        private string categoryName;
+        private Label lbl_NoCategories;
+        private Label lbl_NoFiles;
+
         /// <summary>
         /// On page load this method will be triggered, everything inside this
         /// method will be executed.
@@ -61,15 +71,50 @@ namespace ICT4Events.Post
                     DataTable subCategory = new PostBAL().GetCategories(this.C);
                     this.repSubCat.DataSource = subCategory;
                     this.repSubCat.DataBind();
+
+                    try
+                    {
+                        bool temp = subCategory.Rows[0] != null;
+                        lbl_NoCategories.Visible = false;
+                    }
+                    catch
+                    {
+                        lbl_NoCategories.Visible = true;
+                    }
+
                     DataTable post = new PostBAL().GetAllPosts(this.C);
                     post.Columns.Add("NAAM");
+                    post.Columns.Add("UPLOADER");
+                    post.Columns.Add("LIKES");
+                    post.Columns.Add("FLAGS");
+
                     foreach(DataRow Row in post.Rows)
                     {
                         filename = Row.Field<string>("BESTANDSLOCATIE").Split('\\').Last();
                         Row["NAAM"] = filename;
+
+                        int uploaderID = Convert.ToInt32(Row.Field<long>("ACCOUNT_ID"));
+                        string[] accountData = new AccountBAL().SelectAccount(uploaderID);
+                        Row["UPLOADER"] = accountData[0];
+
+                        List<int> likeFlagcount = new PostBAL().GetLikeFlagCount(Row.Field<long>("ID").ToString());
+                        Row["LIKES"] = likeFlagcount[0];
+                        Row["FLAGS"] = likeFlagcount[1];
                     }
                     this.repFile.DataSource = post;
                     this.repFile.DataBind();
+
+                    try
+                    {
+                        bool temp = post.Rows[0] != null;
+                        lbl_NoFiles.Visible = false;
+                        this.FilesFound = true;
+                    }
+                    catch
+                    {
+                        lbl_NoFiles.Visible = true;
+                        this.FilesFound = false;
+                    }
                     
 
                     if (this.Session["User_ID"] != null)
@@ -107,13 +152,22 @@ namespace ICT4Events.Post
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void BtnDel_Click(object sender, EventArgs e)
         {
-            if (new PostBAL().DeletePost(this.C) > 0)
+            string parentID = new PostBAL().GetParentCategoryID(this.C).ToString();
+
+            if (new PostBAL().DeleteCategory(this.C) > 0)
             {
-                Response.Write("<script language=javascript>alert('Post is verwijderd');</script>");
+                Response.Write(string.Format("<script language=javascript>alert('Categorie {0} is succesvol verwijderd.');</script>", categoryName));
+
+                if (parentID == "0")
+                {
+                    Response.Redirect("../Post/Category.aspx");
+                }
+
+                Response.Redirect("../Post/Category.aspx?catid=" + parentID);
             }
             else
             {
-                Response.Write("<script language=javascript>alert('Post is niet verwijderd');</script>");
+                Response.Write(string.Format("<script language=javascript>alert('Error: Categorie {0} kon niet worden verwijderd.');</script>", categoryName));
             }
         }
 
@@ -125,6 +179,40 @@ namespace ICT4Events.Post
         protected void BtnCreateCat_Click(object sender, EventArgs e)
         {
             Response.Redirect("../Post/CreateCategory.aspx");
+        }
+
+        protected void RepSubCat_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            RepeaterItem item = (RepeaterItem)e.Item;
+            if (item.ItemType == ListItemType.Header)
+            {
+                Literal litCateroy = (Literal)item.FindControl("litCategory");
+                categoryName = new PostBAL().GetCategoryName(C);
+                litCateroy.Text = "Categorie - " + categoryName;
+
+                lbl_NoCategories = (Label)item.FindControl("lbl_NoCategories");
+            }
+        }
+
+        protected void RepFile_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            RepeaterItem item = (RepeaterItem)e.Item;
+            if (item.ItemType == ListItemType.Header)
+            {
+                lbl_NoFiles = (Label)item.FindControl("lbl_NoFiles");
+            }
+        }
+
+        protected void BtnBack_Click(object sender, EventArgs e)
+        {
+            string parentID = new PostBAL().GetParentCategoryID(this.C).ToString();
+
+            if (parentID == "0")
+            {
+                Response.Redirect("../Post/Category.aspx");
+            }
+            
+            Response.Redirect("../Post/Category.aspx?catid=" + parentID);
         }
     }
 }
