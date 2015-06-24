@@ -96,7 +96,7 @@ namespace ICT4Events.Account
                             string username = accountData[0];
                             //adbal.ChangeUser(username, this.tbUserName.Text, "Username");
                             adbal.ChangeUser(username, this.tbPassword.Text, "Password");
-                            adbal.ChangeUser(username, this.tbEmailAdress.Text, "Email");
+                            //adbal.ChangeUser(username, this.tbEmailAdress.Text, "Email");
                             if (this.ddlRol.SelectedValue.ToString() == "GEBRUIKER")
                             {
                                 adbal.RemoveFromGroup(this.tbUserName.Text, "PremiumLeden");
